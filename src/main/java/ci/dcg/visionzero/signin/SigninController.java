@@ -44,7 +44,17 @@ public class SigninController {
 
     @ModelAttribute("titrepage")
     String titre() {
-        return "Vision Zero | Connexion";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            return HOME_PAGE_TITLE;
+        }
+        return SIGNIN_PAGE_TITLE;
+    }
+
+    @ModelAttribute("module")
+    String module() {
+        return HOME_MODULE;
     }
 
     @GetMapping("/")

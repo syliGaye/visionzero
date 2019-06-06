@@ -61,7 +61,7 @@ public class SignupController {
 
     @ModelAttribute("titrepage")
     String titre() {
-        return "Vision Zero | Register";
+        return SIGNUP_PAGE_TITLE;
     }
 
     @GetMapping("signup")

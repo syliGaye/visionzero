@@ -57,11 +57,11 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.successForwardUrl("/")
                 .defaultSuccessUrl("/home")
                 .and()
-            .logout()
+            /*.logout()
                 .logoutUrl("/logout")
                 .permitAll()
                 .logoutSuccessUrl("/?logout")
-                .and()
+                .and()*/
             .rememberMe()
                 .rememberMeServices(rememberMeServices())
                 .key("remember-me-key");
