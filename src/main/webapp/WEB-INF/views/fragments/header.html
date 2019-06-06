@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:fragment="header-title">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title th:text="${titrepage}">Minovate - Admin Dashboard</title>
+        <link rel="icon" type="image/ico" href="../../../resources/assets/images/favicon.ico" th:href="@{/resources/assets/images/favicon.ico}" />
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </div>
+
+    <th:block th:fragment="header-css">
+        <!-- ============================================
+        ================= Stylesheets ===================
+        ============================================= -->
+        <!-- vendor css files -->
+        <link rel="stylesheet" href="../../../resources/assets/css/vendor/bootstrap.min.css" media="screen" th:href="@{/resources/assets/css/vendor/bootstrap.min.css}">
+        <link rel="stylesheet" href="../../../resources/assets/css/vendor/animate.css" media="screen" th:href="@{/resources/assets/css/vendor/animate.css}">
+        <link rel="stylesheet" href="../../../resources/assets/css/vendor/font-awesome.min.css" media="screen" th:href="@{/resources/assets/css/vendor/font-awesome.min.css}">
+        <link rel="stylesheet" href="../../../resources/assets/js/vendor/animsition/css/animsition.min.css" media="screen" th:href="@{/resources/assets/js/vendor/animsition/css/animsition.min.css}">
+
+        <!-- project main css files -->
+        <link rel="stylesheet" href="../../../resources/assets/css/main.css" media="screen" th:href="@{/resources/assets/css/main.css}">
+        <!--/ stylesheets -->
+
+
+        <!-- ==========================================
+        ================= Modernizr ===================
+        =========================================== -->
+        <script src="../../../resources/assets/js/vendor/modernizr/modernizr-2.8.3-respond-1.4.2.min.js" th:src="@{/resources/assets/js/vendor/modernizr/modernizr-2.8.3-respond-1.4.2.min.js}"></script>
+        <!--/ modernizr -->
+    </th:block>
+    <th:block th:fragment="header-css-datatables">
+        <link rel="stylesheet" href="../../../resources/assets/js/vendor/datatables/css/jquery.dataTables.min.css" media="screen" th:href="@{/resources/assets/js/vendor/datatables/css/jquery.dataTables.min.css}">
+        <link rel="stylesheet" href="../../../resources/assets/js/vendor/datatables/datatables.bootstrap.min.css" media="screen" th:href="@{/resources/assets/js/vendor/datatables/datatables.bootstrap.min.css}">
+        <link rel="stylesheet" href="../../../resources/assets/js/vendor/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css" media="screen" th:href="@{/resources/assets/js/vendor/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css}">
+        <link rel="stylesheet" href="../../../resources/assets/js/vendor/datatables/extensions/Responsive/css/dataTables.responsive.css" media="screen" th:href="@{/resources/assets/js/vendor/datatables/extensions/Responsive/css/dataTables.responsive.css}">
+        <link rel="stylesheet" href="../../../resources/assets/js/vendor/datatables/extensions/ColVis/css/dataTables.colVis.min.css" media="screen" th:href="@{/resources/assets/js/vendor/datatables/extensions/ColVis/css/dataTables.colVis.min.css}">
+        <link rel="stylesheet" href="../../../resources/assets/js/vendor/datatables/extensions/TableTools/css/dataTables.tableTools.min.css" media="screen" th:href="@{/resources/assets/js/vendor/datatables/extensions/TableTools/css/dataTables.tableTools.min.css}">
+    </th:block>
+</head>
+<body>
+
+</body>
+</html>

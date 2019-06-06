@@ -1,0 +1,100 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+
+
+
+<head>
+
+    <div th:replace="fragments/header :: header-title">&nbsp;</div>
+
+
+    <th:block th:replace="fragments/header :: header-css"/>
+
+</head>
+
+
+<body id="minovate" class="appWrapper">
+
+
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+
+<!-- ====================================================
+================= Application Content ===================
+===================================================== -->
+<div id="wrap" class="animsition">
+
+
+
+
+    <div class="page page-core page-login">
+
+        <div class="text-center"><img src="../../../resources/assets/images/logo.svg" th:src="@{/resources/assets/images/logo.svg}" class="login-head-view"></div>
+
+        <div class="container w-420 p-15 bg-white mt-40 text-center">
+
+
+            <h2 class="text-light text-greensea">T&eacute;l&eacute;charger Image</h2>
+
+            <!-- tile body -->
+            <div>
+
+                <form class="form-horizontal" role="form" method="post" th:action="@{/upload}" enctype="multipart/form-data">
+                    <th:block th:if="${param.error != null}">
+                        <div th:replace="fragments/alert :: alert (type='danger', message='Nom utilisateur ou Mot de Passe incorrect.')">Alert</div>
+                    </th:block>
+                    <div class="form-group text-left">
+                        <label class="col-sm-3 control-label">Utilisateur</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" th:text="${userFile.login}">email@example.com</p>
+                        </div>
+                    </div>
+                    <div class="form-group text-left">
+                        <label class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" th:text="${userFile.email}">email@example.com</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label class="col-sm-3 control-label">Photo</label>
+                        <div class="col-sm-9">
+                            <input type="file" class="filestyle" data-buttonText="Image" data-iconName="fa fa-image" name="photo" accept="image/png, image/jpeg">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10 text-left">
+                            <a th:href="@{/singup}" type="reset" class="btn btn-rounded btn-red btn-sm">&nbsp;&nbsp;&nbsp; <i class="fa fa-arrow-left"></i>&nbsp;&nbsp;&nbsp; Retour &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+                            <button type="submit" class="btn btn-rounded btn-greensea btn-sm pull-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Terminer &nbsp;&nbsp;&nbsp;<i class="fa fa-save"></i> &nbsp;&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+<!--/ Application Content -->
+
+
+
+<th:block th:replace="fragments/footer :: footer-js-debut"/>
+
+<script src="../../../resources/assets/js/vendor/filestyle/bootstrap-filestyle.min.js" th:src="@{/resources/assets/js/vendor/filestyle/bootstrap-filestyle.min.js}"></script>
+
+<th:block th:replace="fragments/footer :: footer-js-fin"/>
+
+</body>
+</html>

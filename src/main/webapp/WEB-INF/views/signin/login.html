@@ -1,0 +1,89 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""  xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+
+<head>
+
+    <div th:replace="fragments/header :: header-title">&nbsp;</div>
+
+    <th:block th:replace="fragments/header :: header-css"/>
+
+</head>
+
+<body id="minovate" class="appWrapper">
+
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- ====================================================
+================= Application Content ===================
+===================================================== -->
+<div id="wrap" class="animsition">
+
+    <div class="page page-core page-login">
+
+        <div class="text-center"><img src="../../../resources/assets/images/logo.svg" th:src="@{/resources/assets/images/logo.svg}" class="login-head-view"></div>
+
+        <div class="container w-420 p-15 bg-white mt-40 text-center">
+
+
+            <h2 class="text-light text-greensea">Se Connecter</h2>
+
+            <!-- tile body -->
+            <div>
+
+                <form class="form-horizontal" role="form" action="#" method="post" th:action="@{/authenticate}">
+                    <th:block th:if="${param.error != null}">
+                        <div th:replace="fragments/alert :: alert (type='danger', message='Nom utilisateur ou Mot de Passe incorrect.')">Alert</div>
+                    </th:block>
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-sm-3 control-label">Utilisateur</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Utilisateur" name="username"
+                                   data-parsley-trigger="change"
+                                   data-parsley-range="[4, 12]"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-sm-3 control-label">Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password"
+                                   data-parsley-trigger="change"
+                                   data-parsley-range="[6, 12]"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group text-left">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <label class="checkbox checkbox-custom">
+                                <input type="checkbox" name="_spring_security_remember_me"/><i></i>
+                                Remember me
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-10 text-left">
+                            <button type="submit" class="btn btn-rounded btn-greensea btn-sm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Connexion &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!--/ Application Content -->
+
+<th:block th:replace="fragments/footer :: footer-js-debut"/>
+
+<th:block th:replace="fragments/footer :: footer-js-fin"/>
+
+</body>
+</html>

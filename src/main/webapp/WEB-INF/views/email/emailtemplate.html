@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!-- ====================================================
+================= CONTENT ===============================
+===================================================== -->
+<section id="content">
+
+    <div class="page page-dashboard">
+
+        <div class="pageheader">
+
+            <h2>Dashboard <span>// You can place subtitle here</span></h2>
+
+            <div class="page-bar">
+
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="index.html"><i class="fa fa-home"></i> Vision Zero</a>
+                    </li>
+                    <li>
+                        <a th:href="__${message}__" th:text="${message}">Accueil</a>
+                    </li>
+                </ul>
+
+                <div class="page-toolbar">
+                    <a role="button" tabindex="0" class="btn btn-lightred no-border pickDate">
+                        <i class="fa fa-calendar"></i>&nbsp;&nbsp;<span></span>&nbsp;&nbsp;<i class="fa fa-angle-down"></i>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- row -->
+        <div class="row">
+            <p>Hello!</p>
+
+
+        </div>
+        <!-- /row -->
+
+    </div>
+
+</section>
+<!--/ CONTENT -->
+
+</body>
+</html>

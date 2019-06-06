@@ -1,0 +1,104 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+
+<head>
+
+    <th:block th:replace="fragments/header :: header-title"/>
+
+    <link rel="stylesheet" href="../../../resources/assets/js/vendor/daterangepicker/daterangepicker-bs3.css" media="screen" th:href="@{/resources/assets/js/vendor/daterangepicker/daterangepicker-bs3.css}">
+    <link rel="stylesheet" href="../../../resources/assets/js/vendor/morris/morris.css" media="screen" th:href="@{/resources/assets/js/vendor/morris/morris.css}">
+    <link rel="stylesheet" href="../../../resources/assets/js/vendor/owl-carousel/owl.carousel.css" media="screen" th:href="@{/resources/assets/js/vendor/owl-carousel/owl.carousel.css}">
+    <link rel="stylesheet" href="../../../resources/assets/js/vendor/owl-carousel/owl.theme.css" media="screen" th:href="@{/resources/assets/js/vendor/owl-carousel/owl.theme.css}">
+    <link rel="stylesheet" href="../../../resources/assets/js/vendor/rickshaw/rickshaw.min.css" media="screen" th:href="@{/resources/assets/js/vendor/rickshaw/rickshaw.min.css}">
+    <link rel="stylesheet" href="../../../resources/assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css" media="screen" th:href="@{/resources/assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css}">
+    <link rel="stylesheet" href="../../../resources/assets/js/vendor/chosen/chosen.css" media="screen" th:href="@{/resources/assets/js/vendor/chosen/chosen.css}">
+    <link rel="stylesheet" href="../../../resources/assets/js/vendor/summernote/summernote.css" media="screen" th:href="@{/resources/assets/js/vendor/summernote/summernote.css}">
+
+    <th:block th:replace="fragments/header :: header-css-datatables"/>
+    <th:block th:replace="fragments/header :: header-css"/>
+
+</head>
+
+<body id="minovate" class="appWrapper">
+
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- ====================================================
+================= Application Content ===================
+===================================================== -->
+<div id="wrap" class="animsition">
+
+<th:block th:replace="fragments/menu :: navbar"/>
+
+<th:block th:replace="fragments/menu :: sidebar"/>
+
+<!-- ====================================================
+================= CONTENT ===============================
+===================================================== -->
+<section id="content">
+
+<div class="page page-dashboard">
+
+<div class="pageheader">
+
+    <h2>Dashboard <span>// You can place subtitle here</span></h2>
+
+    <div class="page-bar">
+
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="index.html"><i class="fa fa-home"></i> Vision Zero</a>
+            </li>
+            <li>
+                <a href="index.html">Accueil</a>
+            </li>
+        </ul>
+
+        <div class="page-toolbar">
+            <a role="button" tabindex="0" class="btn btn-lightred no-border pickDate">
+                <i class="fa fa-calendar"></i>&nbsp;&nbsp;<span></span>&nbsp;&nbsp;<i class="fa fa-angle-down"></i>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- row -->
+<div class="row">
+    <p>Hello!</p>
+
+
+</div>
+<!-- /row -->
+
+</div>
+
+</section>
+<!--/ CONTENT -->
+
+</div>
+<!--/ Application Content -->
+
+
+<th:block th:replace="fragments/footer :: footer-js-debut"/>
+
+<script src="../../resources/assets/js/vendor/d3/d3.min.js" th:src="@{/resources/assets/js/vendor/d3/d3.min.js}"></script>
+<script src="../../resources/assets/js/vendor/d3/d3.layout.min.js" th:src="@{/resources/assets/js/vendor/d3/d3.layout.min.js}"></script>
+
+<script src="../../resources/assets/js/vendor/rickshaw/rickshaw.min.js" th:src="@{/resources/assets/js/vendor/rickshaw/rickshaw.min.js}"></script>
+
+<script src="../../resources/assets/js/vendor/daterangepicker/moment.min.js" th:src="@{/resources/assets/js/vendor/daterangepicker/moment.min.js}"></script>
+<script src="../../resources/assets/js/vendor/daterangepicker/daterangepicker.js" th:src="@{/resources/assets/js/vendor/daterangepicker/daterangepicker.js}"></script>
+
+
+
+<th:block th:replace="fragments/footer :: footer-js-fin"/>
+</body>
+</html>
