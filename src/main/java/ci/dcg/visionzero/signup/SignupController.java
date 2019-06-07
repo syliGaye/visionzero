@@ -138,7 +138,6 @@ public class SignupController {
             return REDIRECT_SIGNIN;
         } catch (IOException e) {
             e.printStackTrace();
-
             return REDIRECT_SIGNUP;
         }
     }
@@ -153,7 +152,7 @@ public class SignupController {
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException ex) {
-            logger.info("Could not determine file type.");
+            logger.info("Impossible de déterminer le type de fichier.");
         }
 
         // Fallback to the default content type if type could not be determined

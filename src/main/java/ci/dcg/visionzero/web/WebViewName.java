@@ -23,4 +23,13 @@ public class WebViewName {
     /** Signout Controller **/
     public static final String REDIRECT_SIGNOUT = "redirect:/logout";
 
+    /** Role Controller **/
+    public static final String ROLE_LIST_VIEW_NAME = "parametres/role/roles";
+    public static final String ROLE_ADD_VIEW_NAME = "parametres/role/addrole";
+    public static final String REDIRECT_ROLE_LIST = "redirect:/roles";
+    public static final String REDIRECT_ROLE_ADD = "redirect:/roles/add";
+    public static final String ROLE_MODULE = "administration";
+    public static final String ROLE_SOUS_MODULE_UN = "roles";
+    public static final String ROLE_TITLE = "Vision Zero | Profiles Utilisateur";
+
 }

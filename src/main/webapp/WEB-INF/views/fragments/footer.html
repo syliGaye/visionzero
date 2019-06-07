@@ -35,6 +35,15 @@
     <!--/ vendor javascripts -->
 </th:block>
 
+<th:block th:fragment="js-datatables">
+    <script src="../../../resources/assets/js/vendor/datatables/js/jquery.dataTables.min.js" th:src="@{/resources/assets/js/vendor/datatables/js/jquery.dataTables.min.js}"></script>
+    <script src="../../../resources/assets/js/vendor/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js" th:src="@{/resources/assets/js/vendor/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js}"></script>
+    <script src="../../../resources/assets/js/vendor/datatables/extensions/Responsive/js/dataTables.responsive.min.js" th:src="@{/resources/assets/js/vendor/datatables/extensions/Responsive/js/dataTables.responsive.min.js}"></script>
+    <script src="../../../resources/assets/js/vendor/datatables/extensions/ColVis/js/dataTables.colVis.min.js" th:src="@{/resources/assets/js/vendor/datatables/extensions/ColVis/js/dataTables.colVis.min.js}"></script>
+    <script src="../../../resources/assets/js/vendor/datatables/extensions/TableTools/js/dataTables.tableTools.min.js" th:src="@{/resources/assets/js/vendor/datatables/extensions/TableTools/js/dataTables.tableTools.min.js}"></script>
+    <script src="../../../resources/assets/js/vendor/datatables/extensions/dataTables.bootstrap.js" th:src="@{/resources/assets/js/vendor/datatables/extensions/dataTables.bootstrap.js}"></script>
+</th:block>
+
 <th:block th:fragment="footer-js-fin">
     <!-- ============================================
     ============== Custom JavaScripts ===============

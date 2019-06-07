@@ -134,7 +134,8 @@
                 </th:block>
 
 
-                <li class="toggle-right-sidebar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li class="toggle-right-sidebar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li class="toggle-right-sidebar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
             </ul>
             <!-- Right-side navigation end -->
 
@@ -175,12 +176,12 @@
                                 <ul id="navigation">
 
                                     <th:block th:if="${#authorization.expression('isAuthenticated()')}">
-                                        <li th:classappend="${module == 'home' ? 'active' : ''}"><a th:href="@{/}"><i class="fa fa-home"></i> <span>Accueil</span></a></li>
+                                        <li th:classappend="${module == 'home' ? 'active' : ''}"><a th:href="@{/home}"><i class="fa fa-home"></i> <span>Accueil</span></a></li>
                                         <li th:classappend="${module == 'administration' ? 'active open' : ''}">
                                             <a role="button" tabindex="0"><i class="fa fa-users"></i> <span>Administration</span></a>
                                             <ul>
-                                                <li><a href="roles.html"><i class="fa fa-caret-right"></i> Profils Utilisateur</a></li>
-                                                <li><a href="users.html"><i class="fa fa-caret-right"></i> Utilisateurs</a></li>
+                                                <li th:classappend="${sousmoduleun == 'roles' ? 'active' : ''}"><a th:href="@{/roles}"><i class="fa fa-caret-right"></i> Profils Utilisateur</a></li>
+                                                <li th:classappend="${sousmoduleun == 'utilisateurs' ? 'active' : ''}"><a href="users.html"><i class="fa fa-caret-right"></i> Utilisateurs</a></li>
                                             </ul>
                                         </li>
                                         <li th:classappend="${module == 'parametrages' ? 'active open' : ''}">
@@ -239,5 +240,6 @@
     </div>
     <!--/ CONTROLS Content -->
 </th:block>
+
 </body>
 </html>

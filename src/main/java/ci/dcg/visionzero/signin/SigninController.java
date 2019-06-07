@@ -3,14 +3,10 @@ package ci.dcg.visionzero.signin;
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.couleur.CouleurService;
 import ci.dcg.visionzero.files.FileStorageService;
-import ci.dcg.visionzero.imageuser.ImageUser;
-import ci.dcg.visionzero.imageuser.ImageUserService;
 import ci.dcg.visionzero.role.Role;
 import ci.dcg.visionzero.role.RoleService;
 import ci.dcg.visionzero.utilisateur.UserService;
 import ci.dcg.visionzero.utilisateur.Utilisateur;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,14 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.security.Principal;
-
 import static ci.dcg.visionzero.web.WebViewName.*;
 
 @Controller
 public class SigninController {
-
-    private static Logger logger = LoggerFactory.getLogger(SigninController.class);
 
     @Autowired
     private UserService userService;

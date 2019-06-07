@@ -45,30 +45,7 @@
 
 <div class="page page-dashboard">
 
-<div class="pageheader">
-
-    <h2>Dashboard <span>// You can place subtitle here</span></h2>
-
-    <div class="page-bar">
-
-        <ul class="page-breadcrumb">
-            <li>
-                <a href="index.html"><i class="fa fa-home"></i> Vision Zero</a>
-            </li>
-            <li>
-                <a href="index.html">Accueil</a>
-            </li>
-        </ul>
-
-        <div class="page-toolbar">
-            <a role="button" tabindex="0" class="btn btn-lightred no-border pickDate">
-                <i class="fa fa-calendar"></i>&nbsp;&nbsp;<span></span>&nbsp;&nbsp;<i class="fa fa-angle-down"></i>
-            </a>
-        </div>
-
-    </div>
-
-</div>
+    <th:block th:replace="fragments/content :: pageheader"/>
 
 <!-- row -->
 <div class="row">
@@ -96,8 +73,6 @@
 
 <script src="../../resources/assets/js/vendor/daterangepicker/moment.min.js" th:src="@{/resources/assets/js/vendor/daterangepicker/moment.min.js}"></script>
 <script src="../../resources/assets/js/vendor/daterangepicker/daterangepicker.js" th:src="@{/resources/assets/js/vendor/daterangepicker/daterangepicker.js}"></script>
-
-
 
 <th:block th:replace="fragments/footer :: footer-js-fin"/>
 </body>
