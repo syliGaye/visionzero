@@ -1,5 +1,7 @@
-package ci.dcg.visionzero.utilisateur;
+package ci.dcg.visionzero.signup;
 
+import ci.dcg.visionzero.utilisateur.UserService;
+import ci.dcg.visionzero.utilisateur.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -7,7 +9,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
-public class UserValidator implements Validator {
+public class SignupValidator implements Validator {
     @Autowired
     private UserService userService;
 
@@ -18,7 +20,7 @@ public class UserValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        UtilisateurForm user = (UtilisateurForm) o;
+        SignupForm user = (SignupForm) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "NotEmpty");
         if (user.getLogin().length() < 6 || user.getLogin().length() > 32) {
@@ -30,8 +32,13 @@ public class UserValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "idRole", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
+        if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
+            errors.rejectValue("password", "Size.signupForm.password");
+        }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "file", "NotEmpty");
+        if (!user.getPasswordConfirm().equals(user.getPassword())) {
+            errors.rejectValue("passwordConfirm", "Diff.signupForm.passwordConfirm");
+        }
     }
 }

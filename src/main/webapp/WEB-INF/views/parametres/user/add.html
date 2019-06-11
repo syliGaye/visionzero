@@ -46,7 +46,7 @@
 
                         <!-- tile header -->
                         <div class="tile-header dvd dvd-btm">
-                            <h1 class="custom-font"><strong>Ajouter un R&ocirc;le</strong></h1>
+                            <h1 class="custom-font"><strong>Ajouter un Utilisateur</strong></h1>
                             <ul class="controls">
 
                                 <li class="dropdown">
@@ -61,46 +61,49 @@
                         <!-- tile body -->
                         <div class="tile-body">
 
-                            <form class="form-horizontal" id="addUserForm" method="post" role="form" th:action="@{/users/add}" th:object="${utilisateurForm}" th:fragment="utilisateurForm">
+                            <form class="form-horizontal" id="addUserForm" method="post" role="form" th:action="@{/users/add}" th:object="${utilisateurForm}" th:fragment="utilisateurForm" enctype="multipart/form-data">
                                 <th:block th:if="${param.error != null}">
                                     <div th:replace="fragments/alert :: alert (type='danger', message='Profile utilisateur incorrect.')">Alert</div>
                                 </th:block>
 
                                 <div class="form-group"  th:classappend="${#fields.hasErrors('login')}? 'has-error'">
-                                    <label for="inputUsername" class="col-sm-3 control-label">Nom utilisateur</label>
-                                    <div class="col-sm-9">
+                                    <label for="inputUsername" class="col-sm-2 control-label">Nom utilisateur</label>
+                                    <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inputUsername" placeholder="Nom Utilisateur" th:field="*{login}">
                                         <span class="help-block" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Nom utilisateur incorrect</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group"  th:classappend="${#fields.hasErrors('email')}? 'has-error'">
-                                    <label for="inputEmail" class="col-sm-3 control-label">Email</label>
-                                    <div class="col-sm-9">
+                                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                                    <div class="col-sm-10">
                                         <input type="email" class="form-control" id="inputEmail" placeholder="email@email.email" th:field="*{email}">
                                         <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Adresse mail incorrecte</span>
                                     </div>
                                 </div>
 
-                                <div class="form-group" th:classappend="${#fields.hasErrors('role')}? 'has-error'">
-                                    <label class="col-sm-2 control-label">Profile Utilisateur</label>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('idRole')}? 'has-error'">
+                                    <label class="col-sm-2 control-label">Profile</label>
                                     <div class="col-sm-10">
 
-                                        <select class="form-control mb-10" th:field="*{role}">
+                                        <select class="form-control mb-10" th:field="*{idRole}">
                                             <option value="">-- Veuillez choisir un R&ocirc;le --</option>
                                             <option th:each="role:${listRole}"
+                                                    th:if="${role.roleName != 'ROLE_SUPERADMIN'}"
                                                     th:value="${role.id}"
-                                                    th:text="${role.roleName}">2</option>
+                                                    th:text="${role.roleName}"
+                                            >2</option>
 
                                         </select>
-                                        <span class="help-block" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Profile utilisateur incorrect</span>
+                                        <span class="help-block" th:if="${#fields.hasErrors('idRole')}" th:errors="*{idRole}">Profile utilisateur incorrect</span>
                                     </div>
                                 </div>
 
-                                <div class="form-group text-left">
-                                    <label class="col-sm-3 control-label">Photo</label>
-                                    <div class="col-sm-9">
-                                        <input type="file" class="filestyle" data-buttonText="Image" data-iconName="fa fa-image" name="imageUser" accept="image/png, image/jpeg">
+                                <div class="form-group text-left" th:classappend="${#fields.hasErrors('file')}? 'has-error'">
+                                    <label class="col-sm-2 control-label">Photo</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="filestyle" data-buttonText="Image" data-iconName="fa fa-image" th:field="*{file}" accept="image/png, image/jpeg">
+                                        <span class="help-block" th:if="${#fields.hasErrors('file')}" th:errors="*{file}">Profile utilisateur incorrect</span>
                                     </div>
                                 </div>
 

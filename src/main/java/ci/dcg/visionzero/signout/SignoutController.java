@@ -21,7 +21,7 @@ public class SignoutController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("logout")
+    @PostMapping("goToLogout")
     String signout(HttpServletRequest request, HttpServletResponse response){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){

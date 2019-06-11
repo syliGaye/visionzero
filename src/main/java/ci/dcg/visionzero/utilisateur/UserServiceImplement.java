@@ -54,7 +54,8 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public void update(Utilisateur utilisateur) {
-        userRepository.save(utilisateur);
+        Utilisateur utilisateur1 = userRepository.save(utilisateur);
+        System.out.println(utilisateur1.toString());
     }
 
     @Override

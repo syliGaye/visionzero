@@ -76,6 +76,33 @@ public class Utilisateur implements Serializable {
         this.email = email;
     }
 
+    public Utilisateur(String login, String password, String passwordConfirm, String email, Integer active, ImageUser imageUser, Role role) {
+        this.login = login;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
+        this.email = email;
+        this.active = active;
+        this.imageUser = imageUser;
+        this.role = role;
+    }
+
+    public Utilisateur(String id, String login, String password, String passwordConfirm, String email, Integer active, ImageUser imageUser, Role role) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
+        this.email = email;
+        this.active = active;
+        this.imageUser = imageUser;
+        this.role = role;
+    }
+
+    public Utilisateur(String login, String email, ImageUser imageUser) {
+        this.login = login;
+        this.email = email;
+        this.imageUser = imageUser;
+    }
+
     public Utilisateur(String login, String password, String passwordConfirm, String email, Integer active) {
         this.login = login;
         this.password = password;
@@ -84,10 +111,14 @@ public class Utilisateur implements Serializable {
         this.active = active;
     }
 
-    public Utilisateur(String login, String email, ImageUser imageUser) {
+    public Utilisateur(String id, String login, String password, String passwordConfirm, String email, ImageUser imageUser, Role role) {
+        this.id = id;
         this.login = login;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
         this.email = email;
         this.imageUser = imageUser;
+        this.role = role;
     }
 
     public String getId() {

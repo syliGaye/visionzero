@@ -1,7 +1,11 @@
 package ci.dcg.visionzero.utilisateur;
 
 import ci.dcg.visionzero.files.FileStorageService;
+import ci.dcg.visionzero.imageuser.ImageUser;
+import ci.dcg.visionzero.imageuser.ImageUserService;
+import ci.dcg.visionzero.role.Role;
 import ci.dcg.visionzero.role.RoleService;
+import ci.dcg.visionzero.signup.SignupValidator;
 import ci.dcg.visionzero.support.AjaxResponseBody;
 import ci.dcg.visionzero.support.LesFonctions;
 import ci.dcg.visionzero.web.AjaxUtils;
@@ -13,9 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+
+import java.io.IOException;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
 
@@ -32,6 +37,9 @@ public class UtilisateurController {
 
     @Autowired
     private FileStorageService fileStorageService;
+
+    @Autowired
+    private ImageUserService imageUserService;
 
     @Autowired
     private UserValidator userValidator;
@@ -71,19 +79,34 @@ public class UtilisateurController {
     }
 
     @PostMapping("users/add")
-    String add(Model model, @Valid @ModelAttribute UtilisateurForm utilisateurForm, @RequestParam("imageUser") MultipartFile file, Errors errors){
-        /*userValidator.validate(utilisateurForm, errors);
+    String add(Model model, @Valid @ModelAttribute UtilisateurForm utilisateurForm, Errors errors){
+        utilisateurForm.setPassword("admin");   utilisateurForm.setPasswordConfirm("admin");
+
+        userValidator.validate(utilisateurForm, errors);
 
         if (errors.hasErrors()){
             new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
-
+            model.addAttribute("listRole", roleService.findAll());
             return USER_ADD_VIEW_NAME;
-        }*/
+        }
 
-        System.out.println(file.getName());
+        System.out.println(utilisateurForm.getPassword());
 
-        //roleService.save(utilisateurForm.createNewRole());
-        return REDIRECT_USER_LIST;
+        Role role = roleService.getOne(utilisateurForm.getIdRole());
+        String idUser = userService.retourneId();
+
+        try {
+            ImageUser imageUser = new LesFonctions().createImageForUser(idUser, imageUserService, utilisateurForm.getFile());
+            utilisateurForm.setId(idUser);   utilisateurForm.setImageUser(imageUser);   utilisateurForm.setRole(role);
+
+            userService.save(utilisateurForm.createNewUser());
+            return REDIRECT_USER_LIST;
+        } catch (IOException e) {
+            e.printStackTrace();
+            new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
+            model.addAttribute("listRole", roleService.findAll());
+            return USER_ADD_VIEW_NAME;
+        }
     }
 
     @GetMapping("users/edit/{id}")

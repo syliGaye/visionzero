@@ -122,10 +122,10 @@
                             </li>
 
                             <li>
-                                <a href="/logout" th:href="@{#}" onclick="$('#formNavLogout').submit();">
+                                <a href="/goToLogout" th:href="@{#}" onclick="$('#formNavLogout').submit();">
                                     <i class="fa fa-sign-out"></i>&nbsp;D&eacute;connexion
                                 </a>
-                                <form  style="visibility: hidden" id="formNavLogout" method="post" action="#" th:action="@{/logout}"></form>
+                                <form  style="visibility: hidden" id="formNavLogout" method="post" action="#" th:action="@{/goToLogout}"></form>
                             </li>
 
                         </ul>
@@ -213,8 +213,8 @@
                                         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                                         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                                         <li>
-                                            <a href="/logout" th:href="@{#}" onclick="$('#formLeftLogout').submit();"><i class="fa fa-sign-out"></i> <span>D&eacute;connexion</span></a>
-                                            <form style="visibility: hidden" id="formLeftLogout" method="post" action="#" th:action="@{/logout}"></form>
+                                            <a href="/goToLogout" th:href="@{#}" onclick="$('#formLeftLogout').submit();"><i class="fa fa-sign-out"></i> <span>D&eacute;connexion</span></a>
+                                            <form style="visibility: hidden" id="formLeftLogout" method="post" action="#" th:action="@{/goToLogout}"></form>
                                         </li>
                                     </th:block>
 

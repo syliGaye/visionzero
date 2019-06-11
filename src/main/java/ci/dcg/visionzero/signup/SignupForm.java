@@ -1,6 +1,7 @@
 package ci.dcg.visionzero.signup;
 
 import ci.dcg.visionzero.utilisateur.Utilisateur;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -22,6 +23,8 @@ public class SignupForm {
 
     @NotNull(message = SignupForm.NOT_BLANK_MESSAGE)
     private String passwordConfirm;
+
+    private MultipartFile file;
 
     public String getLogin() {
         return login;
@@ -55,9 +58,16 @@ public class SignupForm {
         this.passwordConfirm = passwordConfirm;
     }
 
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
 
     public Utilisateur createSuperAdmin() {
-        return new Utilisateur(getLogin(), getPassword(), getPasswordConfirm(), getEmail(), 0);
+        return new Utilisateur(getLogin(), getPassword(), getPasswordConfirm(), getEmail());
     }
 
     @Override

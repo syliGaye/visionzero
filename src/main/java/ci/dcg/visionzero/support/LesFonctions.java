@@ -3,13 +3,18 @@ package ci.dcg.visionzero.support;
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.couleur.CouleurService;
 import ci.dcg.visionzero.files.FileStorageService;
+import ci.dcg.visionzero.imageuser.ImageUser;
+import ci.dcg.visionzero.imageuser.ImageUserService;
 import ci.dcg.visionzero.utilisateur.UserService;
 import ci.dcg.visionzero.utilisateur.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
@@ -67,5 +72,26 @@ public class LesFonctions {
         fileStorageService.storeFileUser(utilisateur.getImageUser());
 
         model.addAttribute("userConnected", new Utilisateur(user.getUsername(), utilisateur.getEmail(), utilisateur.getImageUser()));
+    }
+
+    public ImageUser createImageForUser(String idUser, ImageUserService imageUserService, MultipartFile file) throws IOException {
+        byte[] bytes = file.getBytes();
+        String codImage = imageUserService.retourneId();
+        String fileName = codImage + "_" + idUser;
+
+        String[] types = file.getContentType().split("/");
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(fileName + "." + types[1])
+                .toUriString();
+
+        ImageUser imageUser = new ImageUser();
+        imageUser.setCodeImageUser(codImage);
+        imageUser.setFileUser(bytes); imageUser.setFileDownloadUriUser(fileDownloadUri); imageUser.setFileNameUser(fileName);
+        imageUser.setFileTypeUser(types[1]); imageUser.setFileSizeUser(file.getSize());
+
+        return imageUserService.save(imageUser);
+
     }
 }

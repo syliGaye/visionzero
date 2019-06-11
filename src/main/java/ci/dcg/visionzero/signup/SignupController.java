@@ -1,13 +1,11 @@
 package ci.dcg.visionzero.signup;
 
-import ci.dcg.visionzero.email.EmailService;
 import ci.dcg.visionzero.files.FileStorageService;
-import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.imageuser.ImageUserService;
 import ci.dcg.visionzero.role.Role;
 import ci.dcg.visionzero.role.RoleService;
+import ci.dcg.visionzero.support.LesFonctions;
 import ci.dcg.visionzero.utilisateur.UserService;
-import ci.dcg.visionzero.utilisateur.UserValidator;
 import ci.dcg.visionzero.utilisateur.Utilisateur;
 import ci.dcg.visionzero.utilisateur.UtilisateurDetailService;
 import ci.dcg.visionzero.web.AjaxUtils;
@@ -22,8 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -43,7 +39,7 @@ public class SignupController {
     private UtilisateurDetailService utilisateurDetailService;
 
     @Autowired
-    private UserValidator userValidator;
+    private SignupValidator signupValidator;
 
     @Autowired
     private RoleService roleService;
@@ -54,11 +50,6 @@ public class SignupController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @Autowired
-    private EmailService emailService;
-
-    private Utilisateur utilisateurStoked;
-
     @ModelAttribute("titrepage")
     String titre() {
         return SIGNUP_PAGE_TITLE;
@@ -66,7 +57,9 @@ public class SignupController {
 
     @GetMapping("signup")
     String signup(Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith){
-        utilisateurStoked = null;
+
+        if (userService.count() != 0) return SIGNIN_VIEW_NAME;
+
         model.addAttribute(new SignupForm());
         if (AjaxUtils.isAjaxRequest(requestedWith)) {
             return SIGNUP_VIEW_NAME.concat(" :: signupForm");
@@ -77,12 +70,6 @@ public class SignupController {
     @PostMapping("signup")
     public String signup(@Valid @ModelAttribute SignupForm signupForm, Errors errors) {
 
-        userValidator.validate(signupForm, errors);
-
-        if (errors.hasErrors()) {
-            return SIGNUP_VIEW_NAME;
-        }
-
 		/*Map<String, String> map = new HashMap<String, String>();
 
 		Enumeration headerNames = request.getHeaderNames();
@@ -92,14 +79,32 @@ public class SignupController {
 			map.put(key, value);
 		}*/
 
-        Role role = roleService.findByRoleName("ROLE_SUPERADMIN");
-        utilisateurStoked = signupForm.createSuperAdmin();
-        utilisateurStoked.setRole(role);
+        try {
+            signupValidator.validate(signupForm, errors);
 
-        return REDIRECT_UPLOADFILE;
+            if (errors.hasErrors()) {
+                return SIGNUP_VIEW_NAME;
+            }
+
+            Role role = roleService.findByRoleName("ROLE_SUPERADMIN");
+            Utilisateur utilisateur = signupForm.createSuperAdmin();
+            String codeUtilisateur = userService.retourneId();
+
+            utilisateur.setRole(role);
+            utilisateur.setId(codeUtilisateur);
+            utilisateur.setImageUser(new LesFonctions().createImageForUser(codeUtilisateur, imageUserService, signupForm.getFile()));
+
+            userService.save(utilisateur);
+            utilisateurDetailService.loginUser(utilisateur);
+
+            return REDIRECT_SIGNIN;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return REDIRECT_SIGNUP;
+        }
     }
 
-    @GetMapping("upload")
+    /*@GetMapping("upload")
     String upload(Model model){
         if (utilisateurStoked != null){
             model.addAttribute("userFile", utilisateurStoked);
@@ -140,7 +145,7 @@ public class SignupController {
             e.printStackTrace();
             return REDIRECT_SIGNUP;
         }
-    }
+    }*/
 
     @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
