@@ -5,13 +5,12 @@ import ci.dcg.visionzero.couleur.CouleurService;
 import ci.dcg.visionzero.files.FileStorageService;
 import ci.dcg.visionzero.role.Role;
 import ci.dcg.visionzero.role.RoleService;
+import ci.dcg.visionzero.support.LesFonctions;
 import ci.dcg.visionzero.utilisateur.UserService;
-import ci.dcg.visionzero.utilisateur.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,11 +106,8 @@ public class SigninController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Utilisateur utilisateur = userService.findByLogin(user.getUsername());
-            fileStorageService.storeFileUser(utilisateur.getImageUser());
+            new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
 
-            model.addAttribute("userConnected", new Utilisateur(user.getUsername(), utilisateur.getEmail(), utilisateur.getImageUser()));
             return HOME_VIEW_NAME;
         }
 

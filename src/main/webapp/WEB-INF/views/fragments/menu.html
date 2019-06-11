@@ -181,7 +181,7 @@
                                             <a role="button" tabindex="0"><i class="fa fa-users"></i> <span>Administration</span></a>
                                             <ul>
                                                 <li th:classappend="${sousmoduleun == 'roles' ? 'active' : ''}"><a th:href="@{/roles}"><i class="fa fa-caret-right"></i> Profils Utilisateur</a></li>
-                                                <li th:classappend="${sousmoduleun == 'utilisateurs' ? 'active' : ''}"><a href="users.html"><i class="fa fa-caret-right"></i> Utilisateurs</a></li>
+                                                <li th:classappend="${sousmoduleun == 'utilisateurs' ? 'active' : ''}"><a th:href="@{/users}"><i class="fa fa-caret-right"></i> Utilisateurs</a></li>
                                             </ul>
                                         </li>
                                         <li th:classappend="${module == 'parametrages' ? 'active open' : ''}">

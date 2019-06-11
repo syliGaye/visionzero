@@ -7,8 +7,6 @@
 <head>
     <th:block th:replace="fragments/header :: header-title"/>
 
-    <th:block th:replace="fragments/header :: header-css-datatables"/>
-
     <th:block th:replace="fragments/header :: header-css"/>
 </head>
 
@@ -48,11 +46,9 @@
 
                         <!-- tile header -->
                         <div class="tile-header dvd dvd-btm">
-                            <h1 class="custom-font"><strong>Liste des R&ocirc;les</strong></h1>
+                            <h1 class="custom-font"><strong>Ajouter un R&ocirc;le</strong></h1>
                             <ul class="controls">
-                                <li>
-                                    <a role="button" th:href="@{/roles/add}" tabindex="0" class="bg-primary"><i class="fa fa-plus mr-5"></i> Nouveau Profile</a>
-                                </li>
+
                                 <li class="dropdown">
 
                                     <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">&nbsp;&nbsp;</a>
@@ -64,33 +60,29 @@
 
                         <!-- tile body -->
                         <div class="tile-body">
-                            <div class="table-responsive">
-                                <table class="table table-custom" id="editable-usage">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>ID</th>
-                                        <th>Profile Name</th>
-                                        <th style="width: 160px;" class="no-sort">Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="role,i:${listRole}">
-                                        <td th:text="${(i.index) +1}"></td>
-                                        <td th:text="${role.id}">Trident</td>
-                                        <td th:text="${role.roleName}">Internet Explorer 4.0</td>
-                                        <th:block th:if="!${role.roleName == 'ROLE_SUPERADMIN'}">
-                                            <td><a th:href="@{/roles/edit/__${role.id}__}" tabindex="0" class="edit text-primary text-uppercase text-strong text-sm mr-10">Modifier</a><a role="button" th:id="${role.id}" tabindex="0" class="delete text-danger text-uppercase text-strong text-sm mr-10">Supprimer</a></td>
-                                        </th:block>
-                                        <th:block th:if="${role.roleName == 'ROLE_SUPERADMIN'}">
-                                            <td>&Agrave; ne rien faire</td>
-                                        </th:block>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+
+                            <form class="form-horizontal" id="addRoleForm" method="post" role="form" th:action="@{/roles/add}" th:object="${roleForm}" th:fragment="roleForm">
+                                <th:block th:if="${param.error != null}">
+                                    <div th:replace="fragments/alert :: alert (type='danger', message='Profile utilisateur incorrect.')">Alert</div>
+                                </th:block>
+
+                                <div class="form-group"  th:classappend="${#fields.hasErrors('roleName')}? 'has-error'">
+                                    <label for="inputRoleName" class="col-sm-3 control-label">Nom du Profile</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="inputRoleName" placeholder="Nom du Profile Utilisateur" th:field="*{roleName}">
+                                        <span class="help-block" th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}">Profile utilisateur incorrect</span>
+                                    </div>
+                                </div>
+
+                            </form>
+
                         </div>
                         <!-- /tile body -->
+
+                        <div class="modal-footer">
+                            <a role="button" th:href="@{/roles}" class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c"><i class="fa fa-arrow-left"></i> Retour</a>
+                            <a role="button" onclick="$('#addRoleForm').submit();" class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Enregistrer</a>
+                        </div>
 
                     </section>
                     <!-- /tile -->
@@ -111,14 +103,6 @@
 
 <th:block th:replace="fragments/footer :: footer-js-debut"/>
 
-<th:block th:replace="fragments/footer :: js-datatables"/>
-<!--/ vendor javascripts -->
-
-<!-- ===============================================
-============== Page Specific Scripts ===============
-================================================ -->
-<script src="../../../../resources/assets/js/role/roles.js" th:src="@{/resources/assets/js/role/roles.js}"></script>
-<!--/ Page Specific Scripts -->
 
 <th:block th:replace="fragments/footer :: footer-js-fin"/>
 

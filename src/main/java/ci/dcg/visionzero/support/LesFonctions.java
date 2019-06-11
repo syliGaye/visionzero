@@ -2,7 +2,13 @@ package ci.dcg.visionzero.support;
 
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.couleur.CouleurService;
+import ci.dcg.visionzero.files.FileStorageService;
+import ci.dcg.visionzero.utilisateur.UserService;
+import ci.dcg.visionzero.utilisateur.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.ui.Model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -53,5 +59,13 @@ public class LesFonctions {
         String result = viewResolver.isPresent() ? viewResolver.get() : "jsp";
         result += viewName;
         return result;
+    }
+
+    public void profileDeConnexion(Model model, FileStorageService fileStorageService, UserService userService){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Utilisateur utilisateur = userService.findByLogin(user.getUsername());
+        fileStorageService.storeFileUser(utilisateur.getImageUser());
+
+        model.addAttribute("userConnected", new Utilisateur(user.getUsername(), utilisateur.getEmail(), utilisateur.getImageUser()));
     }
 }

@@ -46,7 +46,7 @@
 
                         <!-- tile header -->
                         <div class="tile-header dvd dvd-btm">
-                            <h1 class="custom-font"><strong>Ajouter des R&ocirc;le</strong></h1>
+                            <h1 class="custom-font"><strong>Modifier R&ocirc;le</strong></h1>
                             <ul class="controls">
 
                                 <li class="dropdown">
@@ -61,18 +61,24 @@
                         <!-- tile body -->
                         <div class="tile-body">
 
-                            <form class="form-horizontal" role="form" th:action="@{/}" th:object="${}" th:fragment="">
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Nom du Profile</label>
+                            <form class="form-horizontal" id="editRoleForm" method="post" role="form" th:action="@{/roles/edit}" th:object="${roleForm}" th:fragment="roleForm">
+                                <th:block th:if="${param.error != null}">
+                                    <div th:replace="fragments/alert :: alert (type='danger', message='Profile utilisateur incorrect.')">Alert</div>
+                                </th:block>
+
+                                <div class="form-group"  th:classappend="${#fields.hasErrors('id')}? 'has-error'">
+                                    <label for="inputId" class="col-sm-3 control-label">Identifiant</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputEmail3" placeholder="Email">
-                                        <p class="help-block mb-0">Example block-level help text here.</p>
+                                        <input type="text" class="form-control" id="inputId" placeholder="Identifiant" th:field="*{id}" disabled>
+                                        <span class="help-block" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Identifiant incorrect</span>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                                    <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+
+                                <div class="form-group"  th:classappend="${#fields.hasErrors('roleName')}? 'has-error'">
+                                    <label for="inputRoleName" class="col-sm-3 control-label">Nom du Profile</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="inputRoleName" placeholder="Nom du Profile Utilisateur" th:field="*{roleName}">
+                                        <span class="help-block" th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}">Profile utilisateur incorrect</span>
                                     </div>
                                 </div>
 
@@ -82,8 +88,8 @@
                         <!-- /tile body -->
 
                         <div class="modal-footer">
-                            <a role="button" class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c"><i class="fa fa-arrow-left"></i> Retour</a>
-                            <a role="button" class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Enregistrer</a>
+                            <a role="button" th:href="@{/roles}" class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c"><i class="fa fa-arrow-left"></i> Retour</a>
+                            <a role="button" onclick="$('#editRoleForm').submit();" class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Enregistrer</a>
                         </div>
 
                     </section>

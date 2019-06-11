@@ -28,11 +28,6 @@
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-
-
-
-
-
 <!-- ====================================================
 ================= Application Content ===================
 ===================================================== -->
@@ -52,7 +47,7 @@
 
                 <form class="form-horizontal" role="form"  method="post" th:action="@{/signup}" th:object="${signupForm}" th:fragment="signupForm">
                     <th:block th:if="${param.error != null}">
-                        <div th:replace="fragments/alert :: alert (type='danger', message='Nom utilisateur ou Mot de Passe incorrect.')">Alert</div>
+                        <div th:replace="fragments/alert :: alert (type='danger', message='Saisie incorrect.')">Alert</div>
                     </th:block>
                     <div class="form-group" th:classappend="${#fields.hasErrors('login')}? 'has-error'">
                         <label for="inputUsername" class="col-sm-3 control-label">Utilisateur</label>

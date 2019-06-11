@@ -22,7 +22,7 @@ $(window).load(function(){
         }
 
         $.ajax({
-            url: context + 'roles/delete/' + idRole,
+            url: context + 'users/delete/' + idRole,
             method: 'GET',
             data: null,
             success: function (data) {
@@ -33,11 +33,11 @@ $(window).load(function(){
                     alert("Suppression imposibble!");
                 }
 
-                location.href = context + 'roles';
+                location.href = context + 'users';
             },
             error: function () {
                 alert("Suppression imposibble!");
-                location.href = context + 'roles';
+                location.href = context + 'users';
             }
         });
 

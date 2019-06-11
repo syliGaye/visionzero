@@ -2,6 +2,7 @@ package ci.dcg.visionzero.role;
 
 import ci.dcg.visionzero.utilisateur.Utilisateur;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,6 +23,7 @@ public class Role implements Serializable{
     private String roleName;
 
     @JsonBackReference
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private Set<Utilisateur> utilisateurList;
 

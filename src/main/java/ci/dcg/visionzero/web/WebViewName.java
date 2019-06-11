@@ -25,11 +25,24 @@ public class WebViewName {
 
     /** Role Controller **/
     public static final String ROLE_LIST_VIEW_NAME = "parametres/role/roles";
-    public static final String ROLE_ADD_VIEW_NAME = "parametres/role/addrole";
+    public static final String ROLE_ADD_VIEW_NAME = "parametres/role/add";
+    public static final String ROLE_EDIT_VIEW_NAME = "parametres/role/edit";
     public static final String REDIRECT_ROLE_LIST = "redirect:/roles";
     public static final String REDIRECT_ROLE_ADD = "redirect:/roles/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
     public static final String ROLE_MODULE = "administration";
     public static final String ROLE_SOUS_MODULE_UN = "roles";
     public static final String ROLE_TITLE = "Vision Zero | Profiles Utilisateur";
+
+    /** Utilisateur Controller **/
+    public static final String USER_LIST_VIEW_NAME = "parametres/user/users";
+    public static final String USER_ADD_VIEW_NAME = "parametres/user/add";
+    public static final String USER_EDIT_VIEW_NAME = "parametres/user/edit";
+    public static final String REDIRECT_USER_LIST = "redirect:/users";
+    public static final String REDIRECT_USER_ADD = "redirect:/users/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String USER_MODULE = "administration";
+    public static final String USER_SOUS_MODULE_UN = "utilisateurs";
+    public static final String USER_TITLE = "Vision Zero | Gestion des Utilisateur";
 
 }
