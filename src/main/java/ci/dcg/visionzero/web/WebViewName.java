@@ -2,6 +2,11 @@ package ci.dcg.visionzero.web;
 
 public class WebViewName {
 
+    /** ETAT **/
+    public static final String DO_INSERT = "insertion";
+    public static final String DO_UPDATE = "modification";
+    public static final String DO_DELETE = "suppression";
+
     /** Home Controller **/
     public static final String HOME_VIEW_NAME = "home/home";
     public static final String REDIRECT_HOME = "redirect:/home";
@@ -45,4 +50,27 @@ public class WebViewName {
     public static final String USER_SOUS_MODULE_UN = "utilisateurs";
     public static final String USER_TITLE = "Vision Zero | Gestion des Utilisateur";
 
+    /** Continent Controller **/
+    public static final String CONTINENT_LIST_VIEW_NAME = "parametres/continent/continents";
+    public static final String CONTINENT_ADD_VIEW_NAME = "parametres/continent/add";
+    public static final String CONTINENT_EDIT_VIEW_NAME = "parametres/continent/edit";
+    public static final String REDIRECT_CONTINENT_LIST = "redirect:/continents";
+    public static final String REDIRECT_CONTINENT_ADD = "redirect:/continents/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String CONTINENT_MODULE = "parametrages";
+    public static final String CONTINENT_SOUS_MODULE_UN = "parametrespecifiques";
+    public static final String CONTINENT_SOUS_MODULE_DEUX = "continents";
+    public static final String CONTINENT_TITLE = "Vision Zero | Gestion des Continents";
+
+    /** Pays Controller **/
+    public static final String PAYS_LIST_VIEW_NAME = "parametres/pays/pays";
+    public static final String PAYS_ADD_VIEW_NAME = "parametres/pays/add";
+    public static final String PAYS_EDIT_VIEW_NAME = "parametres/pays/edit";
+    public static final String REDIRECT_PAYS_LIST = "redirect:/pays";
+    public static final String REDIRECT_PAYS_ADD = "redirect:/pays/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String PAYS_MODULE = "parametrages";
+    public static final String PAYS_SOUS_MODULE_UN = "parametrespecifiques";
+    public static final String PAYS_SOUS_MODULE_DEUX = "pays";
+    public static final String PAYS_TITLE = "Vision Zero | Gestion des Pays";
 }

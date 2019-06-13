@@ -6,6 +6,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import static ci.dcg.visionzero.web.WebViewName.DO_INSERT;
+
 @Component
 public class UserValidator implements Validator {
     @Autowired
@@ -24,14 +26,16 @@ public class UserValidator implements Validator {
         if (user.getLogin().length() < 6 || user.getLogin().length() > 32) {
             errors.rejectValue("login", "Size.signupForm.username");
         }
-        if (userService.findByLogin(user.getLogin()) != null) {
-            errors.rejectValue("login", "Duplicate.signupForm.username");
+        if (user.getEtat().equals(DO_INSERT)){
+            if (userService.findByLogin(user.getLogin()) != null) {
+                errors.rejectValue("login", "Duplicate.signupForm.username");
+            }
+
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "file", "NotEmpty");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "idRole", "NotEmpty");
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "file", "NotEmpty");
     }
 }

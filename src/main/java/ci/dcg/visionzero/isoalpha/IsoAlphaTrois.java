@@ -42,6 +42,11 @@ public class IsoAlphaTrois implements Serializable {
         this.codeIsoAlphaTrois = codeIsoAlphaTrois;
     }
 
+    public IsoAlphaTrois(String codeIsoAlphaTrois, Pays pays) {
+        this.pays = pays;
+        this.codeIsoAlphaTrois = codeIsoAlphaTrois;
+    }
+
     public String getIdIsoAlphaTrois() {
         return idIsoAlphaTrois;
     }

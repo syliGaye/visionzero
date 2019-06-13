@@ -81,6 +81,7 @@ public class UtilisateurController {
     @PostMapping("users/add")
     String add(Model model, @Valid @ModelAttribute UtilisateurForm utilisateurForm, Errors errors){
         utilisateurForm.setPassword("admin");   utilisateurForm.setPasswordConfirm("admin");
+        utilisateurForm.setEtat(DO_INSERT);
 
         userValidator.validate(utilisateurForm, errors);
 
@@ -109,12 +110,13 @@ public class UtilisateurController {
         }
     }
 
-    @GetMapping("users/edit/{id}")
+    @GetMapping("users/get/{id}")
     String edit(@PathVariable("id") String id, Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith){
-        new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
-
         Utilisateur utilisateur = userService.getOne(id);
-        //model.addAttribute(new RoleForm(role.getId(), role.getRoleName()));
+        model.addAttribute(new UtilisateurForm(utilisateur.getId(), utilisateur.getLogin(), utilisateur.getEmail(), utilisateur.getRole().getId()));
+        model.addAttribute("id", utilisateur.getId());
+        new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
+        model.addAttribute("listRole", roleService.findAll());
 
         if (AjaxUtils.isAjaxRequest(requestedWith)) {
             return USER_EDIT_VIEW_NAME.concat(" :: utilisateurForm");
@@ -122,17 +124,26 @@ public class UtilisateurController {
         return USER_EDIT_VIEW_NAME;
     }
 
-    @PostMapping("users/edit")
-    String edit(Model model, @Valid @ModelAttribute UtilisateurForm utilisateurForm, Errors errors){
+    @GetMapping("users/edit/{id}")
+    String edit(@PathVariable("id") String id, Model model, @Valid @ModelAttribute UtilisateurForm utilisateurForm, Errors errors){
+        utilisateurForm.setEtat(DO_UPDATE);
         userValidator.validate(utilisateurForm, errors);
 
         if (errors.hasErrors()){
+            model.addAttribute("id", id);
             new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
+            model.addAttribute("listRole", roleService.findAll());
 
             return USER_EDIT_VIEW_NAME;
         }
 
-        //roleService.update(roleForm.updateRole());
+        Utilisateur utilisateur = userService.getOne(id);
+        Role role = roleService.getOne(utilisateurForm.getIdRole());
+
+        utilisateur.setRole(role);   utilisateur.setLogin(utilisateurForm.getLogin());
+        utilisateur.setEmail(utilisateurForm.getEmail());
+
+        userService.update(utilisateur);
         return REDIRECT_USER_LIST;
     }
 
@@ -140,7 +151,7 @@ public class UtilisateurController {
     ResponseEntity<?> delete(@PathVariable("id") String id){
         AjaxResponseBody ajaxResponseBody = new AjaxResponseBody();
 
-        if (!userService.isExiste(id)){ajaxResponseBody.setMsg("role inexistant!");}
+        if (!userService.isExiste(id)){ajaxResponseBody.setMsg("utilisateur inexistant!");}
         else {
             userService.delete(id);
             ajaxResponseBody.setMsg("ok");

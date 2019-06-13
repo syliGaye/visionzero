@@ -83,11 +83,12 @@ public class RoleController {
         return REDIRECT_ROLE_LIST;
     }
 
-    @GetMapping("roles/edit/{id}")
+    @GetMapping("roles/get/{id}")
     String edit(@PathVariable("id") String id, Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith){
         new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
 
         Role role = roleService.getOne(id);
+        model.addAttribute("id", id);
         model.addAttribute(new RoleForm(role.getId(), role.getRoleName()));
 
         if (AjaxUtils.isAjaxRequest(requestedWith)) {
@@ -96,17 +97,20 @@ public class RoleController {
         return ROLE_EDIT_VIEW_NAME;
     }
 
-    @PostMapping("roles/edit")
-    String edit(Model model, @Valid @ModelAttribute RoleForm roleForm, Errors errors){
+    @GetMapping("roles/edit/{id}")
+    String edit(@PathVariable("id") String id, Model model, @Valid @ModelAttribute RoleForm roleForm, Errors errors){
         roleValidator.validate(roleForm, errors);
 
         if (errors.hasErrors()){
             new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
+            model.addAttribute("id", id);
 
             return ROLE_EDIT_VIEW_NAME;
         }
 
-        roleService.update(roleForm.updateRole());
+        Role role = roleService.getOne(id);
+        role.setRoleName(roleForm.getRoleName());
+        roleService.update(role);
         return REDIRECT_ROLE_LIST;
     }
 

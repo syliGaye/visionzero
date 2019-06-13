@@ -15,6 +15,18 @@ public class UtilisateurForm {
     private Role role;
     private MultipartFile file;
     private String idRole;
+    private String etat;
+
+    public UtilisateurForm() {
+        super();
+    }
+
+    public UtilisateurForm(String id, String login, String email, String idRole) {
+        this.id = id;
+        this.login = login;
+        this.email = email;
+        this.idRole = idRole;
+    }
 
     public String getId() {
         return id;
@@ -94,6 +106,14 @@ public class UtilisateurForm {
 
     public void setIdRole(String idRole) {
         this.idRole = idRole;
+    }
+
+    public String getEtat() {
+        return etat;
+    }
+
+    public void setEtat(String etat) {
+        this.etat = etat;
     }
 
     public Utilisateur createNewUser(){

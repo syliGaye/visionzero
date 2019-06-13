@@ -80,7 +80,7 @@
                                         <td th:text="${role.id}">Trident</td>
                                         <td th:text="${role.roleName}">Internet Explorer 4.0</td>
                                         <th:block th:if="!${role.roleName == 'ROLE_SUPERADMIN'}">
-                                            <td><a th:href="@{/roles/edit/__${role.id}__}" tabindex="0" class="edit text-primary text-uppercase text-strong text-sm mr-10">Modifier</a><a role="button" th:id="${role.id}" tabindex="0" class="delete text-danger text-uppercase text-strong text-sm mr-10">Supprimer</a></td>
+                                            <td><a th:href="@{/roles/get/__${role.id}__}" tabindex="0" class="edit text-primary text-uppercase text-strong text-sm mr-10">Modifier</a><a role="button" th:id="${role.id}" tabindex="0" class="delete text-danger text-uppercase text-strong text-sm mr-10">Supprimer</a></td>
                                         </th:block>
                                         <th:block th:if="${role.roleName == 'ROLE_SUPERADMIN'}">
                                             <td>&Agrave; ne rien faire</td>

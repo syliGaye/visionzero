@@ -59,9 +59,9 @@
                         <!-- /tile header -->
 
                         <!-- tile body -->
-                        <div class="tile-body">
+                        <div class="tile-body" th:object="${id}">
 
-                            <form class="form-horizontal" id="editRoleForm" method="post" role="form" th:action="@{/roles/edit}" th:object="${roleForm}" th:fragment="roleForm">
+                            <form class="form-horizontal" id="editRoleForm" method="get" role="form" th:action="@{/roles/edit/__${id}__}" th:object="${roleForm}" th:fragment="roleForm">
                                 <th:block th:if="${param.error != null}">
                                     <div th:replace="fragments/alert :: alert (type='danger', message='Profile utilisateur incorrect.')">Alert</div>
                                 </th:block>

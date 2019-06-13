@@ -198,9 +198,9 @@
                                                 <li th:classappend="${sousmoduleun == 'parametrespecifiques' ? 'active open' : ''}">
                                                     <a href="#"><i class="fa fa-search-plus"></i> Param&egrave;tres Sp&eacute;cifiques</a>
                                                     <ul>
-                                                        <li th:classappend="${sousmoduledeux == 'isoalpha' ? 'active' : ''}"><a href="iso-alphas.html"><i class="fa fa-caret-right"></i> ISO ALPHA</a></li>
                                                         <li th:classappend="${sousmoduledeux == 'secteursactivites' ? 'active' : ''}"><a href="secteurs-activites.html"><i class="fa fa-caret-right"></i> Secteurs d'Activit&eacute;s</a></li>
-                                                        <li th:classappend="${sousmoduledeux == 'pays' ? 'active' : ''}"><a href="pays.html"><i class="fa fa-caret-right"></i> Pays</a></li>
+                                                        <li th:classappend="${sousmoduledeux == 'pays' ? 'active' : ''}"><a th:href="@{/pays}"><i class="fa fa-caret-right"></i> Pays</a></li>
+                                                        <li th:classappend="${sousmoduledeux == 'continents' ? 'active' : ''}"><a th:href="@{/continents}"><i class="fa fa-caret-right"></i> Continents</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>

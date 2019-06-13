@@ -77,9 +77,9 @@
                                     <tbody>
                                     <tr th:each="continent,i:${listContinent}">
                                         <td th:text="${(i.index) +1}"></td>
-                                        <td th:text="${continent.id}">Trident</td>
-                                        <td th:text="${continent.roleName}">Internet Explorer 4.0</td>
-                                        <td><a th:href="@{/continents/edit/__${continent.id}__}" tabindex="0" class="edit text-primary text-uppercase text-strong text-sm mr-10">Modifier</a><a role="button" th:id="${continent.id}" tabindex="0" class="delete text-danger text-uppercase text-strong text-sm mr-10">Supprimer</a></td>
+                                        <td th:text="${continent.idContinent}">Trident</td>
+                                        <td th:text="${continent.libelleContinent}">Internet Explorer 4.0</td>
+                                        <td><a th:href="@{/continents/get/__${continent.idContinent}__}" tabindex="0" class="edit text-primary text-uppercase text-strong text-sm mr-10">Modifier</a><a role="button" th:id="${continent.idContinent}" tabindex="0" class="delete text-danger text-uppercase text-strong text-sm mr-10">Supprimer</a></td>
 
                                     </tr>
                                     </tbody>

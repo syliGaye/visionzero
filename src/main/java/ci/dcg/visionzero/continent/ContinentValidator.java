@@ -19,11 +19,11 @@ public class ContinentValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        Continent continent = (Continent) o;
+        ContinentForm continentForm = (ContinentForm) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "libelleContinent", "NotEmpty");
-        if (continentService.findByLibelleContinent(continent.getLibelleContinent()) != null) {
-            errors.rejectValue("libelleContinent", "Duplicate.saveContinent.libelleContinent");
+        if (continentService.findByLibelleContinent(continentForm.getLibelleContinent()) != null) {
+            errors.rejectValue("libelleContinent", "Duplicate.continentForm.libelleContinent");
         }
     }
 }

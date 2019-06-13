@@ -35,8 +35,8 @@ public class Continent implements Serializable {
         super();
     }
 
-    public Continent(String idContinent) {
-        this.idContinent = idContinent;
+    public Continent(String libelleContinent) {
+        this.libelleContinent = libelleContinent;
     }
 
     public Continent(String idContinent, String libelleContinent) {
