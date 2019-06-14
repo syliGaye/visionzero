@@ -16,6 +16,11 @@ public class EvaluationServiceImpl implements EvaluationService {
     EvaluationRepository evaluationRepository;
 
     @Override
+    public Evaluation findByLibelleEvaluation(String s) {
+        return evaluationRepository.findByLibelleEvaluation(s);
+    }
+
+    @Override
     public Evaluation findByQuestionnaire(String codeQuestion) {
         return evaluationRepository.findByQuestion(codeQuestion);
     }

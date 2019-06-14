@@ -60,4 +60,9 @@ public class RaisonSocialeServiceImpl implements RaisonSocialeService {
 
         return "raiSoc"+ft.format(date)+""+i;
     }
+
+    @Override
+    public RaisonSociale findByLibelleRaisonSociale(String s) {
+        return raisonSocialeRepository.findByLibelleRaisonSociale(s);
+    }
 }

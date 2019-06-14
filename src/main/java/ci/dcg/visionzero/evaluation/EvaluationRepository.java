@@ -7,6 +7,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface EvaluationRepository extends JpaRepository<Evaluation, String> {
+    @Query("SELECT e FROM Evaluation e WHERE e.libelleEvaluation = :libelle")
+    Evaluation findByLibelleEvaluation(@Param("libelle") String s);
+
     @Query("SELECT e FROM Evaluation e WHERE e.axe.codeAxe = :codeAxe")
     List<Evaluation> findAllByAxe(@Param("codeAxe") String codeAxe);
 

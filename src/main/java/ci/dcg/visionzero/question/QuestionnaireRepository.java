@@ -7,6 +7,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface QuestionnaireRepository extends JpaRepository<Questionnaire, String> {
+    @Query("SELECT q FROM Questionnaire q WHERE q.libelleQuestionnaire = :libelle")
+    Questionnaire findByLibelleQuestionnaire(@Param("libelle") String s);
+
     @Query("SELECT q FROM Questionnaire q WHERE q.evaluation.codeEvaluation = :codeEvaluation")
     List<Questionnaire> findAllByEvaluation(@Param("codeEvaluation") String codeEvaluation);
 }

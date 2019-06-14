@@ -85,4 +85,83 @@ public class WebViewName {
     public static final String SECTEUR_ACTIVITE_SOUS_MODULE_UN = "parametrespecifiques";
     public static final String SECTEUR_ACTIVITE_SOUS_MODULE_DEUX = "secteursactivites";
     public static final String SECTEUR_ACTIVITE_TITLE = "Vision Zero | Gestion des Secteurs d'Activit&eacute;";
+
+    /** Raison Sociale Controller **/
+    public static final String RAISON_SOCIALE_LIST_VIEW_NAME = "parametres/raisonsociale/raisonsociales";
+    public static final String RAISON_SOCIALE_ADD_VIEW_NAME = "parametres/raisonsociale/add";
+    public static final String RAISON_SOCIALE_EDIT_VIEW_NAME = "parametres/raisonsociale/edit";
+    public static final String RAISON_SOCIALE_ACTIVITE_LIST = "redirect:/raisonsociales";
+    public static final String RAISON_SOCIALE_ACTIVITE_ADD = "redirect:/raisonsociales/add";
+    //public static final String REDIRECT_RAISON_SOCIALE_EDIT = "redirect:/roles/add";
+    public static final String RAISON_SOCIALE_MODULE = "parametrages";
+    public static final String RAISON_SOCIALE_SOUS_MODULE_UN = "parametrespecifiques";
+    public static final String RAISON_SOCIALE_SOUS_MODULE_DEUX = "raisonsociales";
+    public static final String RAISON_SOCIALE_TITLE = "Vision Zero | Gestion des Raisons Sociales";
+
+    /** Evaluation Controller **/
+    public static final String DOMAINE_LIST_VIEW_NAME = "parametres/domaine/domaines";
+    public static final String DOMAINE_ADD_VIEW_NAME = "parametres/domaine/add";
+    public static final String DOMAINE_EDIT_VIEW_NAME = "parametres/domaine/edit";
+    public static final String REDIRECT_DOMAINE_LIST = "redirect:/domaines";
+    public static final String REDIRECT_DOMAINE_ADD = "redirect:/domaines/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String DOMAINE_MODULE = "parametrages";
+    public static final String DOMAINE_SOUS_MODULE_UN = "parametresgeneraux";
+    public static final String DOMAINE_SOUS_MODULE_DEUX = "domaines";
+    public static final String DOMAINE_TITLE = "Vision Zero | Gestion des Domaines";
+
+    /** Question Controller **/
+    public static final String QUESTION_LIST_VIEW_NAME = "parametres/question/questions";
+    public static final String QUESTION_ADD_VIEW_NAME = "parametres/question/add";
+    public static final String QUESTION_EDIT_VIEW_NAME = "parametres/question/edit";
+    public static final String REDIRECT_QUESTION_LIST = "redirect:/questions";
+    public static final String REDIRECT_QUESTION_ADD = "redirect:/questions/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String QUESTION_MODULE = "parametrages";
+    public static final String QUESTION_SOUS_MODULE_UN = "parametresgeneraux";
+    public static final String QUESTION_SOUS_MODULE_DEUX = "questions";
+    public static final String QUESTION_TITLE = "Vision Zero | Gestion des Questionnaires";
+
+    /** Reponse Controller **/
+    public static final String REPONSE_LIST_VIEW_NAME = "parametres/reponse/reponses";
+    public static final String REPONSE_ADD_VIEW_NAME = "parametres/reponse/add";
+    public static final String REPONSE_EDIT_VIEW_NAME = "parametres/reponse/edit";
+    public static final String REDIRECT_REPONSE_LIST = "redirect:/reponses";
+    public static final String REDIRECT_REPONSE_ADD = "redirect:/reponses/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String REPONSE_MODULE = "parametrages";
+    public static final String REPONSE_SOUS_MODULE_UN = "parametresgeneraux";
+    public static final String REPONSE_SOUS_MODULE_DEUX = "reponses";
+    public static final String REPONSE_TITLE = "Vision Zero | Gestion des Reponses";
+
+    /** Entreprrise Controller **/
+    public static final String ENTREPRISE_LIST_VIEW_NAME = "admin/entreprise/entreprises";
+    public static final String ENTREPRISE_ADD_VIEW_NAME = "admin/entreprise/add";
+    public static final String ENTREPRISE_EDIT_VIEW_NAME = "admin/entreprise/edit";
+    public static final String REDIRECT_ENTREPRISE_LIST = "redirect:/entreprises";
+    public static final String REDIRECT_ENTREPRISE_ADD = "redirect:/entreprises/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String ENTREPRISE_MODULE = "entreprises";
+    public static final String ENTREPRISE_TITLE = "Vision Zero | Gestion des Entreprises";
+
+    /** Axe Controller **/
+    public static final String AXE_LIST_VIEW_NAME = "admin/reglesdor/regledors";
+    //public static final String ENTREPRISE_ADD_VIEW_NAME = "admin/entreprise/add";
+    //public static final String ENTREPRISE_EDIT_VIEW_NAME = "admin/entreprise/edit";
+    //public static final String REDIRECT_ENTREPRISE_LIST = "redirect:/entreprises";
+    //public static final String REDIRECT_ENTREPRISE_ADD = "redirect:/entreprises/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String AXE_MODULE = "reglesor";
+    public static final String AXE_TITLE = "Vision Zero | Les R&egrave;gles d'Or";
+
+    /** Statistique Controller **/
+    public static final String STATISTIQUE_ALL_VIEW_NAME = "admin/statistique/statistiques";
+    //public static final String ENTREPRISE_ADD_VIEW_NAME = "admin/entreprise/add";
+    //public static final String ENTREPRISE_EDIT_VIEW_NAME = "admin/entreprise/edit";
+    //public static final String REDIRECT_ENTREPRISE_LIST = "redirect:/entreprises";
+    //public static final String REDIRECT_ENTREPRISE_ADD = "redirect:/entreprises/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String STATISTIQUE_MODULE = "statistiques";
+    //public static final String ENTREPRISE_TITLE = "Vision Zero | Gestion des Entreprises";
+
 }

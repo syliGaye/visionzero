@@ -16,6 +16,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     private QuestionnaireRepository questionnaireRepository;
 
     @Override
+    public Questionnaire findByLibelleQuestionnaire(String s) {
+        return questionnaireRepository.findByLibelleQuestionnaire(s);
+    }
+
+    @Override
     public List<Questionnaire> findAllByEvaluation(String codeEvaluation) {
         return questionnaireRepository.findAllByEvaluation(codeEvaluation);
     }
