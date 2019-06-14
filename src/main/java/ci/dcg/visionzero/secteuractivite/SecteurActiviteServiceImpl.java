@@ -60,4 +60,9 @@ public class SecteurActiviteServiceImpl implements SecteurActiviteService {
 
         return "secAc"+ft.format(date)+""+i;
     }
+
+    @Override
+    public SecteurActivite findByLibelleSecteurActivite(String s) {
+        return secteurActiviteRepository.findByLibelleSecteurActivite(s);
+    }
 }

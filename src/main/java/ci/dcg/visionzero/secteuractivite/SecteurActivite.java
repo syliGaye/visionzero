@@ -35,8 +35,8 @@ public class SecteurActivite implements Serializable {
         super();
     }
 
-    public SecteurActivite(String idSecteurActivite) {
-        this.idSecteurActivite = idSecteurActivite;
+    public SecteurActivite(String libelleSecteurActivite) {
+        this.libelleSecteurActivite = libelleSecteurActivite;
     }
 
     public String getIdSecteurActivite() {

@@ -73,4 +73,16 @@ public class WebViewName {
     public static final String PAYS_SOUS_MODULE_UN = "parametrespecifiques";
     public static final String PAYS_SOUS_MODULE_DEUX = "pays";
     public static final String PAYS_TITLE = "Vision Zero | Gestion des Pays";
+
+    /** Secteur Activite Controller **/
+    public static final String SECTEUR_ACTIVITE_LIST_VIEW_NAME = "parametres/secteuractivite/secteuractivites";
+    public static final String SECTEUR_ACTIVITE_ADD_VIEW_NAME = "parametres/secteuractivite/add";
+    public static final String SECTEUR_ACTIVITE_EDIT_VIEW_NAME = "parametres/secteuractivite/edit";
+    public static final String REDIRECT_SECTEUR_ACTIVITE_LIST = "redirect:/secteuractivites";
+    public static final String REDIRECT_SECTEUR_ACTIVITE_ADD = "redirect:/secteuractivites/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String SECTEUR_ACTIVITE_MODULE = "parametrages";
+    public static final String SECTEUR_ACTIVITE_SOUS_MODULE_UN = "parametrespecifiques";
+    public static final String SECTEUR_ACTIVITE_SOUS_MODULE_DEUX = "secteursactivites";
+    public static final String SECTEUR_ACTIVITE_TITLE = "Vision Zero | Gestion des Secteurs d'Activit&eacute;";
 }

@@ -61,7 +61,7 @@
                         <!-- tile body -->
                         <div class="tile-body" th:object="${id}">
 
-                            <form class="form-horizontal" id="addPaysForm" method="get" role="form" th:action="@{/pays/edit/__${id}__}" th:object="${paysForm}" th:fragment="paysForm">
+                            <form class="form-horizontal" id="editPaysForm" method="get" role="form" th:action="@{/pays/edit/__${id}__}" th:object="${paysForm}" th:fragment="paysForm">
                                 <th:block th:if="${param.error != null}">
                                     <div th:replace="fragments/alert :: alert (type='danger', message='Pays incorrect.')">Alert</div>
                                 </th:block>
@@ -121,7 +121,7 @@
 
                         <div class="modal-footer">
                             <a role="button" th:href="@{/pays}" class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c"><i class="fa fa-arrow-left"></i> Retour</a>
-                            <a role="button" onclick="$('#addPaysForm').submit();" class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Enregistrer</a>
+                            <a role="button" onclick="$('#editPaysForm').submit();" class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Enregistrer</a>
                         </div>
 
                     </section>
