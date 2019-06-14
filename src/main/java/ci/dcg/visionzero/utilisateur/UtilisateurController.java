@@ -91,8 +91,6 @@ public class UtilisateurController {
             return USER_ADD_VIEW_NAME;
         }
 
-        System.out.println(utilisateurForm.getPassword());
-
         Role role = roleService.getOne(utilisateurForm.getIdRole());
         String idUser = userService.retourneId();
 

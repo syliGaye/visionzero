@@ -61,6 +61,11 @@ public class Pays implements Serializable {
         this.libellePays = libellePays;
     }
 
+    public Pays(String libellePays, Continent continent) {
+        this.continent = continent;
+        this.libellePays = libellePays;
+    }
+
     public String getIdPays() {
         return idPays;
     }
@@ -130,9 +135,6 @@ public class Pays implements Serializable {
         return "Pays{" +
                 "idPays='" + idPays + '\'' +
                 ", libellePays='" + libellePays + '\'' +
-                ", isoAlphaDeux=" + isoAlphaDeux +
-                ", isoAlphaTrois=" + isoAlphaTrois +
-                ", entrepriseList=" + entrepriseList +
                 '}';
     }
 }

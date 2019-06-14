@@ -16,6 +16,11 @@ public class PaysServiceImpl implements PaysService {
     private PaysRepository paysRepository;
 
     @Override
+    public Pays findByLibellePays(String s) {
+        return paysRepository.findByLibellePays(s);
+    }
+
+    @Override
     public Pays findByIsoAlphaDeux(String s) {
         return paysRepository.findByIsoAlphaDeux(s);
     }
@@ -53,7 +58,7 @@ public class PaysServiceImpl implements PaysService {
     @Override
     public Pays save(Pays pays) {
         pays.setIdPays(this.retourneId());
-        return null;
+        return paysRepository.save(pays);
     }
 
     @Override

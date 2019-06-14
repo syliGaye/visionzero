@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface PaysRepository extends JpaRepository<Pays, String> {
 
+    @Query("SELECT p FROM Pays p WHERE p.libellePays = :pays")
+    Pays findByLibellePays(@Param("pays") String s);
+
     @Query("SELECT p FROM Pays p WHERE p.continent.idContinent = :idContinent")
     List<Pays> findAllByContinent(@Param("idContinent") String s);
 

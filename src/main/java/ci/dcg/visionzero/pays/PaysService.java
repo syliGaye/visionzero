@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface PaysService extends ServiceFactory<Pays, String> {
 
+    Pays findByLibellePays(String s);
+
     Pays findByIsoAlphaDeux(String s);
 
     Pays findByIsoAlphaTrois(String s);

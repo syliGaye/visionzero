@@ -43,6 +43,11 @@ public class IsoAlphaDeux implements Serializable {
         this.codeIsoAlphaDeux = codeIsoAlphaDeux;
     }
 
+    public IsoAlphaDeux(String codeIsoAlphaDeux, Pays pays) {
+        this.pays = pays;
+        this.codeIsoAlphaDeux = codeIsoAlphaDeux;
+    }
+
     public String getIdIsoAlphaDeux() {
         return idIsoAlphaDeux;
     }
