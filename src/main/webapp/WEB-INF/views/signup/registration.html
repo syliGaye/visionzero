@@ -45,7 +45,7 @@
             <!-- tile body -->
             <div>
 
-                <form class="form-horizontal" role="form"  method="post" th:action="@{/signup}" th:object="${signupForm}" th:fragment="signupForm">
+                <form class="form-horizontal" role="form"  method="post" th:action="@{/signup}" th:object="${signupForm}" th:fragment="signupForm" enctype="multipart/form-data">
                     <th:block th:if="${param.error != null}">
                         <div th:replace="fragments/alert :: alert (type='danger', message='Saisie incorrect.')">Alert</div>
                     </th:block>
@@ -117,6 +117,8 @@
 
 
 <th:block th:replace="fragments/footer :: footer-js-debut"/>
+
+<script src="../../../resources/assets/js/vendor/filestyle/bootstrap-filestyle.min.js" th:src="@{/resources/assets/js/vendor/filestyle/bootstrap-filestyle.min.js}"></script>
 
 <th:block th:replace="fragments/footer :: footer-js-fin"/>
 </body>
