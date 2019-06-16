@@ -1,8 +1,7 @@
 package ci.dcg.visionzero.image;
 
 import ci.dcg.visionzero.axe.Axe;
-import ci.dcg.visionzero.utilisateur.Utilisateur;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -43,9 +42,8 @@ public class Image implements Serializable {
     @Column(name = "TAILLE_IMAGE", nullable = false)
     private long size;
 
-    @JsonManagedReference
-    @JoinColumn(name = "CODE_AXE", referencedColumnName = "CODE_AXE")
-    @OneToOne(optional = false)
+    @JsonBackReference
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "image")
     private Axe axe;
 
     public Image() {
@@ -161,7 +159,7 @@ public class Image implements Serializable {
 
     @Override
     public String toString() {
-        return "ImageUserRepository{" +
+        return "Image{" +
                 "codeImage='" + codeImage + '\'' +
                 ", fileName='" + fileName + '\'' +
                 ", fileDownloadUri='" + fileDownloadUri + '\'' +

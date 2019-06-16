@@ -6,6 +6,7 @@ import ci.dcg.visionzero.image.Image;
 import ci.dcg.visionzero.notationaxe.NotationAxe;
 import ci.dcg.visionzero.notationaxe.NotationAxeInd;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -41,17 +42,20 @@ public class Axe implements Serializable {
     @OneToOne(optional = false)
     private Couleur couleur;
 
+    @JsonManagedReference
+    @JoinColumn(name = "CODE_IMAGE", referencedColumnName = "CODE_IMAGE")
+    @OneToOne(optional = false)
+    private Image image;
+
     @JsonBackReference
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axe")
     private List<Evaluation> evaluationList;
 
     @JsonBackReference
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axe")
     private List<NotationAxe> notationAxeList;
-
-    @JsonBackReference
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "axe")
-    private Image image;
 
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axe")
@@ -67,6 +71,14 @@ public class Axe implements Serializable {
     public Axe(String codeAxe, String libelleAxe) {
         this.codeAxe = codeAxe;
         this.libelleAxe = libelleAxe;
+    }
+
+    public Axe(String codeAxe, String libelleAxe, String descriptionAxe, Couleur couleur, Image image) {
+        this.codeAxe = codeAxe;
+        this.libelleAxe = libelleAxe;
+        this.descriptionAxe = descriptionAxe;
+        this.couleur = couleur;
+        this.image = image;
     }
 
     public String getCodeAxe() {

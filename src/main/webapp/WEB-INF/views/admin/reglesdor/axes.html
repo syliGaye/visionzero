@@ -48,10 +48,10 @@
 
                         <!-- tile header -->
                         <div class="tile-header dvd dvd-btm">
-                            <h1 class="custom-font"><strong>Liste des Raisons Sociales</strong></h1>
+                            <h1 class="custom-font"><strong>Liste des Axes</strong></h1>
                             <ul class="controls">
                                 <li>
-                                    <a role="button" th:href="@{/raisonsociales/add}" tabindex="0" class="bg-primary"><i class="fa fa-plus mr-5"></i> Nouvelle Raison Sociale</a>
+                                    <a role="button" th:href="@{/axes/add}" tabindex="0" class="bg-primary"><i class="fa fa-plus mr-5"></i> Nouveau Axe</a>
                                 </li>
                                 <li class="dropdown">
 
@@ -69,18 +69,19 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>ID</th>
-                                        <th>Raison Sociale</th>
+                                        <th>Pic</th>
+                                        <th>Libell&eacute;</th>
+                                        <th>Description</th>
                                         <th style="width: 160px;" class="no-sort">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="rs,i:${listRaisonSociale}">
+                                    <tr th:each="axe,i:${listAxes}">
                                         <td th:text="${(i.index) +1}"></td>
-                                        <td th:text="${rs.idRaisonSociale}">Trident</td>
-                                        <td th:text="${rs.libelleRaisonSociale}">Internet Explorer 4.0</td>
-                                        <td><a th:href="@{/raisonsociales/get/__${rs.idRaisonSociale}__}" tabindex="0" class="edit text-primary text-uppercase text-strong text-sm mr-10">Modifier</a><a role="button" th:id="${rs.idRaisonSociale}" tabindex="0" class="delete text-danger text-uppercase text-strong text-sm mr-10">Supprimer</a></td>
-
+                                        <td><img th:src="${axe.image.fileDownloadUri}" alt=""></td>
+                                        <td th:text="${axe.libelleAxe}">Internet Explorer 4.0</td>
+                                        <td th:text="${axe.descriptionAxe}">Internet Explorer 4.0</td>
+                                        <td><a th:href="@{/axes/get/__${axe.codeAxe}__}" tabindex="0" class="edit text-primary text-uppercase text-strong text-sm mr-10">Modifier</a><a role="button" th:id="${axe.codeAxe}" tabindex="0" class="delete text-danger text-uppercase text-strong text-sm mr-10">Supprimer</a></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -113,7 +114,7 @@
 <!-- ===============================================
 ============== Page Specific Scripts ===============
 ================================================ -->
-<script src="../../../../resources/assets/js/raisonsociale/raisonsociales.js" th:src="@{/resources/assets/js/raisonsociale/raisonsociales.js}"></script>
+<script src="../../../../resources/assets/js/reglesdor/axes.js" th:src="@{/resources/assets/js/reglesdor/axes.js}"></script>
 <!--/ Page Specific Scripts -->
 
 <th:block th:replace="fragments/footer :: footer-js-fin"/>

@@ -190,9 +190,9 @@
                                                 <li th:classappend="${sousmoduleun == 'parametresgeneraux' ? 'active open' : ''}">
                                                     <a href="#"><i class="fa fa-expand"></i> Param&egrave;tres G&eacute;n&eacute;raux</a>
                                                     <ul>
-                                                        <li th:classappend="${sousmoduledeux == 'domaines' ? 'active' : ''}"><a href="domaines.html"><i class="fa fa-caret-right"></i> Domaines</a></li>
-                                                        <li th:classappend="${sousmoduledeux == 'questions' ? 'active' : ''}"><a href="questions.html"><i class="fa fa-caret-right"></i> Questions</a></li>
-                                                        <li th:classappend="${sousmoduledeux == 'reponses' ? 'active' : ''}"><a href="reponses.html"><i class="fa fa-caret-right"></i> R&eacute;ponses</a></li>
+                                                        <li th:classappend="${sousmoduledeux == 'domaines' ? 'active' : ''}"><a th:href="@{/domaines}"><i class="fa fa-caret-right"></i> Domaines</a></li>
+                                                        <li th:classappend="${sousmoduledeux == 'questions' ? 'active' : ''}"><a th:href="@{/questions}"><i class="fa fa-caret-right"></i> Questions</a></li>
+                                                        <li th:classappend="${sousmoduledeux == 'reponses' ? 'active' : ''}"><a th:href="@{/reponses}"><i class="fa fa-caret-right"></i> R&eacute;ponses</a></li>
                                                     </ul>
                                                 </li>
                                                 <li th:classappend="${sousmoduleun == 'parametrespecifiques' ? 'active open' : ''}">

@@ -32,7 +32,6 @@ public class AxeServiceImpl implements AxeService {
 
     @Override
     public Axe save(Axe axe) {
-        axe.setCodeAxe(this.retourneId());
         return axeRepository.save(axe);
     }
 
@@ -59,6 +58,11 @@ public class AxeServiceImpl implements AxeService {
         int i = this.count() + 1;
 
         return "axe"+ft.format(date)+""+i;
+    }
+
+    @Override
+    public Axe findByLibelleAxe(String s) {
+        return axeRepository.findByLibelleAxe(s);
     }
 
     @Override

@@ -4,8 +4,6 @@ import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.role.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Value;
-import lombok.experimental.NonFinal;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -35,8 +33,8 @@ public class Utilisateur implements Serializable {
     private Integer active;
 
     @JsonManagedReference
-    @JoinColumn(name = "CODE_IMAGE_USER", referencedColumnName = "CODE_IMAGE_USER")
-    @OneToOne(optional = false)
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinTable(name = "IMAGE_USER_TABLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "CODE_IMAGE_USER"))
     private ImageUser imageUser;
 
     @JsonManagedReference

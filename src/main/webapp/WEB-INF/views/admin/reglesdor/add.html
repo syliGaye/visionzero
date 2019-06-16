@@ -1,0 +1,142 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+
+<head>
+    <th:block th:replace="fragments/header :: header-title"/>
+
+    <th:block th:replace="fragments/header :: header-css"/>
+</head>
+
+<body id="minovate" class="appWrapper">
+
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- ====================================================
+================= Application Content ===================
+===================================================== -->
+<div id="wrap" class="animsition">
+
+    <th:block th:replace="fragments/menu :: navbar"/>
+
+    <th:block th:replace="fragments/menu :: sidebar"/>
+
+    <!-- ====================================================
+    ================= CONTENT ===============================
+    ===================================================== -->
+    <section id="content">
+
+        <div class="page page-tables-datatables">
+
+            <th:block th:replace="fragments/content :: pageheader"/>
+
+            <!-- row -->
+            <div class="row">
+                <!-- col -->
+                <div class="col-md-12">
+
+
+
+                    <!-- tile -->
+                    <section class="tile">
+
+                        <!-- tile header -->
+                        <div class="tile-header dvd dvd-btm">
+                            <h1 class="custom-font"><strong>Ajouter un Axe</strong></h1>
+                            <ul class="controls">
+
+                                <li class="dropdown">
+
+                                    <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">&nbsp;&nbsp;</a>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /tile header -->
+
+                        <!-- tile body -->
+                        <div class="tile-body">
+
+                            <form class="form-horizontal" id="addAxeForm" method="post" role="form" th:action="@{/axes/add}" th:object="${axeForm}" th:fragment="axeForm" enctype="multipart/form-data">
+                                <th:block th:if="${param.error != null}">
+                                    <div th:replace="fragments/alert :: alert (type='danger', message='Axe incorrect.')">Alert</div>
+                                </th:block>
+
+                                <div class="form-group"  th:classappend="${#fields.hasErrors('libelleAxe')}? 'has-error'">
+                                    <label for="inputLibAxe" class="col-sm-2 control-label">Libell&eacute;</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputLibAxe" placeholder="Libell&eacute;" th:field="*{libelleAxe}">
+                                        <span class="help-block" th:if="${#fields.hasErrors('libelleAxe')}" th:errors="*{libelleAxe}">Libell&eacute; incorrect</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"  th:classappend="${#fields.hasErrors('descriptionAxe')}? 'has-error'">
+                                    <label for="inputDesc" class="col-sm-2 control-label">Description</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="inputDesc" placeholder="Description" th:field="*{descriptionAxe}">
+                                        <span class="help-block" th:if="${#fields.hasErrors('descriptionAxe')}" th:errors="*{descriptionAxe}">Adresse mail incorrecte</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:classappend="${#fields.hasErrors('idCouleur')}? 'has-error'">
+                                    <label class="col-sm-2 control-label">Profile</label>
+                                    <div class="col-sm-10">
+
+                                        <select class="form-control mb-10" th:field="*{idCouleur}">
+                                            <option value="">-- Veuillez choisir la Couleur --</option>
+                                            <option th:each="coul:${listColors}"
+                                                    th:value="${coul.codeCouleur}"
+                                                    th:text="${coul.libelleCouleur}">2</option>
+
+                                        </select>
+                                        <span class="help-block" th:if="${#fields.hasErrors('idCouleur')}" th:errors="*{idCouleur}">Profile utilisateur incorrect</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group text-left" th:classappend="${#fields.hasErrors('file')}? 'has-error'">
+                                    <label class="col-sm-2 control-label">Image</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="filestyle" data-buttonText="Image" data-iconName="fa fa-image" th:field="*{file}" accept="image/png, image/jpeg">
+                                        <span class="help-block" th:if="${#fields.hasErrors('file')}" th:errors="*{file}">Profile utilisateur incorrect</span>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <!-- /tile body -->
+
+                        <div class="modal-footer">
+                            <a role="button" th:href="@{/axes}" class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c"><i class="fa fa-arrow-left"></i> Retour</a>
+                            <a role="button" onclick="$('#addAxeForm').submit();" class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Enregistrer</a>
+                        </div>
+
+                    </section>
+                    <!-- /tile -->
+
+                </div>
+                <!-- /col -->
+            </div>
+            <!-- /row -->
+
+        </div>
+
+    </section>
+    <!--/ CONTENT -->
+
+</div>
+<!--/ Application Content -->
+
+
+<th:block th:replace="fragments/footer :: footer-js-debut"/>
+
+<script src="../../../resources/assets/js/vendor/filestyle/bootstrap-filestyle.min.js" th:src="@{/resources/assets/js/vendor/filestyle/bootstrap-filestyle.min.js}"></script>
+
+<th:block th:replace="fragments/footer :: footer-js-fin"/>
+
+</body>
+</html>

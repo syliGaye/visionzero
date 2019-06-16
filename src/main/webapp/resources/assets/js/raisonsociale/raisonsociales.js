@@ -22,22 +22,22 @@ $(window).load(function(){
         }
 
         $.ajax({
-            url: context + 'domaines/delete/' + id,
+            url: context + 'raisonsociales/delete/' + id,
             method: 'GET',
             data: null,
             success: function (data) {
                 if (data.msg === 'ok') {
-                    alert("Supprimé!");
+                    alert("Supprimmé!");
                 }
                 else {
                     alert("Suppression imposibble!");
                 }
 
-                location.href = context + 'domaines';
+                location.href = context + 'raisonsociales';
             },
             error: function () {
                 alert("Suppression imposibble!");
-                location.href = context + 'domaines';
+                location.href = context + 'raisonsociales';
             }
         });
 

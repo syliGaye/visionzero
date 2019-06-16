@@ -3,6 +3,8 @@ package ci.dcg.visionzero.support;
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.couleur.CouleurService;
 import ci.dcg.visionzero.files.FileStorageService;
+import ci.dcg.visionzero.image.Image;
+import ci.dcg.visionzero.image.ImageService;
 import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.imageuser.ImageUserService;
 import ci.dcg.visionzero.utilisateur.UserService;
@@ -86,12 +88,22 @@ public class LesFonctions {
                 .path(fileName + "." + types[1])
                 .toUriString();
 
-        ImageUser imageUser = new ImageUser();
-        imageUser.setCodeImageUser(codImage);
-        imageUser.setFileUser(bytes); imageUser.setFileDownloadUriUser(fileDownloadUri); imageUser.setFileNameUser(fileName);
-        imageUser.setFileTypeUser(types[1]); imageUser.setFileSizeUser(file.getSize());
+        return imageUserService.save(new ImageUser(codImage, bytes, fileDownloadUri, fileName, types[1], file.getSize()));
+    }
 
-        return imageUserService.save(imageUser);
+    public Image createImageForAxe(String idAxe, ImageService imageService, MultipartFile file) throws IOException {
+        byte[] bytes = file.getBytes();
+        String codImage = imageService.retourneId();
+        String fileName = codImage + "_" + idAxe;
 
+        String[] types = file.getContentType().split("/");
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(fileName)
+                //.path(fileName + "." + types[1])
+                .toUriString();
+
+        return imageService.save(new Image(codImage, bytes, fileDownloadUri, fileName, types[1], file.getSize()));
     }
 }

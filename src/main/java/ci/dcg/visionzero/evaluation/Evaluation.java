@@ -60,6 +60,11 @@ public class Evaluation implements Serializable {
         this.libelleEvaluation = libelleEvaluation;
     }
 
+    public Evaluation(String libelleEvaluation, Axe axe) {
+        this.axe = axe;
+        this.libelleEvaluation = libelleEvaluation;
+    }
+
     public String getCodeEvaluation() {
         return codeEvaluation;
     }

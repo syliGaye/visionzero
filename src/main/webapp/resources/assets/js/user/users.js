@@ -15,19 +15,19 @@ $(window).load(function(){
     table2.on('click', '.delete', function (e) {
         e.preventDefault();
 
-        var idRole = $(this).attr("id");
+        var id = $(this).attr("id");
 
         if (confirm("êtes-vous sûr de la suppression?") == false) {
             return;
         }
 
         $.ajax({
-            url: context + 'users/delete/' + idRole,
+            url: context + 'users/delete/' + id,
             method: 'GET',
             data: null,
             success: function (data) {
                 if (data.msg === 'ok') {
-                    alert("Supprimmé!");
+                    alert("Supprimé!");
                 }
                 else {
                     alert("Suppression imposibble!");

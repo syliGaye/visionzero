@@ -10,7 +10,7 @@ import org.springframework.validation.Validator;
 public class ContinentValidator implements Validator {
 
     @Autowired
-    ContinentService continentService;
+    private ContinentService continentService;
 
     @Override
     public boolean supports(Class<?> aClass) {

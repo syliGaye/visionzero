@@ -90,8 +90,8 @@ public class WebViewName {
     public static final String RAISON_SOCIALE_LIST_VIEW_NAME = "parametres/raisonsociale/raisonsociales";
     public static final String RAISON_SOCIALE_ADD_VIEW_NAME = "parametres/raisonsociale/add";
     public static final String RAISON_SOCIALE_EDIT_VIEW_NAME = "parametres/raisonsociale/edit";
-    public static final String RAISON_SOCIALE_ACTIVITE_LIST = "redirect:/raisonsociales";
-    public static final String RAISON_SOCIALE_ACTIVITE_ADD = "redirect:/raisonsociales/add";
+    public static final String REDIRECT_RAISON_SOCIALE_ACTIVITE_LIST = "redirect:/raisonsociales";
+    public static final String REDIRECT_RAISON_SOCIALE_ACTIVITE_ADD = "redirect:/raisonsociales/add";
     //public static final String REDIRECT_RAISON_SOCIALE_EDIT = "redirect:/roles/add";
     public static final String RAISON_SOCIALE_MODULE = "parametrages";
     public static final String RAISON_SOCIALE_SOUS_MODULE_UN = "parametrespecifiques";
@@ -145,14 +145,14 @@ public class WebViewName {
     public static final String ENTREPRISE_TITLE = "Vision Zero | Gestion des Entreprises";
 
     /** Axe Controller **/
-    public static final String AXE_LIST_VIEW_NAME = "admin/reglesdor/regledors";
-    //public static final String ENTREPRISE_ADD_VIEW_NAME = "admin/entreprise/add";
-    //public static final String ENTREPRISE_EDIT_VIEW_NAME = "admin/entreprise/edit";
-    //public static final String REDIRECT_ENTREPRISE_LIST = "redirect:/entreprises";
-    //public static final String REDIRECT_ENTREPRISE_ADD = "redirect:/entreprises/add";
-    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String AXE_LIST_VIEW_NAME = "admin/reglesdor/axes";
+    public static final String AXE_ADD_VIEW_NAME = "admin/reglesdor/add";
+    public static final String AXE_EDIT_VIEW_NAME = "admin/reglesdor/edit";
+    public static final String REDIRECT_AXE_LIST = "redirect:/axes";
+    public static final String REDIRECT_AXE_ADD = "redirect:/axes/add";
+    //public static final String REDIRECT_AXE_EDIT = "redirect:/roles/add";
     public static final String AXE_MODULE = "reglesor";
-    public static final String AXE_TITLE = "Vision Zero | Les R&egrave;gles d'Or";
+    public static final String AXE_TITLE = "Vision Zero | Liste des Axes";
 
     /** Statistique Controller **/
     public static final String STATISTIQUE_ALL_VIEW_NAME = "admin/statistique/statistiques";

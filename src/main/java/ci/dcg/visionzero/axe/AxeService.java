@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface AxeService extends ServiceFactory<Axe, String> {
 
+	Axe findByLibelleAxe(String s);
+
 	Axe findByQuestionnaire(String codeQuestion);
 
 	List<Axe> findAllByQuestion();

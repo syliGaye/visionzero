@@ -22,7 +22,7 @@ $(window).load(function(){
         }
 
         $.ajax({
-            url: context + 'domaines/delete/' + id,
+            url: context + 'axes/delete/' + id,
             method: 'GET',
             data: null,
             success: function (data) {
@@ -33,11 +33,11 @@ $(window).load(function(){
                     alert("Suppression imposibble!");
                 }
 
-                location.href = context + 'domaines';
+                location.href = context + 'axes';
             },
             error: function () {
                 alert("Suppression imposibble!");
-                location.href = context + 'domaines';
+                location.href = context + 'axes';
             }
         });
 

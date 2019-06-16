@@ -35,8 +35,8 @@ public class RaisonSociale implements Serializable {
         super();
     }
 
-    public RaisonSociale(String idRaisonSociale) {
-        this.idRaisonSociale = idRaisonSociale;
+    public RaisonSociale(String libelleRaisonSociale) {
+        this.libelleRaisonSociale = libelleRaisonSociale;
     }
 
     public String getIdRaisonSociale() {

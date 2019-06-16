@@ -60,6 +60,15 @@ public class ImageUser implements Serializable {
         this.fileSizeUser = fileSizeUser;
     }
 
+    public ImageUser(String codeImageUser, byte[] fileUser, String fileDownloadUriUser, String fileNameUser, String fileTypeUser, long fileSizeUser) {
+        this.codeImageUser = codeImageUser;
+        this.fileUser = fileUser;
+        this.fileNameUser = fileNameUser;
+        this.fileDownloadUriUser = fileDownloadUriUser;
+        this.fileTypeUser = fileTypeUser;
+        this.fileSizeUser = fileSizeUser;
+    }
+
     public String getCodeImageUser() {
         return codeImageUser;
     }
