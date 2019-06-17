@@ -2,31 +2,27 @@ package ci.dcg.visionzero.axe;
 
 import ci.dcg.visionzero.couleur.CouleurService;
 import ci.dcg.visionzero.files.FileStorageService;
-import ci.dcg.visionzero.image.ImageService;
-import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.imageuser.ImageUserService;
-import ci.dcg.visionzero.role.Role;
-import ci.dcg.visionzero.role.RoleService;
-import ci.dcg.visionzero.support.AjaxResponseBody;
 import ci.dcg.visionzero.support.LesFonctions;
-import ci.dcg.visionzero.utilisateur.*;
+import ci.dcg.visionzero.utilisateur.UserService;
+import ci.dcg.visionzero.utilisateur.UtilisateurController;
 import ci.dcg.visionzero.web.AjaxUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
-import static ci.dcg.visionzero.web.WebViewName.REDIRECT_USER_LIST;
-import static ci.dcg.visionzero.web.WebViewName.USER_EDIT_VIEW_NAME;
 
 @Controller
 public class AxeController {
@@ -45,7 +41,7 @@ public class AxeController {
     private FileStorageService fileStorageService;
 
     @Autowired
-    private ImageService imageService;
+    private ImageUserService imageUserService;
 
     @Autowired
     private AxeValidator axeValidator;
@@ -65,11 +61,11 @@ public class AxeController {
         new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
         List<Axe> axeList = axeService.findAll();
 
-        fileStorageService.storeFile(axeList.get(0).getImage());
+        //fileStorageService.storeFileUser(axeList.get(0).getImageUser());
 
-        /*for (Axe axe:axeList) {
-            fileStorageService.storeFile(axe.getImage());
-        }*/
+        for (Axe axe:axeList) {
+            fileStorageService.storeFileUser(axe.getImageUser());
+        }
 
         model.addAttribute("listAxes", axeList);
         return AXE_LIST_VIEW_NAME;
@@ -104,7 +100,7 @@ public class AxeController {
 
         try {
             axeForm.setCodeAxe(idAxe);
-            axeForm.setImage(new LesFonctions().createImageForAxe(idAxe, imageService, axeForm.getFile()));
+            axeForm.setImageUser(new LesFonctions().createImageForUser(idAxe, imageUserService, axeForm.getFile()));
             axeForm.setCouleur(couleurService.getOne(axeForm.getIdCouleur()));
 
             axeService.save(axeForm.createNewAxe());

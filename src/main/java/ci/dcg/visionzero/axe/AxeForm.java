@@ -2,6 +2,7 @@ package ci.dcg.visionzero.axe;
 
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.image.Image;
+import ci.dcg.visionzero.imageuser.ImageUser;
 import org.springframework.web.multipart.MultipartFile;
 
 public class AxeForm {
@@ -11,7 +12,7 @@ public class AxeForm {
     private String idCouleur;
     private MultipartFile file;
     private Couleur couleur;
-    private Image image;
+    private ImageUser imageUser;
     private String etat;
 
     public AxeForm() {
@@ -72,12 +73,12 @@ public class AxeForm {
         this.couleur = couleur;
     }
 
-    public Image getImage() {
-        return image;
+    public ImageUser getImageUser() {
+        return imageUser;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImageUser(ImageUser imageUser) {
+        this.imageUser = imageUser;
     }
 
     public String getEtat() {
@@ -89,6 +90,6 @@ public class AxeForm {
     }
 
     public Axe createNewAxe(){
-        return new Axe(getCodeAxe(), getLibelleAxe(), getDescriptionAxe(), getCouleur(), getImage());
+        return new Axe(getCodeAxe(), getLibelleAxe(), getDescriptionAxe(), getCouleur(), getImageUser());
     }
 }

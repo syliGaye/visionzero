@@ -3,8 +3,6 @@ package ci.dcg.visionzero.support;
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.couleur.CouleurService;
 import ci.dcg.visionzero.files.FileStorageService;
-import ci.dcg.visionzero.image.Image;
-import ci.dcg.visionzero.image.ImageService;
 import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.imageuser.ImageUserService;
 import ci.dcg.visionzero.utilisateur.UserService;
@@ -91,6 +89,7 @@ public class LesFonctions {
         return imageUserService.save(new ImageUser(codImage, bytes, fileDownloadUri, fileName, types[1], file.getSize()));
     }
 
+    /*
     public Image createImageForAxe(String idAxe, ImageService imageService, MultipartFile file) throws IOException {
         byte[] bytes = file.getBytes();
         String codImage = imageService.retourneId();
@@ -106,4 +105,5 @@ public class LesFonctions {
 
         return imageService.save(new Image(codImage, bytes, fileDownloadUri, fileName, types[1], file.getSize()));
     }
+    */
 }

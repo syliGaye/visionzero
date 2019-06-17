@@ -1,5 +1,6 @@
 package ci.dcg.visionzero.imageuser;
 
+import ci.dcg.visionzero.axe.Axe;
 import ci.dcg.visionzero.utilisateur.Utilisateur;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -48,6 +49,10 @@ public class ImageUser implements Serializable {
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "imageUser")
     private Utilisateur utilisateur;
+
+    @JsonBackReference
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "imageUser")
+    private Axe axe;
 
     public ImageUser() {
     }
@@ -124,6 +129,15 @@ public class ImageUser implements Serializable {
 
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
+    }
+
+    @XmlTransient
+    public Axe getAxe() {
+        return axe;
+    }
+
+    public void setAxe(Axe axe) {
+        this.axe = axe;
     }
 
     @Override

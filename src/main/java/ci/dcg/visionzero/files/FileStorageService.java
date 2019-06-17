@@ -30,6 +30,7 @@ public class FileStorageService {
         }
     }
 
+    /*
     public void storeFile(Image image) {
         // Normalize file name
         //String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -52,6 +53,7 @@ public class FileStorageService {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }
+*/
 
     public void storeFileUser(ImageUser imageUser) {
         // Normalize file name

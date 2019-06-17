@@ -3,6 +3,7 @@ package ci.dcg.visionzero.axe;
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.evaluation.Evaluation;
 import ci.dcg.visionzero.image.Image;
+import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.notationaxe.NotationAxe;
 import ci.dcg.visionzero.notationaxe.NotationAxeInd;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -38,14 +39,14 @@ public class Axe implements Serializable {
     private String descriptionAxe;
 
     @JsonManagedReference
-    @JoinColumn(name = "CODE_COULEUR", referencedColumnName = "CODE_COULEUR")
-    @OneToOne(optional = false)
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinTable(name = "COULEUR_AXE", joinColumns = @JoinColumn(name = "CODE_AXE"), inverseJoinColumns = @JoinColumn(name = "CODE_COULEUR"))
     private Couleur couleur;
 
     @JsonManagedReference
-    @JoinColumn(name = "CODE_IMAGE", referencedColumnName = "CODE_IMAGE")
-    @OneToOne(optional = false)
-    private Image image;
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinTable(name = "IMAGE_AXE", joinColumns = @JoinColumn(name = "CODE_AXE"), inverseJoinColumns = @JoinColumn(name = "CODE_IMAGE_USER"))
+    private ImageUser imageUser;
 
     @JsonBackReference
     @JsonIgnore
@@ -73,12 +74,12 @@ public class Axe implements Serializable {
         this.libelleAxe = libelleAxe;
     }
 
-    public Axe(String codeAxe, String libelleAxe, String descriptionAxe, Couleur couleur, Image image) {
+    public Axe(String codeAxe, String libelleAxe, String descriptionAxe, Couleur couleur, ImageUser imageUser) {
         this.codeAxe = codeAxe;
         this.libelleAxe = libelleAxe;
         this.descriptionAxe = descriptionAxe;
         this.couleur = couleur;
-        this.image = image;
+        this.imageUser = imageUser;
     }
 
     public String getCodeAxe() {
@@ -131,12 +132,12 @@ public class Axe implements Serializable {
         this.notationAxeList = notationAxeList;
     }
 
-    public Image getImage() {
-        return image;
+    public ImageUser getImageUser() {
+        return imageUser;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImage(ImageUser imageUser) {
+        this.imageUser = imageUser;
     }
 
     @XmlTransient
@@ -174,9 +175,7 @@ public class Axe implements Serializable {
                 "codeAxe='" + codeAxe + '\'' +
                 ", libelleAxe='" + libelleAxe + '\'' +
                 ", descriptionAxe='" + descriptionAxe + '\'' +
-                ", evaluationList=" + evaluationList +
-                ", notationAxeList=" + notationAxeList +
-                ", image=" + image +
+                ", imageUser=" + imageUser +
                 '}';
     }
 }
