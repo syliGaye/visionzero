@@ -78,7 +78,7 @@
                                     <tbody>
                                     <tr th:each="axe,i:${listAxes}">
                                         <td th:text="${(i.index) +1}"></td>
-                                        <td><img th:src="${axe.image.fileDownloadUri}" alt=""></td>
+                                        <td><img th:src="${axe.imageUser.fileDownloadUriUser}" alt=""></td>
                                         <td th:text="${axe.libelleAxe}">Internet Explorer 4.0</td>
                                         <td th:text="${axe.descriptionAxe}">Internet Explorer 4.0</td>
                                         <td><a th:href="@{/axes/get/__${axe.codeAxe}__}" tabindex="0" class="edit text-primary text-uppercase text-strong text-sm mr-10">Modifier</a><a role="button" th:id="${axe.codeAxe}" tabindex="0" class="delete text-danger text-uppercase text-strong text-sm mr-10">Supprimer</a></td>

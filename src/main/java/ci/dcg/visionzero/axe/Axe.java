@@ -2,7 +2,6 @@ package ci.dcg.visionzero.axe;
 
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.evaluation.Evaluation;
-import ci.dcg.visionzero.image.Image;
 import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.notationaxe.NotationAxe;
 import ci.dcg.visionzero.notationaxe.NotationAxeInd;
@@ -13,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.List;
