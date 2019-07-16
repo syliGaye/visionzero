@@ -1,8 +1,11 @@
 package ci.dcg.visionzero.axe;
 
 import ci.dcg.visionzero.couleur.CouleurService;
+import ci.dcg.visionzero.files.FileForm;
 import ci.dcg.visionzero.files.FileStorageService;
+import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.imageuser.ImageUserService;
+import ci.dcg.visionzero.support.AjaxResponseBody;
 import ci.dcg.visionzero.support.LesFonctions;
 import ci.dcg.visionzero.utilisateur.UserService;
 import ci.dcg.visionzero.utilisateur.UtilisateurController;
@@ -10,16 +13,18 @@ import ci.dcg.visionzero.web.AjaxUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
@@ -61,10 +66,10 @@ public class AxeController {
         new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
         List<Axe> axeList = axeService.findAll();
 
-        //fileStorageService.storeFileUser(axeList.get(0).getImageUser());
-
-        for (Axe axe:axeList) {
-            fileStorageService.storeFileUser(axe.getImageUser());
+        if (!axeList.isEmpty()){
+            for (Axe axe:axeList) {
+                fileStorageService.storeFileUser(axe.getImageUser());
+            }
         }
 
         model.addAttribute("listAxes", axeList);
@@ -113,53 +118,82 @@ public class AxeController {
         }
     }
 
-    /*@GetMapping("axes/get/{id}")
-    String edit(@PathVariable("id") String id, Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith){
-        Utilisateur utilisateur = userService.getOne(id);
-        model.addAttribute(new UtilisateurForm(utilisateur.getId(), utilisateur.getLogin(), utilisateur.getEmail(), utilisateur.getRole().getId()));
-        model.addAttribute("id", utilisateur.getId());
+    @GetMapping("axes/get/{id}")
+    String get(@PathVariable("id") String id, Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith){
+        Axe axe = axeService.getOne(id);
+
+        model.addAttribute(new AxeForm(axe.getCodeAxe(), axe.getLibelleAxe(), axe.getDescriptionAxe(), axe.getCouleur().getCodeCouleur()));
+        model.addAttribute("id", axe.getCodeAxe());
         new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
-        model.addAttribute("listRole", roleService.findAll());
+        model.addAttribute("listColors", couleurService.findAll());
 
         if (AjaxUtils.isAjaxRequest(requestedWith)) {
-            return USER_EDIT_VIEW_NAME.concat(" :: utilisateurForm");
+            return AXE_EDIT_VIEW_NAME.concat(" :: axeForm");
         }
-        return USER_EDIT_VIEW_NAME;
+        return AXE_EDIT_VIEW_NAME;
+    }
+
+    @GetMapping("axes/file/get/{id}")
+    String getFile(@PathVariable("id") String id, Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith){
+        Axe axe = axeService.getOne(id);
+
+        model.addAttribute(new FileForm());
+        model.addAttribute("id", axe.getCodeAxe());
+        new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
+
+        if (AjaxUtils.isAjaxRequest(requestedWith)) {
+            return AXE_EDIT_FILE_VIEW_NAME.concat(" :: fileForm");
+        }
+        return AXE_EDIT_FILE_VIEW_NAME;
     }
 
     @GetMapping("axes/edit/{id}")
-    String edit(@PathVariable("id") String id, Model model, @Valid @ModelAttribute UtilisateurForm utilisateurForm, Errors errors){
-        utilisateurForm.setEtat(DO_UPDATE);
-        userValidator.validate(utilisateurForm, errors);
+    String edit(@PathVariable("id") String id, Model model, @Valid @ModelAttribute AxeForm axeForm, Errors errors){
+        axeForm.setEtat(DO_UPDATE);
+        axeValidator.validate(axeForm, errors);
 
         if (errors.hasErrors()){
             model.addAttribute("id", id);
             new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
-            model.addAttribute("listRole", roleService.findAll());
+            model.addAttribute("listColors", couleurService.findAll());
 
-            return USER_EDIT_VIEW_NAME;
+            return AXE_EDIT_VIEW_NAME;
         }
 
-        Utilisateur utilisateur = userService.getOne(id);
-        Role role = roleService.getOne(utilisateurForm.getIdRole());
+        Axe axe = axeService.getOne(id);
+        axe.setCouleur(couleurService.getOne(axeForm.getIdCouleur()));   axe.setLibelleAxe(axeForm.getLibelleAxe());
+        axe.setDescriptionAxe(axeForm.getDescriptionAxe());
 
-        utilisateur.setRole(role);   utilisateur.setLogin(utilisateurForm.getLogin());
-        utilisateur.setEmail(utilisateurForm.getEmail());
+        axeService.update(axe);
+        return REDIRECT_AXE_LIST;
+    }
 
-        userService.update(utilisateur);
-        return REDIRECT_USER_LIST;
+    @GetMapping("axes/file/edit/{id}")
+    String editFile(@PathVariable("id") String id, Model model, @Valid @ModelAttribute FileForm fileForm){
+
+        Axe axe = axeService.getOne(id);
+
+        try {
+            axe.setImage(new LesFonctions().updateImage(imageUserService.getOne(axe.getImageUser().getCodeImageUser()), imageUserService, fileForm.getFile()));
+            axeService.update(axe);
+            return REDIRECT_AXE_LIST;
+        } catch (IOException e){
+            e.printStackTrace();
+            model.addAttribute("id", id);
+            return AXE_EDIT_FILE_VIEW_NAME;
+        }
     }
 
     @GetMapping("axes/delete/{id}")
     ResponseEntity<?> delete(@PathVariable("id") String id){
         AjaxResponseBody ajaxResponseBody = new AjaxResponseBody();
 
-        if (!userService.isExiste(id)){ajaxResponseBody.setMsg("axe inexistant!");}
+        if (!axeService.isExiste(id)){ajaxResponseBody.setMsg("axe inexistant!");}
         else {
-            userService.delete(id);
+            axeService.delete(id);
+            //imageUserService.delete(axeService.getOne(id).getImageUser().getCodeImageUser());
             ajaxResponseBody.setMsg("ok");
         }
         return ResponseEntity.ok(ajaxResponseBody);
     }
-    */
 }

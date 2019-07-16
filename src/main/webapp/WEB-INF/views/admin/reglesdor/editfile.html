@@ -7,8 +7,6 @@
 <head>
     <th:block th:replace="fragments/header :: header-title"/>
 
-    <th:block th:replace="fragments/header :: header-css-datatables"/>
-
     <th:block th:replace="fragments/header :: header-css"/>
 </head>
 
@@ -48,11 +46,9 @@
 
                         <!-- tile header -->
                         <div class="tile-header dvd dvd-btm">
-                            <h1 class="custom-font"><strong>Liste des Axes</strong></h1>
+                            <h1 class="custom-font"><strong>Modifier Image Axe</strong></h1>
                             <ul class="controls">
-                                <li>
-                                    <a role="button" th:href="@{/axes/add}" tabindex="0" class="bg-primary"><i class="fa fa-plus mr-5"></i> Nouveau Axe</a>
-                                </li>
+
                                 <li class="dropdown">
 
                                     <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">&nbsp;&nbsp;</a>
@@ -63,31 +59,37 @@
                         <!-- /tile header -->
 
                         <!-- tile body -->
-                        <div class="tile-body">
-                            <div class="table-responsive">
-                                <table class="table table-custom" id="editable-usage">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Pic</th>
-                                        <th>Libell&eacute;</th>
-                                        <th>Description</th>
-                                        <th style="width: 160px;" class="no-sort">Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="axe,i:${listAxes}">
-                                        <td th:text="${(i.index) +1}"></td>
-                                        <td><a th:href="@{/axes/file/get/__${axe.codeAxe}__}"><img th:src="${axe.imageUser.fileDownloadUriUser}" alt=""></a></td>
-                                        <td th:text="${axe.libelleAxe}">Internet Explorer 4.0</td>
-                                        <td th:text="${axe.descriptionAxe}">Internet Explorer 4.0</td>
-                                        <td><a th:href="@{/axes/get/__${axe.codeAxe}__}" tabindex="0" class="edit text-primary text-uppercase text-strong text-sm mr-10">Modifier</a><a role="button" th:id="${axe.codeAxe}" tabindex="0" class="delete text-danger text-uppercase text-strong text-sm mr-10">Supprimer</a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="tile-body" th:object="${id}">
+
+                            <form class="form-horizontal" id="editAxeFileForm" method="get" role="form" th:action="@{/axes/file/edit/__${id}__}" th:object="${fileForm}" th:fragment="fileForm" enctype="multipart/form-data">
+                                <th:block th:if="${param.error != null}">
+                                    <div th:replace="fragments/alert :: alert (type='danger', message='Axe incorrect.')">Alert</div>
+                                </th:block>
+
+                                <div class="form-group">
+                                    <label for="inputIdAxe" class="col-sm-2 control-label">Axe</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputIdAxe" th:value="${id}" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-group text-left" th:classappend="${#fields.hasErrors('file')}? 'has-error'">
+                                    <label class="col-sm-2 control-label">Image</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="filestyle" data-buttonText="Image" data-iconName="fa fa-image" th:field="*{file}" accept="image/png, image/jpeg">
+                                        <span class="help-block" th:if="${#fields.hasErrors('file')}" th:errors="*{file}">Image incorrecte</span>
+                                    </div>
+                                </div>
+
+                            </form>
+
                         </div>
                         <!-- /tile body -->
+
+                        <div class="modal-footer">
+                            <a role="button" th:href="@{/axes}" class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c"><i class="fa fa-arrow-left"></i> Retour</a>
+                            <a role="button" onclick="$('#editAxeFileForm').submit();" class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Enregistrer</a>
+                        </div>
 
                     </section>
                     <!-- /tile -->
@@ -108,14 +110,7 @@
 
 <th:block th:replace="fragments/footer :: footer-js-debut"/>
 
-<th:block th:replace="fragments/footer :: js-datatables"/>
-<!--/ vendor javascripts -->
-
-<!-- ===============================================
-============== Page Specific Scripts ===============
-================================================ -->
-<script src="../../../../resources/assets/js/reglesdor/axes.js" th:src="@{/resources/assets/js/reglesdor/axes.js}"></script>
-<!--/ Page Specific Scripts -->
+<script src="../../../resources/assets/js/vendor/filestyle/bootstrap-filestyle.min.js" th:src="@{/resources/assets/js/vendor/filestyle/bootstrap-filestyle.min.js}"></script>
 
 <th:block th:replace="fragments/footer :: footer-js-fin"/>
 

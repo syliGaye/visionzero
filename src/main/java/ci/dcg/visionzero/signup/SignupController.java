@@ -86,11 +86,10 @@ public class SignupController {
                 return SIGNUP_VIEW_NAME;
             }
 
-            Role role = roleService.findByRoleName("ROLE_SUPERADMIN");
             Utilisateur utilisateur = signupForm.createSuperAdmin();
             String codeUtilisateur = userService.retourneId();
 
-            utilisateur.setRole(role);
+            utilisateur.setRole(roleService.findByRoleName("ROLE_SUPERADMIN"));
             utilisateur.setId(codeUtilisateur);
             utilisateur.setImageUser(new LesFonctions().createImageForUser(codeUtilisateur, imageUserService, signupForm.getFile()));
 

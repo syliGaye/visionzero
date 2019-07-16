@@ -148,6 +148,7 @@ public class WebViewName {
     public static final String AXE_LIST_VIEW_NAME = "admin/reglesdor/axes";
     public static final String AXE_ADD_VIEW_NAME = "admin/reglesdor/add";
     public static final String AXE_EDIT_VIEW_NAME = "admin/reglesdor/edit";
+    public static final String AXE_EDIT_FILE_VIEW_NAME = "admin/reglesdor/editfile";
     public static final String REDIRECT_AXE_LIST = "redirect:/axes";
     public static final String REDIRECT_AXE_ADD = "redirect:/axes/add";
     //public static final String REDIRECT_AXE_EDIT = "redirect:/roles/add";

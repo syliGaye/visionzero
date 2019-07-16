@@ -42,7 +42,7 @@ public class Axe implements Serializable {
     private Couleur couleur;
 
     @JsonManagedReference
-    @OneToOne(cascade = CascadeType.DETACH)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "IMAGE_AXE", joinColumns = @JoinColumn(name = "CODE_AXE"), inverseJoinColumns = @JoinColumn(name = "CODE_IMAGE_USER"))
     private ImageUser imageUser;
 

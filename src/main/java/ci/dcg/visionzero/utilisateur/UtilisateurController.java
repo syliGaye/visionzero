@@ -91,12 +91,12 @@ public class UtilisateurController {
             return USER_ADD_VIEW_NAME;
         }
 
-        Role role = roleService.getOne(utilisateurForm.getIdRole());
         String idUser = userService.retourneId();
 
         try {
-            ImageUser imageUser = new LesFonctions().createImageForUser(idUser, imageUserService, utilisateurForm.getFile());
-            utilisateurForm.setId(idUser);   utilisateurForm.setImageUser(imageUser);   utilisateurForm.setRole(role);
+            utilisateurForm.setId(idUser);
+            utilisateurForm.setImageUser(new LesFonctions().createImageForUser(idUser, imageUserService, utilisateurForm.getFile()));
+            utilisateurForm.setRole(roleService.getOne(utilisateurForm.getIdRole()));
 
             userService.save(utilisateurForm.createNewUser());
             return REDIRECT_USER_LIST;
@@ -112,7 +112,7 @@ public class UtilisateurController {
     String edit(@PathVariable("id") String id, Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith){
         Utilisateur utilisateur = userService.getOne(id);
         model.addAttribute(new UtilisateurForm(utilisateur.getId(), utilisateur.getLogin(), utilisateur.getEmail(), utilisateur.getRole().getId()));
-        model.addAttribute("id", utilisateur.getId());
+        model.addAttribute("idEdit", utilisateur.getId());
         new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
         model.addAttribute("listRole", roleService.findAll());
 
@@ -128,7 +128,7 @@ public class UtilisateurController {
         userValidator.validate(utilisateurForm, errors);
 
         if (errors.hasErrors()){
-            model.addAttribute("id", id);
+            model.addAttribute("idEdit", id);
             new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
             model.addAttribute("listRole", roleService.findAll());
 
@@ -136,9 +136,8 @@ public class UtilisateurController {
         }
 
         Utilisateur utilisateur = userService.getOne(id);
-        Role role = roleService.getOne(utilisateurForm.getIdRole());
 
-        utilisateur.setRole(role);   utilisateur.setLogin(utilisateurForm.getLogin());
+        utilisateur.setRole(roleService.getOne(utilisateurForm.getIdRole()));   utilisateur.setLogin(utilisateurForm.getLogin());
         utilisateur.setEmail(utilisateurForm.getEmail());
 
         userService.update(utilisateur);

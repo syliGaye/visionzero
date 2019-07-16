@@ -42,6 +42,7 @@ public class AxeServiceImpl implements AxeService {
 
     @Override
     public void delete(String s) {
+        System.out.println("c'est supprimé");
         axeRepository.deleteById(s);
     }
 

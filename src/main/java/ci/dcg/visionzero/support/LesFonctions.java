@@ -89,21 +89,18 @@ public class LesFonctions {
         return imageUserService.save(new ImageUser(codImage, bytes, fileDownloadUri, fileName, types[1], file.getSize()));
     }
 
-    /*
-    public Image createImageForAxe(String idAxe, ImageService imageService, MultipartFile file) throws IOException {
-        byte[] bytes = file.getBytes();
-        String codImage = imageService.retourneId();
-        String fileName = codImage + "_" + idAxe;
-
-        String[] types = file.getContentType().split("/");
-
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+    public ImageUser updateImage(ImageUser imageUser, ImageUserService imageUserService, MultipartFile file) throws IOException {
+        imageUser.setFileUser(file.getBytes());
+        imageUser.setFileTypeUser(file.getContentType().split("/")[1]);
+        imageUser.setFileDownloadUriUser(ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
-                .path(fileName)
-                //.path(fileName + "." + types[1])
-                .toUriString();
+                .path(imageUser.getFileNameUser() + "." + imageUser.getFileTypeUser())
+                .toUriString());
+        imageUser.setFileSizeUser(file.getSize());
 
-        return imageService.save(new Image(codImage, bytes, fileDownloadUri, fileName, types[1], file.getSize()));
+        imageUserService.update(imageUser);
+
+        return imageUser;
     }
-    */
+
 }

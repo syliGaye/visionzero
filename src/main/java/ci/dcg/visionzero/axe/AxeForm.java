@@ -1,7 +1,6 @@
 package ci.dcg.visionzero.axe;
 
 import ci.dcg.visionzero.couleur.Couleur;
-import ci.dcg.visionzero.image.Image;
 import ci.dcg.visionzero.imageuser.ImageUser;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +22,22 @@ public class AxeForm {
         this.libelleAxe = libelleAxe;
         this.descriptionAxe = descriptionAxe;
         this.idCouleur = idCouleur;
+    }
+
+    public AxeForm(String codeAxe, String libelleAxe, String descriptionAxe, String idCouleur, ImageUser imageUser) {
+        this.codeAxe = codeAxe;
+        this.libelleAxe = libelleAxe;
+        this.descriptionAxe = descriptionAxe;
+        this.idCouleur = idCouleur;
+        this.imageUser = imageUser;
+    }
+
+    public AxeForm(String codeAxe, String libelleAxe, String descriptionAxe, String codeCouleur, MultipartFile file) {
+        this.codeAxe = codeAxe;
+        this.libelleAxe = libelleAxe;
+        this.descriptionAxe = descriptionAxe;
+        this.idCouleur = codeCouleur;
+        this.file = file;
     }
 
     public String getCodeAxe() {
