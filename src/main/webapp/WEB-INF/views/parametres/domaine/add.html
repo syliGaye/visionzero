@@ -81,8 +81,8 @@
                                         <select class="form-control mb-10" th:field="*{idAxe}">
                                             <option value="">-- Veuillez choisir l'axe --</option>
                                             <option th:each="axe:${listAxes}"
-                                                    th:value="${axe.idContinent}"
-                                                    th:text="${axe.libelleContinent}"
+                                                    th:value="${axe.codeAxe}"
+                                                    th:text="${axe.libelleAxe}"
                                             >2</option>
 
                                         </select>

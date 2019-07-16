@@ -54,6 +54,11 @@ public class Questionnaire implements Serializable {
         this.libelleQuestionnaire = libelleQuestionnaire;
     }
 
+    public Questionnaire(String libelleQuestionnaire, Evaluation evaluation) {
+        this.evaluation = evaluation;
+        this.libelleQuestionnaire = libelleQuestionnaire;
+    }
+
     public String getCodeQuestionnaire() {
         return codeQuestionnaire;
     }

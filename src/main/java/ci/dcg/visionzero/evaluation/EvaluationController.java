@@ -23,7 +23,7 @@ import static ci.dcg.visionzero.web.WebViewName.*;
 @Controller
 public class EvaluationController {
 
-    private static Logger logger = LoggerFactory.getLogger(UtilisateurController.class);
+    private static Logger logger = LoggerFactory.getLogger(EvaluationController.class);
 
     @Autowired
     private EvaluationService evaluationService;
