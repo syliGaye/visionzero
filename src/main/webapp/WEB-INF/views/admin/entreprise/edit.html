@@ -1,10 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="fragments/header :: header-title"/>
+
+    <th:block th:replace="fragments/header :: header-css"/>
 </head>
-<body>
+
+<body id="minovate" class="appWrapper">
+
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- ====================================================
+================= Application Content ===================
+===================================================== -->
+<div id="wrap" class="animsition">
+
+    <th:block th:replace="fragments/menu :: navbar"/>
+
+    <th:block th:replace="fragments/menu :: sidebar"/>
+
+    <!-- ====================================================
+    ================= CONTENT ===============================
+    ===================================================== -->
+    <section id="content">
+
+        <div class="page page-tables-datatables">
+
+            <th:block th:replace="fragments/content :: pageheader"/>
+
+            <!-- row -->
+            <div class="row">
+                <!-- col -->
+                <div class="col-md-12">
+
+
+
+                    <!-- tile -->
+                    <section class="tile">
+
+                        <!-- tile header -->
+                        <div class="tile-header dvd dvd-btm">
+                            <h1 class="custom-font"><strong>Modifier Entreprise</strong></h1>
+                            <ul class="controls">
+
+                                <li class="dropdown">
+
+                                    <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">&nbsp;&nbsp;</a>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /tile header -->
+
+                        <!-- tile body -->
+                        <div class="tile-body" th:object="${id}">
+
+                            <form class="form-horizontal" id="editEntrepriseForm" method="get" role="form" th:action="@{/entreprises/edit/__${id}__}" th:object="${entrepriseForm}" th:fragment="entrepriseForm">
+                                <th:block th:if="${param.error != null}">
+                                    <div th:replace="fragments/alert :: alert (type='danger', message='Entreprise incorrecte.')">Alert</div>
+                                </th:block>
+
+                                <div class="form-group"  th:classappend="${#fields.hasErrors('codeEntreprise')}? 'has-error'">
+                                    <label for="inputIdEntreprise" class="col-sm-2 control-label">Identifiant</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputIdEntreprise" th:field="*{codeEntreprise}" disabled>
+                                        <span class="help-block" th:if="${#fields.hasErrors('codeEntreprise')}" th:errors="*{codeEntreprise}">Identifiant de l'Entreprise incorrect</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"  th:classappend="${#fields.hasErrors('nomEntreprise')}? 'has-error'">
+                                    <label for="inputNomEntreprise" class="col-sm-2 control-label">Nom de l'Entreprise</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputNomEntreprise" placeholder="Nom de l'Entreprise" th:field="*{nomEntreprise}">
+                                        <span class="help-block" th:if="${#fields.hasErrors('nomEntreprise')}" th:errors="*{nomEntreprise}">Nom de l'Entreprise incorrect</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"  th:classappend="${#fields.hasErrors('descriptionEntreprise')}? 'has-error'">
+                                    <label for="inputDescEntreprise" class="col-sm-2 control-label">Description</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputDescEntreprise" placeholder="Description de l'Entreprise" th:field="*{descriptionEntreprise}">
+                                        <span class="help-block" th:if="${#fields.hasErrors('descriptionEntreprise')}" th:errors="*{descriptionEntreprise}">Description de l'Entreprise incorrecte</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:classappend="${#fields.hasErrors('idPays')}? 'has-error'">
+                                    <label class="col-sm-2 control-label">Pays</label>
+                                    <div class="col-sm-10">
+
+                                        <select class="form-control mb-10" th:field="*{idPays}">
+                                            <option value="">-- Veuillez choisir le pays --</option>
+                                            <option th:each="pays:${listPays}"
+                                                    th:value="${pays.idPays}"
+                                                    th:text="${pays.libellePays}"
+                                            >2</option>
+
+                                        </select>
+                                        <span class="help-block" th:if="${#fields.hasErrors('idPays')}" th:errors="*{idPays}">Pays incorrect</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:classappend="${#fields.hasErrors('idSecteurActivite')}? 'has-error'">
+                                    <label class="col-sm-2 control-label">Secteur d'Activit&eacute;s</label>
+                                    <div class="col-sm-10">
+
+                                        <select class="form-control mb-10" th:field="*{idSecteurActivite}">
+                                            <option value="">-- Veuillez choisir le secteur d'activit&eacute;s --</option>
+                                            <option th:each="sa:${listSecteurActivites}"
+                                                    th:value="${sa.idSecteurActivite}"
+                                                    th:text="${sa.libelleSecteurActivite}"
+                                            >2</option>
+
+                                        </select>
+                                        <span class="help-block" th:if="${#fields.hasErrors('idSecteurActivite')}" th:errors="*{idSecteurActivite}">Secter d'Activit&eacute;s incorrect</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:classappend="${#fields.hasErrors('idRaisonSociale')}? 'has-error'">
+                                    <label class="col-sm-2 control-label">Raison Sociale</label>
+                                    <div class="col-sm-10">
+
+                                        <select class="form-control mb-10" th:field="*{idRaisonSociale}">
+                                            <option value="">-- Veuillez choisir la raison sociale --</option>
+                                            <option th:each="rs:${listRaisonSociales}"
+                                                    th:value="${rs.idRaisonSociale}"
+                                                    th:text="${rs.libelleRaisonSociale}"
+                                            >2</option>
+
+                                        </select>
+                                        <span class="help-block" th:if="${#fields.hasErrors('idRaisonSociale')}" th:errors="*{idRaisonSociale}">Raison Sociale incorrect</span>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <!-- /tile body -->
+
+                        <div class="modal-footer">
+                            <a role="button" th:href="@{/entreprises}" class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c"><i class="fa fa-arrow-left"></i> Retour</a>
+                            <a role="button" onclick="$('#editEntrepriseForm').submit();" class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Enregistrer</a>
+                        </div>
+
+                    </section>
+                    <!-- /tile -->
+
+                </div>
+                <!-- /col -->
+            </div>
+            <!-- /row -->
+
+        </div>
+
+    </section>
+    <!--/ CONTENT -->
+
+</div>
+<!--/ Application Content -->
+
+
+<th:block th:replace="fragments/footer :: footer-js-debut"/>
+
+<th:block th:replace="fragments/footer :: footer-js-fin"/>
 
 </body>
 </html>

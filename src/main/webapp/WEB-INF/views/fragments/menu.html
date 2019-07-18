@@ -207,9 +207,9 @@
                                             </ul>
                                         </li>
 
-                                        <li th:classappend="${module == 'reglesor' ? 'active' : ''}"><a href="regles-or.html"><i class="fa fa-tags"></i> <span>R&egrave;gles d'Or</span></a></li>
-                                        <li th:classappend="${module == 'entreprises' ? 'active' : ''}"><a href="entreprises.html"><i class="fa fa-institution"></i> <span>Entreprises</span></a></li>
-                                        <li th:classappend="${module == 'statistiques' ? 'active' : ''}"><a href="statistiques.html"><i class="fa fa-bar-chart"></i> <span>Statistiques</span></a></li>
+                                        <li th:classappend="${module == 'reglesor' ? 'active' : ''}"><a th:href="@{/regles-or}"><i class="fa fa-tags"></i> <span>R&egrave;gles d'Or</span></a></li>
+                                        <li th:classappend="${module == 'entreprises' ? 'active' : ''}"><a th:href="@{entreprises}"><i class="fa fa-institution"></i> <span>Entreprises</span></a></li>
+                                        <li th:classappend="${module == 'statistiques' ? 'active' : ''}"><a th:href="@{/statistiques}"><i class="fa fa-bar-chart"></i> <span>Statistiques</span></a></li>
                                         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                                         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                                         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>

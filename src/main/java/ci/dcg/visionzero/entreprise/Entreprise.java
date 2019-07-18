@@ -67,6 +67,14 @@ public class Entreprise implements Serializable {
         this.codeEntreprise = codeEntreprise;
     }
 
+    public Entreprise(String nomEntreprise, String descriptionEntreprise, Pays pays, SecteurActivite secteurActivite, RaisonSociale raisonSociale) {
+        this.nomEntreprise = nomEntreprise;
+        this.descriptionEntreprise = descriptionEntreprise;
+        this.pays = pays;
+        this.secteurActivite = secteurActivite;
+        this.raisonSociale = raisonSociale;
+    }
+
     public String getCodeEntreprise() {
         return codeEntreprise;
     }
