@@ -56,6 +56,12 @@ public class Reponse implements Serializable {
         this.valeurReponse = valeurReponse;
     }
 
+    public Reponse(String libelleReponse, Integer valeurReponse, Couleur couleur) {
+        this.couleur = couleur;
+        this.libelleReponse = libelleReponse;
+        this.valeurReponse = valeurReponse;
+    }
+
     public String getCodeReponse() {
         return codeReponse;
     }

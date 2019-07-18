@@ -1,6 +1,5 @@
 package ci.dcg.visionzero.files;
 
-import ci.dcg.visionzero.image.Image;
 import ci.dcg.visionzero.imageuser.ImageUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

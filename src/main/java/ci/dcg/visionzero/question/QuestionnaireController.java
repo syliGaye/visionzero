@@ -1,5 +1,8 @@
 package ci.dcg.visionzero.question;
 
+import ci.dcg.visionzero.axe.Axe;
+import ci.dcg.visionzero.axe.AxeService;
+import ci.dcg.visionzero.evaluation.Evaluation;
 import ci.dcg.visionzero.evaluation.EvaluationService;
 import ci.dcg.visionzero.files.FileStorageService;
 import ci.dcg.visionzero.support.AjaxResponseBody;
@@ -16,6 +19,10 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
 
@@ -37,6 +44,9 @@ public class QuestionnaireController {
 
     @Autowired
     private EvaluationService evaluationService;
+
+    @Autowired
+    private AxeService axeService;
 
     @ModelAttribute("titrepage")
     String titre() {
@@ -69,7 +79,7 @@ public class QuestionnaireController {
     @GetMapping("questions/add")
     String add(Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith){
         new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
-        model.addAttribute("listDomaines", evaluationService.findAll());
+        model.addAttribute("listDomaines", axeService.findAll());
         model.addAttribute(new QuestionnaireForm());
 
         if (AjaxUtils.isAjaxRequest(requestedWith)) {
@@ -85,7 +95,7 @@ public class QuestionnaireController {
 
         if (errors.hasErrors()){
             new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
-            model.addAttribute("listDomaines", evaluationService.findAll());
+            model.addAttribute("listDomaines", axeService.findAll());
             return QUESTION_ADD_VIEW_NAME;
         }
 
@@ -100,7 +110,7 @@ public class QuestionnaireController {
         Questionnaire questionnaire = questionnaireService.getOne(id);
 
         new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
-        model.addAttribute("listDomaines", evaluationService.findAll());
+        model.addAttribute("listDomaines", axeService.findAll());
         model.addAttribute("id", id);
         model.addAttribute(new QuestionnaireForm(questionnaire.getCodeQuestionnaire(), questionnaire.getLibelleQuestionnaire(), questionnaire.getEvaluation().getCodeEvaluation()));
 
@@ -117,7 +127,7 @@ public class QuestionnaireController {
 
         if (errors.hasErrors()){
             new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
-            model.addAttribute("listDomaines", evaluationService.findAll());
+            model.addAttribute("listDomaines", axeService.findAll());
             model.addAttribute("id", id);
             return QUESTION_EDIT_VIEW_NAME;
         }

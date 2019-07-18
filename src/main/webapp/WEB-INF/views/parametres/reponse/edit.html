@@ -1,10 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="fragments/header :: header-title"/>
+
+    <th:block th:replace="fragments/header :: header-css"/>
 </head>
-<body>
+
+<body id="minovate" class="appWrapper">
+
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- ====================================================
+================= Application Content ===================
+===================================================== -->
+<div id="wrap" class="animsition">
+
+    <th:block th:replace="fragments/menu :: navbar"/>
+
+    <th:block th:replace="fragments/menu :: sidebar"/>
+
+    <!-- ====================================================
+    ================= CONTENT ===============================
+    ===================================================== -->
+    <section id="content">
+
+        <div class="page page-tables-datatables">
+
+            <th:block th:replace="fragments/content :: pageheader"/>
+
+            <!-- row -->
+            <div class="row">
+                <!-- col -->
+                <div class="col-md-12">
+
+
+
+                    <!-- tile -->
+                    <section class="tile">
+
+                        <!-- tile header -->
+                        <div class="tile-header dvd dvd-btm">
+                            <h1 class="custom-font"><strong>Modifier Reponse</strong></h1>
+                            <ul class="controls">
+
+                                <li class="dropdown">
+
+                                    <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">&nbsp;&nbsp;</a>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /tile header -->
+
+                        <!-- tile body -->
+                        <div class="tile-body" th:object="${id}">
+
+                            <form class="form-horizontal" id="editReponseForm" method="get" role="form" th:action="@{/reponses/edit/__${id}__}" th:object="${reponseForm}" th:fragment="reponseForm">
+                                <th:block th:if="${param.error != null}">
+                                    <div th:replace="fragments/alert :: alert (type='danger', message='Reponse incorrecte.')">Alert</div>
+                                </th:block>
+
+                                <div class="form-group"  th:classappend="${#fields.hasErrors('codeReponse')}? 'has-error'">
+                                    <label for="inputIdReponse" class="col-sm-2 control-label">Identifiant</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputIdReponse" th:field="*{codeReponse}" disabled>
+                                        <span class="help-block" th:if="${#fields.hasErrors('codeReponse')}" th:errors="*{codeReponse}">Identifiant de la Reponse incorrecte</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"  th:classappend="${#fields.hasErrors('libelleReponse')}? 'has-error'">
+                                    <label for="inputLibReponse" class="col-sm-2 control-label">Libell&eacute; de la Reponse</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputLibReponse" placeholder="Libell&eacute; de la Reponse" th:field="*{libelleReponse}">
+                                        <span class="help-block" th:if="${#fields.hasErrors('libelleReponse')}" th:errors="*{libelleReponse}">Libell&eacute; de la Reponse incorrecte</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:classappend="${#fields.hasErrors('valeurReponse')}? 'has-error'">
+                                    <label class="col-sm-2 control-label">Valeur</label>
+                                    <div class="col-sm-10">
+
+                                        <select class="form-control mb-10" th:field="*{valeurReponse}">
+                                            <option value="">-- Veuillez choisir la Valeur --</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+
+                                        </select>
+                                        <span class="help-block" th:if="${#fields.hasErrors('valeurReponse')}" th:errors="*{valeurReponse}">Valeur incorrecte</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:classappend="${#fields.hasErrors('idCouleur')}? 'has-error'">
+                                    <label class="col-sm-2 control-label">Couleur</label>
+                                    <div class="col-sm-10">
+
+                                        <select class="form-control mb-10" th:field="*{idCouleur}">
+                                            <option value="">-- Veuillez choisir la couleur --</option>
+                                            <option th:each="coul:${listCouleurs}"
+                                                    th:value="${coul.codeCouleur}"
+                                                    th:text="${coul.libelleCouleur}"
+                                            >2</option>
+
+                                        </select>
+                                        <span class="help-block" th:if="${#fields.hasErrors('idCouleur')}" th:errors="*{idCouleur}">Couleur incorrecte</span>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <!-- /tile body -->
+
+                        <div class="modal-footer">
+                            <a role="button" th:href="@{/reponses}" class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c"><i class="fa fa-arrow-left"></i> Retour</a>
+                            <a role="button" onclick="$('#editReponseForm').submit();" class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Enregistrer</a>
+                        </div>
+
+                    </section>
+                    <!-- /tile -->
+
+                </div>
+                <!-- /col -->
+            </div>
+            <!-- /row -->
+
+        </div>
+
+    </section>
+    <!--/ CONTENT -->
+
+</div>
+<!--/ Application Content -->
+
+
+<th:block th:replace="fragments/footer :: footer-js-debut"/>
+
+<th:block th:replace="fragments/footer :: footer-js-fin"/>
 
 </body>
 </html>

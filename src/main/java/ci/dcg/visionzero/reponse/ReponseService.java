@@ -11,4 +11,6 @@ public interface ReponseService extends ServiceFactory<Reponse, String> {
 	boolean isReponseExistByLibelle(String libelle);
 
 	boolean isReponseExistByValeur(Integer valeur);
+
+	void deleteReponse(Reponse reponse);
 }

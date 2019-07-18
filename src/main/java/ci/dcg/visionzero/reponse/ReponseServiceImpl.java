@@ -36,6 +36,11 @@ public class ReponseServiceImpl implements ReponseService {
     }
 
     @Override
+    public void deleteReponse(Reponse reponse) {
+        reponseRepository.delete(reponse);
+    }
+
+    @Override
     public Reponse getOne(String s) {
         return reponseRepository.getOne(s);
     }
