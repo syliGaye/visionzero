@@ -1,6 +1,8 @@
 package ci.dcg.visionzero.utilisateur;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +47,8 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    //@Secured("ROLE_ADMIN")
     public Utilisateur save(Utilisateur utilisateur) {
         utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
         utilisateur.setPasswordConfirm(passwordEncoder.encode(utilisateur.getPasswordConfirm()));
