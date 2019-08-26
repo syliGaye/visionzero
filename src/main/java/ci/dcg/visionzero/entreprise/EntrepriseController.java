@@ -1,7 +1,5 @@
 package ci.dcg.visionzero.entreprise;
 
-import ci.dcg.visionzero.axe.AxeService;
-import ci.dcg.visionzero.evaluation.*;
 import ci.dcg.visionzero.files.FileStorageService;
 import ci.dcg.visionzero.pays.PaysService;
 import ci.dcg.visionzero.raisonsociale.RaisonSocialeService;

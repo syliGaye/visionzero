@@ -2837,11 +2837,11 @@ html.boxed-layout .appWrapper.header-fixed.aside-static #header {
 }
 
 .login-head-view{
-    height: 45px;
-    line-height: 45px;
-    -webkit-transition: none;
-    -moz-transition: none;
-    transition: none;
+  height: 45px;
+  line-height: 45px;
+  -webkit-transition: none;
+  -moz-transition: none;
+  transition: none;
 }
 
 #header .branding a.brand:hover {

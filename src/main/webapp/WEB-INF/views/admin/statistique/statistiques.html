@@ -1,10 +1,404 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="fragments/header :: header-title"/>
+
+    <th:block th:replace="fragments/header :: header-css"/>
 </head>
-<body>
+
+<body id="minovate" class="appWrapper">
+
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- ====================================================
+================= Application Content ===================
+===================================================== -->
+<div id="wrap" class="animsition">
+
+        <th:block th:replace="fragments/menu :: navbar"/>
+
+        <th:block th:replace="fragments/menu :: sidebar"/>
+
+    <!-- ====================================================
+    ================= CONTENT ===============================
+    ===================================================== -->
+    <section id="content">
+
+
+
+        <div class="page page-charts">
+
+            <div class="pageheader">
+
+                <h2>Charts & Graphs <span>// You can place subtitle here</span></h2>
+
+                <div class="page-bar">
+
+                    <ul class="page-breadcrumb">
+                        <li>
+                            <a href="home.html"><i class="fa fa-home"></i> Minovate</a>
+                        </li>
+                        <li>
+                            <a href="charts.html">Charts & Graphs</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <!-- row -->
+            <div class="row">
+
+                <!-- col -->
+                <div class="col-md-9">
+
+                    <!-- tile -->
+                    <section class="tile">
+
+                        <!-- tile body -->
+                        <div class="tile-body">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-greensea"  id="lineViewTri">
+                                    <input type="checkbox" autocomplete="off"> Diagramme en Ligne
+                                </label>
+                                <label class="btn btn-greensea"  id="barViewTri">
+                                    <input type="checkbox" autocomplete="off"> Diagramme en Bande
+                                </label>
+                                <label class="btn btn-greensea" id="pieViewTri">
+                                    <input type="checkbox" autocomplete="off"> camembert
+                                </label>
+                                <label class="btn btn-greensea" id="radarViewTri">
+                                    <input type="checkbox" autocomplete="off"> Radar
+                                </label>
+                            </div>
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
+                                Effectuer tri
+                            </button>
+                        </div>
+                        <!-- tile body -->
+
+                    </section>
+                    <!-- /tile -->
+
+                </div>
+                <!-- /col -->
+
+            </div>
+            <!-- /row -->
+
+            <!-- row -->
+            <div class="row">
+
+                <!-- col -->
+                <div class="col-md-12">
+
+                    <!-- tile -->
+                    <section class="tile" id="lineViewDiagram">
+
+                        <!-- tile header -->
+                        <div class="tile-header dvd dvd-btm">
+                            <h1 class="custom-font"><strong>Line </strong>Chart</h1>
+                            <ul class="controls" hidden>
+                                <li class="remove"><a role="button" tabindex="0" class="tile-close"><i class="fa fa-times"></i></a></li>
+                            </ul>
+                        </div>
+                        <!-- /tile header -->
+
+                        <!-- tile body -->
+                        <div class="tile-body">
+
+                            <div id="line-chart" style="height: 350px"></div>
+
+                        </div>
+                        <!-- /tile body -->
+
+                    </section>
+                    <!-- /tile -->
+
+                </div>
+                <!-- /col -->
+
+            </div>
+            <!-- /row -->
+
+            <!-- row -->
+            <div class="row">
+
+                <!-- col -->
+                <div class="col-md-6">
+
+                    <!-- tile -->
+                    <section class="tile" id="barViewDiagram">
+
+                        <!-- tile header -->
+                        <div class="tile-header dvd dvd-btm">
+                            <h1 class="custom-font"><strong>Ordered </strong>Chart</h1>
+                            <ul class="controls" hidden>
+                                <li class="remove"><a role="button" tabindex="0" class="tile-close"><i class="fa fa-times"></i></a></li>
+                            </ul>
+                        </div>
+                        <!-- /tile header -->
+
+                        <!-- tile body -->
+                        <div class="tile-body">
+
+                            <div id="ordered-chart" style="height: 350px"></div>
+
+                        </div>
+                        <!-- /tile body -->
+
+                    </section>
+                    <!-- /tile -->
+
+                </div>
+                <!-- /col -->
+
+                <!-- col -->
+                <div class="col-md-6">
+
+                    <!-- tile -->
+                    <section class="tile" id="pieViewDiagram">
+
+                        <!-- tile header -->
+                        <div class="tile-header dvd dvd-btm">
+                            <h1 class="custom-font"><strong>Pie </strong>Chart</h1>
+                            <ul class="controls" hidden>
+                                <li class="remove"><a role="button" tabindex="0" class="tile-close"><i class="fa fa-times"></i></a></li>
+                            </ul>
+                        </div>
+                        <!-- /tile header -->
+
+                        <!-- tile body -->
+                        <div class="tile-body">
+
+                            <div id="pie-chart" style="height: 350px"></div>
+
+                        </div>
+                        <!-- /tile body -->
+
+                    </section>
+                    <!-- /tile -->
+
+                </div>
+                <!-- /col -->
+            </div>
+            <!-- /row -->
+
+        </div>
+
+
+
+    </section>
+    <!--/ CONTENT -->
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!--<div class="modal-header">
+                    <h3 class="modal-title custom-font">I'm a modal!</h3>
+                </div>-->
+                <div class="modal-body">
+
+                    <!-- row -->
+                    <div class="row">
+
+                        <!-- col -->
+                        <div class="col-md-6">
+
+                            <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+                                    <h4 class="custom-font"><strong>Continent</strong></h4>
+                                    <select class="form-control mb-10" id="triContinent">
+                                        <option value="">Choisir un Continent</option>
+                                    </select>
+                                </div>
+                                <!-- tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+                        </div>
+                        <!-- /col -->
+
+                        <!-- col -->
+                        <div class="col-md-6">
+
+                            <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+                                    <h4 class="custom-font"><strong>Pays</strong></h4>
+                                    <select class="form-control mb-10" id="triPays">
+                                        <option value="">Choisir un Pays</option>
+                                    </select>
+                                </div>
+                                <!-- tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+                        </div>
+                        <!-- /col -->
+
+                    </div>
+                    <!-- /row -->
+
+                    <!-- row -->
+                    <div class="row">
+
+                        <!-- col -->
+                        <div class="col-md-6">
+
+                            <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+                                    <h4 class="custom-font"><strong>Raison Sociale</strong></h4>
+                                    <select class="form-control mb-10" id="triRaisonSociale">
+                                        <option value="">Choisir une Raison Sociale</option>
+                                    </select>
+                                </div>
+                                <!-- tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+                        </div>
+                        <!-- /col -->
+
+                        <!-- col -->
+                        <div class="col-md-6">
+
+                            <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+                                    <h4 class="custom-font"><strong>Secteur d'Activit&eacute;</strong></h4>
+                                    <select class="form-control mb-10" id="triSecteurActivite">
+                                        <option value="">Choisir un Secteur d'Activit&eacute;</option>
+                                    </select>
+                                </div>
+                                <!-- tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+                        </div>
+                        <!-- /col -->
+
+                    </div>
+                    <!-- /row -->
+
+                    <!-- row -->
+                    <div class="row">
+
+                        <!-- col -->
+                        <div class="col-md-6">
+
+                            <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+                                    <h4 class="custom-font"><strong>Entreprise</strong></h4>
+                                    <select class="form-control mb-10" id="triEntreprise">
+                                        <option value="">Choisir une Entreprise</option>
+                                    </select>
+                                </div>
+                                <!-- tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+                        </div>
+                        <!-- /col -->
+
+                        <!-- col -->
+                        <div class="col-md-3">
+
+                            <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile body -->
+                                <div class="tile-body">&nbsp;&nbsp;&nbsp;</div>
+                                <!-- tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+                        </div>
+                        <!-- /col -->
+
+                        <!-- col -->
+                        <div class="col-md-3">
+
+                            <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+                                    <h4 class="custom-font">&nbsp;&nbsp;&nbsp;</h4>
+                                    <button class="btn btn-primary btn-rounded btn-ef btn-ef-5 btn-ef-5a mb-10" id="boutonTri"><i class="fa fa-refresh"></i> <span>Faire le tri</span></button>
+                                </div>
+                                <!-- tile body -->
+
+                            </section>
+                            <!-- /tile -->
+
+                        </div>
+                        <!-- /col -->
+
+                    </div>
+                    <!-- /row -->
+
+                </div>
+                <!--<div class="modal-footer">
+                    <button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Submit</button>
+                    <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Cancel</button>
+                </div>-->
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<!--/ Application Content -->
+
+<th:block th:replace="fragments/footer :: footer-js-debut"/>
+
+<!--<script src="../../../resources/assets/js/vendor/typeahead/typeahead.bundle.min.js" th:src="@{/resources/assets/js/vendor/typeahead/typeahead.bundle.min.js}"></script>-->
+
+<th:block th:replace="fragments/footer :: js-flot"/>
+
+<!--/ vendor javascripts -->
+
+<!-- ===============================================
+============== Page Specific Scripts ===============
+================================================ -->
+<script src="../../../../resources/assets/js/statistique/statistiques.js" th:src="@{/resources/assets/js/statistique/statistiques.js}"></script>
+<script src="../../../../resources/assets/js/statistique/tri-values.js" th:src="@{/resources/assets/js/statistique/tri-values.js}"></script>
+<script src="../../../../resources/assets/js/statistique/stats-values.js" th:src="@{/resources/assets/js/statistique/stats-values.js}"></script>
+<!--/ Page Specific Scripts -->
+
+<th:block th:replace="fragments/footer :: footer-js-fin"/>
 
 </body>
 </html>

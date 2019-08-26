@@ -32,6 +32,12 @@ public class Couleur implements Serializable {
     @Column(name = "RGB_COULEUR", unique = true, nullable = false)
     private String rgbCouleur;
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 128)
+    @Column(name = "HEX_COULEUR", unique = true, nullable = false)
+    private String hexCouleur;
+
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "couleur")
     private Reponse reponse;
@@ -47,15 +53,17 @@ public class Couleur implements Serializable {
         this.codeCouleur = codeCouleur;
     }
 
-    public Couleur(String libelleCouleur, String rgbCouleur) {
+    public Couleur(String libelleCouleur, String rgbCouleur, String hexCouleur) {
         this.libelleCouleur = libelleCouleur;
         this.rgbCouleur = rgbCouleur;
+        this.hexCouleur = hexCouleur;
     }
 
-    public Couleur(String codeCouleur, String libelleCouleur, String rgbCouleur) {
+    public Couleur(String codeCouleur, String libelleCouleur, String rgbCouleur, String hexCouleur) {
         this.codeCouleur = codeCouleur;
         this.libelleCouleur = libelleCouleur;
         this.rgbCouleur = rgbCouleur;
+        this.hexCouleur = hexCouleur;
     }
 
     public String getCodeCouleur() {
@@ -80,6 +88,14 @@ public class Couleur implements Serializable {
 
     public void setRgbCouleur(String rgbCouleur) {
         this.rgbCouleur = rgbCouleur;
+    }
+
+    public String getHexCouleur() {
+        return hexCouleur;
+    }
+
+    public void setHexCouleur(String hexCouleur) {
+        this.hexCouleur = hexCouleur;
     }
 
     @XmlTransient
@@ -121,6 +137,7 @@ public class Couleur implements Serializable {
                 "codeCouleur=" + codeCouleur +
                 ", libelleCouleur='" + libelleCouleur + '\'' +
                 ", rgbCouleur='" + rgbCouleur + '\'' +
+                ", hexCouleur='" + hexCouleur + '\'' +
                 ", reponseList=" + reponse +
                 ", axe=" + axe +
                 '}';

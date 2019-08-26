@@ -1,10 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="fragments/header :: header-title"/>
+
+    <th:block th:replace="fragments/header :: header-css-datatables"/>
+
+    <th:block th:replace="fragments/header :: header-css"/>
 </head>
-<body>
+
+<body id="minovate" class="appWrapper">
+
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- ====================================================
+================= Application Content ===================
+===================================================== -->
+<div id="wrap" class="animsition">
+
+    <th:block th:replace="fragments/menu :: navbar"/>
+
+    <th:block th:replace="fragments/menu :: sidebar"/>
+
+    <!-- ====================================================
+    ================= CONTENT ===============================
+    ===================================================== -->
+    <section id="content">
+
+        <div class="page page-tables-datatables">
+
+            <th:block th:replace="fragments/content :: pageheader"/>
+
+            <!-- row -->
+            <div class="row">
+                <!-- col -->
+                <div class="col-md-12">
+
+
+
+                    <!-- tile -->
+                    <section class="tile">
+
+                        <!-- tile header -->
+                        <div class="tile-header dvd dvd-btm">
+                            <h1 class="custom-font"><strong>Les R&egrave;les d'Or</strong></h1>
+                        </div>
+                        <!-- /tile header -->
+
+                        <!-- tile body -->
+                        <div class="tile-body">
+                            <div class="table-responsive">
+                                <table class="table table-custom" id="editable-usage">
+                                    <thead>
+                                    <tr>
+                                        <th>Pic</th>
+                                        <th>Libell&eacute;</th>
+                                        <th>Description</th>
+                                        <th style="width: 160px;" class="no-sort">Notation</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="axe,i:${lesAxes}">
+                                        <td><a th:href="@{/axes/file/get/__${axe.codeAxe}__}"><img th:src="${axe.imageUser.fileDownloadUriUser}" alt=""></a></td>
+                                        <td th:text="${axe.libelleAxe}">Internet Explorer 4.0</td>
+                                        <td th:text="${axe.descriptionAxe}">Internet Explorer 4.0</td>
+                                        <td><a th:href="@{/regle-or/notation/__${axe.codeAxe}__}" th:class="'myIcon icon-'+${axe.couleur.libelleCouleur}"><i class="fa fa-eye"></i></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /tile body -->
+
+                    </section>
+                    <!-- /tile -->
+
+                </div>
+                <!-- /col -->
+            </div>
+            <!-- /row -->
+
+        </div>
+
+    </section>
+    <!--/ CONTENT -->
+
+</div>
+<!--/ Application Content -->
+
+
+<th:block th:replace="fragments/footer :: footer-js-debut"/>
+
+<th:block th:replace="fragments/footer :: js-datatables"/>
+<!--/ vendor javascripts -->
+
+<!-- ===============================================
+============== Page Specific Scripts ===============
+================================================ -->
+<script src="../../../../resources/assets/js/reglesdor/axes.js" th:src="@{/resources/assets/js/reglesdor/axes.js}"></script>
+<!--/ Page Specific Scripts -->
+
+<th:block th:replace="fragments/footer :: footer-js-fin"/>
 
 </body>
 </html>

@@ -163,6 +163,17 @@ public class WebViewName {
     //public static final String REDIRECT_ENTREPRISE_ADD = "redirect:/entreprises/add";
     //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
     public static final String STATISTIQUE_MODULE = "statistiques";
-    //public static final String ENTREPRISE_TITLE = "Vision Zero | Gestion des Entreprises";
+    public static final String STATISTIQUE_TITLE = "Vision Zero | Statistiques";
+
+    /** Statistique Controller **/
+    public static final String REGLE_OR_LIST_VIEW_NAME = "admin/reglesdor/regledors";
+    public static final String REGLE_OR_ONE_VIEW_NAME = "admin/reglesdor/regledor_un";
+    //public static final String ENTREPRISE_ADD_VIEW_NAME = "admin/entreprise/add";
+    //public static final String ENTREPRISE_EDIT_VIEW_NAME = "admin/entreprise/edit";
+    //public static final String REDIRECT_ENTREPRISE_LIST = "redirect:/entreprises";
+    //public static final String REDIRECT_ENTREPRISE_ADD = "redirect:/entreprises/add";
+    //public static final String REDIRECT_ROLE_EDIT = "redirect:/roles/add";
+    public static final String REGLE_OR_MODULE = "reglesor";
+    public static final String REGLE_OR_TITLE = "Vision Zero | Les Règles d'or";
 
 }
