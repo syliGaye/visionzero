@@ -69,7 +69,8 @@
                                         <td><a th:href="@{/axes/file/get/__${axe.codeAxe}__}"><img th:src="${axe.imageUser.fileDownloadUriUser}" alt=""></a></td>
                                         <td th:text="${axe.libelleAxe}">Internet Explorer 4.0</td>
                                         <td th:text="${axe.descriptionAxe}">Internet Explorer 4.0</td>
-                                        <td><a th:href="@{/regle-or/notation/__${axe.codeAxe}__}" th:class="'myIcon icon-'+${axe.couleur.libelleCouleur}"><i class="fa fa-eye"></i></a></td>
+                                        <!--<td><a th:href="@{/regle-or/notation/__${axe.codeAxe}__}" th:class="'myIcon icon-'+${axe.couleur.libelleCouleur}"  data-toggle="modal" data-target="#myModal3"><i class="fa fa-eye"></i></a></td>-->
+                                        <td><a th:href="@{/regles-or/notation/__${axe.codeAxe}__/ent201907180415533931}" th:class="'myIcon icon-'+${axe.couleur.libelleCouleur}"><i class="fa fa-eye"></i></a></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -92,6 +93,24 @@
 
 </div>
 <!--/ Application Content -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title custom-font">I'm a modal!</h3>
+            </div>
+            <div class="modal-body">
+                Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Submit</button>
+                <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <th:block th:replace="fragments/footer :: footer-js-debut"/>

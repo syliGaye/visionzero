@@ -26,8 +26,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
+    public List<Questionnaire> findAllByAxe(String s) {
+        return questionnaireRepository.findAllByAxe(s);
+    }
+
+    @Override
     public int countByEvaluation(String codeEvaluation) {
         return this.findAllByEvaluation(codeEvaluation).size();
+    }
+
+    @Override
+    public int countByAxe(String s) {
+        return this.findAllByAxe(s).size();
     }
 
     @Override

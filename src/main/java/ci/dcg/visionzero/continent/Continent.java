@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@XmlRootElement
 public class Continent implements Serializable {
 
     private static final long serialVersionUID = 1L;

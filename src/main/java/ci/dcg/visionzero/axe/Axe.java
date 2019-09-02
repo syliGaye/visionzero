@@ -12,11 +12,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@XmlRootElement
 public class Axe implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,12 +49,10 @@ public class Axe implements Serializable {
     private ImageUser imageUser;
 
     @JsonBackReference
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axe")
     private List<Evaluation> evaluationList;
 
     @JsonBackReference
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axe")
     private List<NotationAxe> notationAxeList;
 
@@ -173,7 +173,11 @@ public class Axe implements Serializable {
                 "codeAxe='" + codeAxe + '\'' +
                 ", libelleAxe='" + libelleAxe + '\'' +
                 ", descriptionAxe='" + descriptionAxe + '\'' +
+                ", couleur=" + couleur +
                 ", imageUser=" + imageUser +
+                ", evaluationList=" + evaluationList +
+                ", notationAxeList=" + notationAxeList +
+                ", notationAxeIndList=" + notationAxeIndList +
                 '}';
     }
 }

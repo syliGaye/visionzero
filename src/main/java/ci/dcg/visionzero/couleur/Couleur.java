@@ -131,15 +131,4 @@ public class Couleur implements Serializable {
         return codeCouleur != null ? codeCouleur.hashCode() : 0;
     }
 
-    @Override
-    public String toString() {
-        return "Couleur{" +
-                "codeCouleur=" + codeCouleur +
-                ", libelleCouleur='" + libelleCouleur + '\'' +
-                ", rgbCouleur='" + rgbCouleur + '\'' +
-                ", hexCouleur='" + hexCouleur + '\'' +
-                ", reponseList=" + reponse +
-                ", axe=" + axe +
-                '}';
-    }
 }

@@ -12,4 +12,7 @@ public interface QuestionnaireRepository extends JpaRepository<Questionnaire, St
 
     @Query("SELECT q FROM Questionnaire q WHERE q.evaluation.codeEvaluation = :codeEvaluation")
     List<Questionnaire> findAllByEvaluation(@Param("codeEvaluation") String codeEvaluation);
+
+    @Query("SELECT q FROM Questionnaire q WHERE q.evaluation.axe.codeAxe = :codeAxe")
+    List<Questionnaire> findAllByAxe(@Param("codeAxe") String s);
 }

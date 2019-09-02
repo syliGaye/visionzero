@@ -10,6 +10,9 @@ public interface QuestionnaireService extends ServiceFactory<Questionnaire, Stri
 
 	List<Questionnaire> findAllByEvaluation(String codeEvaluation);
 
+	List<Questionnaire> findAllByAxe(String s);
+
 	int countByEvaluation(String codeEvaluation);
 
+	int countByAxe(String s);
 }
