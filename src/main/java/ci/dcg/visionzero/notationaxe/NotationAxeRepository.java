@@ -10,12 +10,9 @@ public interface NotationAxeRepository extends JpaRepository<NotationAxe, String
     @Query("SELECT na FROM NotationAxe na WHERE na.axe.codeAxe = :codeAxe")
     List<NotationAxe> findAllByAxe(@Param("codeAxe") String s);
 
-    @Query("SELECT na FROM NotationAxe na WHERE na.axe.codeAxe = :codeAxe")
-    NotationAxe findByAxe(@Param("codeAxe") String s);
-
     @Query("SELECT na FROM NotationAxe na WHERE na.entreprise.codeEntreprise = :codeEntreprise")
     List<NotationAxe> findAllByEntreprise(@Param("codeEntreprise") String s);
 
-    @Query("SELECT na FROM NotationAxe na WHERE na.entreprise.codeEntreprise = :codeEntreprise")
-    NotationAxe findByEntreprise(@Param("codeEntreprise") String s);
+    @Query("SELECT na FROM NotationAxe na WHERE na.axe.codeAxe = :codeAxe AND na.entreprise.codeEntreprise = :codeEntreprise")
+    NotationAxe findByAxeAndEntreprise(@Param("codeAxe") String s1, @Param("codeEntreprise") String s2);
 }

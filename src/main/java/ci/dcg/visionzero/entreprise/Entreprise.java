@@ -1,7 +1,8 @@
 package ci.dcg.visionzero.entreprise;
 
 import ci.dcg.visionzero.notationaxe.NotationAxe;
-import ci.dcg.visionzero.notationaxe.NotationAxeInd;
+import ci.dcg.visionzero.notationevaluation.NotationEvaluation;
+import ci.dcg.visionzero.notationquestion.NotationQuestion;
 import ci.dcg.visionzero.pays.Pays;
 import ci.dcg.visionzero.raisonsociale.RaisonSociale;
 import ci.dcg.visionzero.secteuractivite.SecteurActivite;
@@ -54,11 +55,15 @@ public class Entreprise implements Serializable {
 
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entreprise")
-    private List<NotationAxeInd> notationAxeIndList;
+    private List<NotationAxe> notationAxeList;
 
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entreprise")
-    private List<NotationAxe> notationAxeList;
+    private List<NotationEvaluation> notationEvaluationList;
+
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entreprise")
+    private List<NotationQuestion> notationQuestionList;
 
     public Entreprise() {
         super();
@@ -125,21 +130,30 @@ public class Entreprise implements Serializable {
     }
 
     @XmlTransient
-    public List<NotationAxeInd> getNotationAxeIndList() {
-        return notationAxeIndList;
-    }
-
-    public void setNotationAxeIndList(List<NotationAxeInd> notationAxeIndList) {
-        this.notationAxeIndList = notationAxeIndList;
-    }
-
-    @XmlTransient
     public List<NotationAxe> getNotationAxeList() {
         return notationAxeList;
     }
 
     public void setNotationAxeList(List<NotationAxe> notationAxeList) {
         this.notationAxeList = notationAxeList;
+    }
+
+    @XmlTransient
+    public List<NotationEvaluation> getNotationEvaluationList() {
+        return notationEvaluationList;
+    }
+
+    public void setNotationEvaluationList(List<NotationEvaluation> notationEvaluationList) {
+        this.notationEvaluationList = notationEvaluationList;
+    }
+
+    @XmlTransient
+    public List<NotationQuestion> getNotationQuestionList() {
+        return notationQuestionList;
+    }
+
+    public void setNotationQuestionList(List<NotationQuestion> notationQuestionList) {
+        this.notationQuestionList = notationQuestionList;
     }
 
     @Override
@@ -163,8 +177,12 @@ public class Entreprise implements Serializable {
                 "codeEntreprise='" + codeEntreprise + '\'' +
                 ", nomEntreprise='" + nomEntreprise + '\'' +
                 ", descriptionEntreprise='" + descriptionEntreprise + '\'' +
-                ", notationAxeIndList=" + notationAxeIndList +
+                ", pays=" + pays +
+                ", secteurActivite=" + secteurActivite +
+                ", raisonSociale=" + raisonSociale +
                 ", notationAxeList=" + notationAxeList +
+                ", notationEvaluationList=" + notationEvaluationList +
+                ", notationQuestionList=" + notationQuestionList +
                 '}';
     }
 }

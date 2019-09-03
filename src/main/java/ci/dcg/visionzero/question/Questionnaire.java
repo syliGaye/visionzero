@@ -2,14 +2,12 @@ package ci.dcg.visionzero.question;
 
 import ci.dcg.visionzero.evaluation.Evaluation;
 import ci.dcg.visionzero.notationquestion.NotationQuestion;
-import ci.dcg.visionzero.notationquestion.NotationQuestionInd;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 
@@ -37,10 +35,6 @@ public class Questionnaire implements Serializable {
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "questionnaire")
     private NotationQuestion notationQuestion;
-
-    @JsonBackReference
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "questionnaire")
-    private NotationQuestionInd notationQuestionInd;
 
     public Questionnaire() {
     }
@@ -92,15 +86,6 @@ public class Questionnaire implements Serializable {
         this.notationQuestion = notationQuestion;
     }
 
-    @XmlTransient
-    public NotationQuestionInd getNotationQuestionInd() {
-        return notationQuestionInd;
-    }
-
-    public void setNotationQuestionInd(NotationQuestionInd notationQuestionInd) {
-        this.notationQuestionInd = notationQuestionInd;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -127,7 +112,6 @@ public class Questionnaire implements Serializable {
                 "codeQuestionnaire='" + codeQuestionnaire + '\'' +
                 ", libelleQuestionnaire='" + libelleQuestionnaire + '\'' +
                 ", notationQuestion=" + notationQuestion +
-                ", notationQuestionInd=" + notationQuestionInd +
                 '}';
     }
 }

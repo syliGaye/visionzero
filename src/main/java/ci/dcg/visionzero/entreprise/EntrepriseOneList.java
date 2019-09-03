@@ -1,12 +1,8 @@
 package ci.dcg.visionzero.entreprise;
 
-import ci.dcg.visionzero.notationaxe.NotationAxe;
-import ci.dcg.visionzero.notationaxe.NotationAxeInd;
 import ci.dcg.visionzero.pays.Pays;
 import ci.dcg.visionzero.raisonsociale.RaisonSociale;
 import ci.dcg.visionzero.secteuractivite.SecteurActivite;
-
-import java.util.List;
 
 public class EntrepriseOneList {
     private String codeEntreprise;
@@ -15,8 +11,6 @@ public class EntrepriseOneList {
     private Pays pays;
     private SecteurActivite secteurActivite;
     private RaisonSociale raisonSociale;
-    private List<NotationAxeInd> notationAxeIndList;
-    private List<NotationAxe> notationAxeList;
 
     public EntrepriseOneList() {
         super();
@@ -70,19 +64,4 @@ public class EntrepriseOneList {
         this.raisonSociale = raisonSociale;
     }
 
-    public List<NotationAxeInd> getNotationAxeIndList() {
-        return notationAxeIndList;
-    }
-
-    public void setNotationAxeIndList(List<NotationAxeInd> notationAxeIndList) {
-        this.notationAxeIndList = notationAxeIndList;
-    }
-
-    public List<NotationAxe> getNotationAxeList() {
-        return notationAxeList;
-    }
-
-    public void setNotationAxeList(List<NotationAxe> notationAxeList) {
-        this.notationAxeList = notationAxeList;
-    }
 }

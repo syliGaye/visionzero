@@ -1,19 +1,22 @@
 package ci.dcg.visionzero.axe;
 
-import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.couleur.CouleurService;
+import ci.dcg.visionzero.entreprise.Entreprise;
 import ci.dcg.visionzero.entreprise.EntrepriseService;
 import ci.dcg.visionzero.evaluation.Evaluation;
 import ci.dcg.visionzero.evaluation.EvaluationOneList;
 import ci.dcg.visionzero.evaluation.EvaluationService;
 import ci.dcg.visionzero.files.FileStorageService;
 import ci.dcg.visionzero.imageuser.ImageUserService;
-import ci.dcg.visionzero.notationevaluation.NotationEvaluationInd;
-import ci.dcg.visionzero.notationquestion.NotationQuestionInd;
-import ci.dcg.visionzero.notationquestion.NotationQuestionIndService;
+import ci.dcg.visionzero.notationaxe.*;
+import ci.dcg.visionzero.notationevaluation.NotationEvaluation;
+import ci.dcg.visionzero.notationevaluation.NotationEvaluationService;
+import ci.dcg.visionzero.notationquestion.NotationQuestion;
+import ci.dcg.visionzero.notationquestion.NotationQuestionService;
 import ci.dcg.visionzero.question.Questionnaire;
 import ci.dcg.visionzero.question.QuestionnaireOneList;
 import ci.dcg.visionzero.question.QuestionnaireService;
+import ci.dcg.visionzero.reponse.Reponse;
 import ci.dcg.visionzero.reponse.ReponseService;
 import ci.dcg.visionzero.support.AjaxResponseBody;
 import ci.dcg.visionzero.support.LesFonctions;
@@ -64,10 +67,16 @@ public class RegleorController {
     private QuestionnaireService questionnaireService;
 
     @Autowired
-    private NotationQuestionIndService notationQuestionIndService;
+    private NotationQuestionService notationQuestionService;
 
     @Autowired
     private ReponseService reponseService;
+
+    @Autowired
+    private NotationAxeService notationAxeService;
+
+    @Autowired
+    private NotationEvaluationService notationEvaluationService;
 
     @ModelAttribute("titrepage")
     String titre() {
@@ -131,5 +140,106 @@ public class RegleorController {
         model.addAttribute("lesReponses", reponseService.findAll());
 
         return REGLE_OR_ONE_VIEW_NAME;
+    }
+
+    @GetMapping("regles-or/notation/value/{axe}/{entreprise}")
+    ResponseEntity<?> getAxeNotationValue(@PathVariable("axe") String codeAxe,
+                                          @PathVariable("entreprise") String codeEntreprise){
+        AjaxResponseBody<NotationAxe> ajaxResponseBody = new AjaxResponseBody();
+        NotationAxe notationAxe = notationAxeService.findByAxeAndEntreprise(codeAxe, codeEntreprise);
+
+        if (notationAxe == null) {
+            notationAxe = new NotationAxe(0.00, axeService.getOne(codeAxe), entrepriseService.getOne(codeEntreprise));
+            ajaxResponseBody.setValeur(notationAxeService.save(notationAxe).getValeurNotationAxe());
+        }
+        else ajaxResponseBody.setValeur(notationAxe.getValeurNotationAxe());
+
+        return ResponseEntity.ok(ajaxResponseBody);
+    }
+
+    @GetMapping("regles-or/evaluation/value/{evaluation}/{entreprise}")
+    ResponseEntity<?> getEvaluationNotationValue(@PathVariable("evaluation") String codeEvaluation,
+                                                 @PathVariable("entreprise") String codeEntreprise){
+        AjaxResponseBody<NotationEvaluation> ajaxResponseBody = new AjaxResponseBody();
+        NotationEvaluation notationEvaluation = notationEvaluationService.findByEvaluationAndEntreprise(codeEvaluation, codeEntreprise);
+
+        if (notationEvaluation == null) {
+            notationEvaluation = new NotationEvaluation(0.00, evaluationService.getOne(codeEvaluation), entrepriseService.getOne(codeEntreprise));
+            ajaxResponseBody.setValeur(notationEvaluationService.save(notationEvaluation).getValeurNotationEvaluation());
+        }
+        else ajaxResponseBody.setValeur(notationEvaluation.getValeurNotationEvaluation());
+
+        return ResponseEntity.ok(ajaxResponseBody);
+    }
+
+    @GetMapping("regles-or/notation/{axe}/{entreprise}/{evaluation}/{question}/{reponse}")
+    ResponseEntity<?> noteAndGetValues(@PathVariable("axe") String codeAxe,
+                                       @PathVariable("entreprise") String codeEntreprise,
+                                       @PathVariable("evaluation") String codeEvaluation,
+                                       @PathVariable("question") String codeQuestion,
+                                       @PathVariable("reponse") String codeReponse){
+        AjaxResponseBody<Map> ajaxResponseBody = new AjaxResponseBody();
+        Map<String, Double> map = new HashMap<>();
+        Entreprise entreprise = entrepriseService.getOne(codeEntreprise);
+        Evaluation evaluation = evaluationService.getOne(codeEvaluation);
+        Questionnaire questionnaire = questionnaireService.getOne(codeQuestion);
+        Reponse reponse = reponseService.getOne(codeReponse);
+        NotationQuestion notationQuestion = notationQuestionService.findByQuestionnaireAndEntreprise(codeQuestion, codeEntreprise);
+        double questionValue = 0.0000;
+        double evaluationValue = 0.0000;
+
+        if (notationQuestion == null){
+            notationQuestion = new NotationQuestion(questionnaire, reponse, entreprise);
+            notationQuestionService.save(notationQuestion);
+        }
+        else {
+            notationQuestion.setReponse(reponse);
+            notationQuestionService.update(notationQuestion);
+        }
+
+        List<Questionnaire> questionnaires = questionnaireService.findAllByEvaluation(evaluation.getCodeEvaluation());
+
+        for(Questionnaire quest : questionnaires){
+            NotationQuestion notQuest = notationQuestionService.findByQuestionnaireAndEntreprise(quest.getCodeQuestionnaire(), codeEntreprise);
+
+            if (notQuest == null) notQuest = notationQuestionService.save(new NotationQuestion(quest, reponseService.findByValeur(1), entreprise));
+
+            questionValue += new Double(notQuest.getReponse().getValeurReponse());
+        }
+
+        NotationEvaluation notationEvaluation = notationEvaluationService.findByEvaluationAndEntreprise(evaluation.getCodeEvaluation(), codeEntreprise);
+
+        if (notationEvaluation == null) notationEvaluation = notationEvaluationService.save(new NotationEvaluation(new LesFonctions().round(questionValue / questionnaires.size(), 2), evaluation, entreprise));
+        else {
+            notationEvaluation.setValeurNotationEvaluation(new LesFonctions().round(questionValue / questionnaires.size(), 2));
+            notationEvaluationService.update(notationEvaluation);
+        }
+
+        List<Evaluation> evaluations = evaluationService.findAllByAxe(codeAxe);
+
+        for (Evaluation eval : evaluations){
+            NotationEvaluation notaEval = notationEvaluationService.findByEvaluationAndEntreprise(eval.getCodeEvaluation(), codeEntreprise);
+
+            double valeurProvisoir = 0.0;
+
+            if (notaEval == null) valeurProvisoir = 1.0;
+            else valeurProvisoir = notaEval.getValeurNotationEvaluation();
+
+            evaluationValue += valeurProvisoir;
+        }
+
+        NotationAxe notationAxe = notationAxeService.findByAxeAndEntreprise(codeAxe, codeEntreprise);
+
+        if (notationAxe == null) notationAxe = notationAxeService.save(new NotationAxe(new LesFonctions().round(evaluationValue / evaluations.size(), 2), axeService.getOne(codeAxe), entreprise));
+        else {
+            notationAxe.setValeurNotationAxe(new LesFonctions().round(evaluationValue / evaluations.size(), 2));
+            notationAxeService.update(notationAxe);
+        }
+
+        map.put("valeurAxe", notationAxe.getValeurNotationAxe());
+        map.put("valeurEval", notationEvaluation.getValeurNotationEvaluation());
+        ajaxResponseBody.setObject(map);
+
+        return ResponseEntity.ok(ajaxResponseBody);
     }
 }

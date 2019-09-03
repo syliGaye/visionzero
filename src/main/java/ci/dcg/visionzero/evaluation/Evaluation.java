@@ -2,7 +2,6 @@ package ci.dcg.visionzero.evaluation;
 
 import ci.dcg.visionzero.axe.Axe;
 import ci.dcg.visionzero.notationevaluation.NotationEvaluation;
-import ci.dcg.visionzero.notationevaluation.NotationEvaluationInd;
 import ci.dcg.visionzero.question.Questionnaire;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -10,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.List;
@@ -44,11 +42,8 @@ public class Evaluation implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "evaluation")
     private NotationEvaluation notationEvaluation;
 
-    @JsonBackReference
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "evaluation")
-    private NotationEvaluationInd notationEvaluationInd;
-
     public Evaluation() {
+        super();
     }
 
     public Evaluation(String codeEvaluation) {
@@ -107,15 +102,6 @@ public class Evaluation implements Serializable {
         this.notationEvaluation = notationEvaluation;
     }
 
-    @XmlTransient
-    public NotationEvaluationInd getNotationEvaluationInd() {
-        return notationEvaluationInd;
-    }
-
-    public void setNotationEvaluationInd(NotationEvaluationInd notationEvaluationInd) {
-        this.notationEvaluationInd = notationEvaluationInd;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -143,7 +129,6 @@ public class Evaluation implements Serializable {
                 ", libelleEvaluation='" + libelleEvaluation + '\'' +
                 ", questionnaireList=" + questionnaireList +
                 ", notationEvaluation=" + notationEvaluation +
-                ", notationEvaluationInd=" + notationEvaluationInd +
                 '}';
     }
 }

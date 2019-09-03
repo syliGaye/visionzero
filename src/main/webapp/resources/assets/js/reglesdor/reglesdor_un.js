@@ -39,10 +39,8 @@ $(window).load(function(){
 
     $('#navPuce_1').addClass('active');
 
-    changerCouleur_1('indiquePourAxe', 0);
-
     for (var i = 1; i < (accordionCount + 1); i++){
-        changerCouleur_1('indPourDom' + i, 0);
+        //changerCouleur_1('indPourDom' + i, 0);
 
         if (i != 1){
             $('#acc'+i).hide();

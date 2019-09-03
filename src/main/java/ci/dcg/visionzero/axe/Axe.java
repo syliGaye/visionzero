@@ -4,9 +4,7 @@ import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.evaluation.Evaluation;
 import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.notationaxe.NotationAxe;
-import ci.dcg.visionzero.notationaxe.NotationAxeInd;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -55,10 +53,6 @@ public class Axe implements Serializable {
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axe")
     private List<NotationAxe> notationAxeList;
-
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axe")
-    private List<NotationAxeInd> notationAxeIndList;
 
     public Axe() {
     }
@@ -138,15 +132,6 @@ public class Axe implements Serializable {
         this.imageUser = imageUser;
     }
 
-    @XmlTransient
-    public List<NotationAxeInd> getNotationAxeIndList() {
-        return notationAxeIndList;
-    }
-
-    public void setNotationAxeIndList(List<NotationAxeInd> notationAxeIndList) {
-        this.notationAxeIndList = notationAxeIndList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -177,7 +162,6 @@ public class Axe implements Serializable {
                 ", imageUser=" + imageUser +
                 ", evaluationList=" + evaluationList +
                 ", notationAxeList=" + notationAxeList +
-                ", notationAxeIndList=" + notationAxeIndList +
                 '}';
     }
 }

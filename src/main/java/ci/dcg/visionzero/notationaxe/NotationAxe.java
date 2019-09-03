@@ -16,7 +16,7 @@ public class NotationAxe implements Serializable {
 
     @Id
     @NotNull
-    @Column(name = "CODE_NOTATION_AXE", updatable = false, nullable = false)
+    @Column(name = "CODE_NOTATION_AXE")
     private String codeNotationAxe;
 
     @Basic(optional = false)
@@ -85,31 +85,34 @@ public class NotationAxe implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codeNotationAxe != null ? codeNotationAxe.hashCode() : 0);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NotationAxe that = (NotationAxe) o;
+
+        if (codeNotationAxe != null ? !codeNotationAxe.equals(that.codeNotationAxe) : that.codeNotationAxe != null)
+            return false;
+        if (valeurNotationAxe != null ? !valeurNotationAxe.equals(that.valeurNotationAxe) : that.valeurNotationAxe != null)
+            return false;
+        if (axe != null ? !axe.equals(that.axe) : that.axe != null) return false;
+        return entreprise != null ? entreprise.equals(that.entreprise) : that.entreprise == null;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof NotationAxe)) {
-            return false;
-        }
-        NotationAxe other = (NotationAxe) object;
-        if ((this.codeNotationAxe == null && other.codeNotationAxe != null) || (this.codeNotationAxe != null && !this.codeNotationAxe.equals(other.codeNotationAxe))) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        int result = codeNotationAxe != null ? codeNotationAxe.hashCode() : 0;
+        result = 31 * result + (valeurNotationAxe != null ? valeurNotationAxe.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "NotationAxe{" +
-                "codeNotationAxe='" + codeNotationAxe + '\'' +
+                "codeNotationAxe=" + codeNotationAxe +
                 ", valeurNotationAxe=" + valeurNotationAxe +
-                //", axe=" + axe +
+                ", axe=" + axe +
+                ", entreprise=" + entreprise +
                 '}';
     }
 }

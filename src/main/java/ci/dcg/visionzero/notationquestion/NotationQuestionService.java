@@ -6,12 +6,20 @@ import java.util.List;
 
 public interface NotationQuestionService extends ServiceFactory<NotationQuestion, String> {
 
-	NotationQuestion findByQuestion(String codeQuestion);
+	List<NotationQuestion> findAllByQuestion(String codeQuestion);
 
 	List<NotationQuestion> findAllByReponse(String codeReponse);
 
-	NotationQuestion findByQuestionAndReponse(String codeQuestion, String codeReponse);
+	List<NotationQuestion> findAllByEntreprise(String codeEntreprise);
+
+	NotationQuestion findByQuestionnaireAndReponseAndEntreprise(String codeQuestion, String codeReponse, String codeEntreprise);
+
+	NotationQuestion findByQuestionnaireAndEntreprise(String codeQuestion, String codeEntreprise);
 
 	int countByReponse(String codeReponse);
+
+	int countByQuestion(String codeQuestion);
+
+	int countByEntreprise(String codeEntreprise);
 
 }

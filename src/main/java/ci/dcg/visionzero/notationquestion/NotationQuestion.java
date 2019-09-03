@@ -1,5 +1,6 @@
 package ci.dcg.visionzero.notationquestion;
 
+import ci.dcg.visionzero.entreprise.Entreprise;
 import ci.dcg.visionzero.question.Questionnaire;
 import ci.dcg.visionzero.reponse.Reponse;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -14,11 +15,11 @@ public class NotationQuestion implements Serializable {
 
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @NotNull
-    @Column(name = "CODE_NOTATION_QUESTIONNAIRE", updatable = false, nullable = false)
+    @Column(name = "CODE_NOTATION_QUESTIONNAIRE")
     private String codeNotationQuestionnaire;
-
 
     @JsonManagedReference
     @JoinColumn(name = "CODE_QUESTIONNAIRE", referencedColumnName = "CODE_QUESTIONNAIRE")
@@ -30,12 +31,23 @@ public class NotationQuestion implements Serializable {
     @ManyToOne(optional = false)
     private Reponse reponse;
 
+    @JsonManagedReference
+    @JoinColumn(name = "CODE_ENTREPRISE", referencedColumnName = "CODE_ENTREPRISE")
+    @ManyToOne(optional = false)
+    private Entreprise entreprise;
+
     public NotationQuestion() {
         super();
     }
 
     public NotationQuestion(String codeNotationQuestionnaire) {
         this.codeNotationQuestionnaire = codeNotationQuestionnaire;
+    }
+
+    public NotationQuestion(Questionnaire questionnaire, Reponse reponse, Entreprise entreprise) {
+        this.questionnaire = questionnaire;
+        this.reponse = reponse;
+        this.entreprise = entreprise;
     }
 
     public String getCodeNotationQuestionnaire() {
@@ -62,6 +74,14 @@ public class NotationQuestion implements Serializable {
         this.reponse = reponse;
     }
 
+    public Entreprise getEntreprise() {
+        return entreprise;
+    }
+
+    public void setEntreprise(Entreprise entreprise) {
+        this.entreprise = entreprise;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,7 +100,10 @@ public class NotationQuestion implements Serializable {
     @Override
     public String toString() {
         return "NotationQuestion{" +
-                "codeNotationQuestionnaire='" + codeNotationQuestionnaire + '\'' +
+                "codeNotationQuestionnaire=" + codeNotationQuestionnaire +
+                ", questionnaire=" + questionnaire +
+                ", reponse=" + reponse +
+                ", entreprise=" + entreprise +
                 '}';
     }
 }

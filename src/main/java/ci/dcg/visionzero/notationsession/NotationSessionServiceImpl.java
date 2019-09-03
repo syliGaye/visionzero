@@ -55,7 +55,7 @@ public class NotationSessionServiceImpl implements NotationSessionService {
 
     @Override
     public NotationSession save(NotationSession notationSession) {
-        return null;
+        return notationSessionRepository.save(notationSession);
     }
 
     @Override

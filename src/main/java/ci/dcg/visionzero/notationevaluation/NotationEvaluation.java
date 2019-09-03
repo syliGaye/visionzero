@@ -1,5 +1,6 @@
 package ci.dcg.visionzero.notationevaluation;
 
+import ci.dcg.visionzero.entreprise.Entreprise;
 import ci.dcg.visionzero.evaluation.Evaluation;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -15,7 +16,7 @@ public class NotationEvaluation implements Serializable {
 
     @Id
     @NotNull
-    @Column(name = "CODE_NOTATION_EVALUATION", updatable = false, nullable = false)
+    @Column(name = "CODE_NOTATION_EVALUATION")
     private String codeNotationEvaluation;
 
     @Basic(optional = false)
@@ -28,7 +29,13 @@ public class NotationEvaluation implements Serializable {
     @OneToOne(optional = false)
     private Evaluation evaluation;
 
+    @JsonManagedReference
+    @JoinColumn(name = "CODE_ENTREPRISE", referencedColumnName = "CODE_ENTREPRISE")
+    @ManyToOne(optional = false)
+    private Entreprise entreprise;
+
     public NotationEvaluation() {
+        super();
     }
 
     public NotationEvaluation(String codeNotationEvaluation) {
@@ -38,6 +45,12 @@ public class NotationEvaluation implements Serializable {
     public NotationEvaluation(String codeNotationEvaluation, Double valeurNotationEvaluation) {
         this.codeNotationEvaluation = codeNotationEvaluation;
         this.valeurNotationEvaluation = valeurNotationEvaluation;
+    }
+
+    public NotationEvaluation(Double valeurNotationEvaluation, Evaluation evaluation, Entreprise entreprise) {
+        this.valeurNotationEvaluation = valeurNotationEvaluation;
+        this.evaluation = evaluation;
+        this.entreprise = entreprise;
     }
 
     public String getCodeNotationEvaluation() {
@@ -64,6 +77,14 @@ public class NotationEvaluation implements Serializable {
         this.evaluation = evaluation;
     }
 
+    public Entreprise getEntreprise() {
+        return entreprise;
+    }
+
+    public void setEntreprise(Entreprise entreprise) {
+        this.entreprise = entreprise;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -87,9 +108,10 @@ public class NotationEvaluation implements Serializable {
     @Override
     public String toString() {
         return "NotationEvaluation{" +
-                "codeNotationEvaluation='" + codeNotationEvaluation + '\'' +
+                "codeNotationEvaluation=" + codeNotationEvaluation +
                 ", valeurNotationEvaluation=" + valeurNotationEvaluation +
-                //", evaluation=" + evaluation +
+                ", evaluation=" + evaluation +
+                ", entreprise=" + entreprise +
                 '}';
     }
 }

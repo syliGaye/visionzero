@@ -16,11 +16,6 @@ public class NotationEvaluationServiceImpl implements NotationEvaluationService 
     NotationEvaluationRepository notationEvaluationRepository;
 
     @Override
-    public NotationEvaluation findByEvaluation(String codeEvaluation) {
-        return notationEvaluationRepository.findByEvaluation(codeEvaluation);
-    }
-
-    @Override
     public NotationEvaluation getOne(String s) {
         return notationEvaluationRepository.getOne(s);
     }
@@ -37,7 +32,7 @@ public class NotationEvaluationServiceImpl implements NotationEvaluationService 
 
     @Override
     public NotationEvaluation save(NotationEvaluation notationEvaluation) {
-        notationEvaluation.setCodeNotationEvaluation(this.retourneId());
+        notationEvaluation.setCodeNotationEvaluation(retourneId());
         return notationEvaluationRepository.save(notationEvaluation);
     }
 
@@ -64,5 +59,30 @@ public class NotationEvaluationServiceImpl implements NotationEvaluationService 
         int i = this.count() + 1;
 
         return "notDom"+ft.format(date)+""+i;
+    }
+
+    @Override
+    public List<NotationEvaluation> findAllByEvaluation(String codeEvaluation) {
+        return notationEvaluationRepository.findAllByEvaluation(codeEvaluation);
+    }
+
+    @Override
+    public List<NotationEvaluation> findAllByEntreprise(String codeEntreprise) {
+        return notationEvaluationRepository.findAllByEntreprise(codeEntreprise);
+    }
+
+    @Override
+    public NotationEvaluation findByEvaluationAndEntreprise(String codeEvaluation, String codeEntreprise) {
+        return notationEvaluationRepository.findByEvaluationAndEntreprise(codeEvaluation, codeEntreprise);
+    }
+
+    @Override
+    public int countByEvaluation(String codeEvaluation) {
+        return this.findAllByEvaluation(codeEvaluation).size();
+    }
+
+    @Override
+    public int countByEntreprise(String codeEntreprise) {
+        return this.findAllByEntreprise(codeEntreprise).size();
     }
 }

@@ -62,8 +62,10 @@
                                         Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
                                     </div>
                                     <th:block th:object="${nbreEvaluation}" th:hidden>
-                                        <div id="accodionCount" th:text="${nbreEvaluation}"></div>
+                                        <div id="accodionCount" th:text="${nbreEvaluation}" hidden></div>
                                     </th:block>
+
+                                    <div id="identifiantAxe" th:text="${unAxe.codeAxe}" hidden></div>
 
                                 </div>
                                 <!-- /col -->
@@ -82,6 +84,7 @@
                                                     <span class="label bg-primary" th:text="${(i.index) +1}">1</span> <th:block th:text="${eval.libelleEvaluation}"></th:block>
                                                 </a>
                                             </h4>
+                                            <div th:id="'identifierEvaluation_' + ${(i.index) +1}" th:text="${eval.codeEvaluation}" hidden></div>
                                         </div>
                                         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                             <div class="panel-body">
@@ -95,11 +98,13 @@
                                                                 <td th:text="${(j.index) +1}">1</td>
                                                                 <td th:text="${quest.libelleQuestionnaire}">Mark</td>
                                                                 <td>
+                                                                    <div th:id="'identifierQuest_' + ${(i.index) +1} + '_' + ${(j.index) +1}" th:text="${quest.codeQuestionnaire}" hidden></div>
                                                                     <!-- row -->
                                                                     <div class="row" th:each="rep,k:${lesReponses}">
                                                                         <!-- col -->
                                                                         <div class="col-md-2">
                                                                             <div th:class="'onoffswitch '+ ${rep.couleur.libelleCouleur} +' inline-block'">
+                                                                                <div th:id="'identifierRep_'+${(i.index) +1}+'_'+${(j.index) +1}+'_'+${(k.index) +1}" th:text="${rep.codeReponse}" hidden></div>
                                                                                 <input type="radio" th:name="'onoffswitch-radio_'+${(i.index) +1}+'_'+${(j.index) +1}" class="onoffswitch-checkbox" th:id="'switch'+${(i.index) +1}+'_'+${(j.index) +1}+'_'+${(k.index) +1}" checked="">
                                                                                 <label class="onoffswitch-label" th:for="'switch'+${(i.index) +1}+'_'+${(j.index) +1}+'_'+${(k.index) +1}">
                                                                                     <span class="onoffswitch-inner"></span>
@@ -182,6 +187,7 @@
 ============== Page Specific Scripts ===============
 ================================================ -->
 <script src="../../../../resources/assets/js/reglesdor/reglesdor_un.js" th:src="@{/resources/assets/js/reglesdor/reglesdor_un.js}"></script>
+<script src="../../../../resources/assets/js/reglesdor/notation_un.js" th:src="@{/resources/assets/js/reglesdor/notation_un.js}"></script>
 <!--/ Page Specific Scripts -->
 
 <th:block th:replace="fragments/footer :: footer-js-fin"/>

@@ -16,8 +16,8 @@ public class NotationQuestionServiceImpl implements NotationQuestionService {
     NotationQuestionRepository notationQuestionRepository;
 
     @Override
-    public NotationQuestion findByQuestion(String codeQuestion) {
-        return notationQuestionRepository.findByQuestion(codeQuestion);
+    public List<NotationQuestion> findAllByQuestion(String codeQuestion) {
+        return notationQuestionRepository.findAllByQuestion(codeQuestion);
     }
 
     @Override
@@ -26,13 +26,33 @@ public class NotationQuestionServiceImpl implements NotationQuestionService {
     }
 
     @Override
-    public NotationQuestion findByQuestionAndReponse(String codeQuestion, String codeReponse) {
-        return notationQuestionRepository.findByQuestionAndReponse(codeQuestion, codeReponse);
+    public List<NotationQuestion> findAllByEntreprise(String codeEntreprise) {
+        return notationQuestionRepository.findAllByEntreprise(codeEntreprise);
+    }
+
+    @Override
+    public NotationQuestion findByQuestionnaireAndReponseAndEntreprise(String codeQuestion, String codeReponse, String codeEntreprise) {
+        return notationQuestionRepository.findByQuestionnaireAndReponseAndEntreprise(codeQuestion, codeReponse, codeEntreprise);
+    }
+
+    @Override
+    public NotationQuestion findByQuestionnaireAndEntreprise(String codeQuestion, String codeEntreprise) {
+        return notationQuestionRepository.findByQuestionnaireAndEntreprise(codeQuestion, codeEntreprise);
     }
 
     @Override
     public int countByReponse(String codeReponse) {
         return this.findAllByReponse(codeReponse).size();
+    }
+
+    @Override
+    public int countByQuestion(String codeQuestion) {
+        return this.findAllByQuestion(codeQuestion).size();
+    }
+
+    @Override
+    public int countByEntreprise(String codeEntreprise) {
+        return this.findAllByEntreprise(codeEntreprise).size();
     }
 
     @Override
@@ -52,7 +72,7 @@ public class NotationQuestionServiceImpl implements NotationQuestionService {
 
     @Override
     public NotationQuestion save(NotationQuestion notationQuestion) {
-        notationQuestion.setCodeNotationQuestionnaire(this.retourneId());
+        notationQuestion.setCodeNotationQuestionnaire(retourneId());
         return notationQuestionRepository.save(notationQuestion);
     }
 

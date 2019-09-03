@@ -21,13 +21,23 @@ public class NotationAxeServiceImpl implements NotationAxeService {
     }
 
     @Override
+    public List<NotationAxe> findAllByEntreprise(String codeEntreprise) {
+        return notationAxeRepository.findAllByEntreprise(codeEntreprise);
+    }
+
+    @Override
+    public NotationAxe findByAxeAndEntreprise(String codeAxe, String codeEntreprise) {
+        return notationAxeRepository.findByAxeAndEntreprise(codeAxe, codeEntreprise);
+    }
+
+    @Override
     public int countByAxe(String codeAxe) {
         return this.findAllByAxe(codeAxe).size();
     }
 
     @Override
-    public NotationAxe findByAxe(String codeAxe) {
-        return notationAxeRepository.findByAxe(codeAxe);
+    public int countByEntreprise(String codeEntreprise) {
+        return this.findAllByEntreprise(codeEntreprise).size();
     }
 
     @Override
@@ -47,7 +57,7 @@ public class NotationAxeServiceImpl implements NotationAxeService {
 
     @Override
     public NotationAxe save(NotationAxe notationAxe) {
-        notationAxe.setCodeNotationAxe(this.retourneId());
+        notationAxe.setCodeNotationAxe(retourneId());
         return notationAxeRepository.save(notationAxe);
     }
 
