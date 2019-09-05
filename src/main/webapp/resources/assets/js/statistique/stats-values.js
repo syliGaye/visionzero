@@ -1,8 +1,64 @@
 $(window).load(function () {
 
+    var context = $('.brand').attr("href");
+
+    $('#boutonTri').on('click', function (e) {
+        e.preventDefault();
+
+        var entreprise = $('#triEntreprise').val();
+        var pays = $('#triPays').val();
+        var raisonsociale = $('#triRaisonSociale').val();
+        var secteuractivite = $('#triSecteurActivite').val();
+
+        if (entreprise === null) entreprise = 'null';
+        if (pays === null) pays = 'null';
+        if (raisonsociale === null) raisonsociale = 'null';
+        if (secteuractivite === null) secteuractivite = 'null';
+
+        drawChartsWithRequest(context + 'statistiques/' + entreprise + '/' + pays + '/' + secteuractivite + '/' + raisonsociale);
+
+    });
+
+    drawChartsWithRequest(context + 'statistiques/null/null/null/null');
+
+});
+
+function drawChartsWithRequest(url) {
+    var dataLine = [];
+    var optionsLine = {};
+    var plotLine = null;
+    var dataOrdered = [];
+    var optionsOrdered = {};
+    var plotOrdered = null;
+    var dataPie = [];
+    var optionsPie = {};
+    var plotPie = null;
+
+    $.ajax({
+        url: url,
+        method: 'GET',
+        data: null,
+        success: function (data) {
+            var donnees = [];
+
+            data.result.forEach(function (t) {
+                //donnees.push(t.);
+            });
+
+            drawLineChart(dataLine, optionsLine, plotLine);
+            drawOrderedChart(dataOrdered, optionsOrdered, plotOrdered);
+            drawPieChart(dataPie, optionsPie, plotPie);
+        },
+        error: function (msg) {
+            alert('Impossible d\'afficher les graphiques!');
+        }
+    });
+}
+
+function drawLineChart(data, options, plot) {
     // Initialize Line Chart
 
-    var data1 = [
+    data = [
         {
             data: [[1,5.3],[2,5.9],[3,7.2],[4,8],[5,7],[6,6.5],[7,6.2],[8,6.7],[9,7.2],[10,7],[11,6.8],[12,7]],
             label: 'Sales',
@@ -33,7 +89,7 @@ $(window).load(function () {
         }
     ];
 
-    var options1 = {
+    options = {
         colors: ['#a2d200', '#cd97eb'],
         series: {
             shadowSize: 0
@@ -69,18 +125,68 @@ $(window).load(function () {
         }
     };
 
-    var plot1 = $.plot($("#line-chart"), data1, options1);
+    plot = $.plot($("#line-chart"), data, options);
 
     $(window).resize(function() {
         // redraw the graph in the correctly sized div
-        plot1.resize();
-        plot1.setupGrid();
-        plot1.draw();
+        plot.resize();
+        plot.setupGrid();
+        plot.draw();
     });
     // * Initialize Line Chart
+}
+
+function drawPieChart(data, options, plot) {
+    // Initialize Pie Chart
+    data = [
+        { label: 'Chrome', data: 30 },
+        { label: 'Firefox', data: 15 },
+        { label: 'Safari', data: 15 },
+        { label: 'IE', data: 10 },
+        { label: 'Opera', data: 5 },
+        { label: 'Other', data: 10}
+    ];
+
+    options = {
+        series: {
+            pie: {
+                show: true,
+                innerRadius: 0,
+                stroke: {
+                    width: 0
+                },
+                label: {
+                    show: true,
+                    threshold: 0.05
+                }
+            }
+        },
+        colors: ['#428bca','#5cb85c','#f0ad4e','#d9534f','#5bc0de','#616f77'],
+        grid: {
+            hoverable: true,
+            clickable: true,
+            borderWidth: 0,
+            color: '#ccc'
+        },
+        tooltip: true,
+        tooltipOpts: { content: '%s: %p.0%' }
+    };
+
+    plot = $.plot($("#pie-chart"), data, options);
+
+    $(window).resize(function() {
+        // redraw the graph in the correctly sized div
+        plot.resize();
+        plot.setupGrid();
+        plot.draw();
+    });
+    // * Initialize Pie Chart
+}
+
+function drawOrderedChart(data, options, plot) {
 
     // Initialize Ordered Chart
-    var data2 = [
+    data = [
         {
             data: [[10, 50], [20, 80], [30, 60], [40, 40]],
             label: 'A'
@@ -93,7 +199,7 @@ $(window).load(function () {
         }
     ];
 
-    var options2 = {
+    options = {
         series: {
             shadowSize: 0
         },
@@ -126,59 +232,13 @@ $(window).load(function () {
         tooltip: true
     };
 
-    var plot2 = $.plot($("#ordered-chart"), data2, options2);
+    plot = $.plot($("#ordered-chart"), data, options);
 
     $(window).resize(function() {
         // redraw the graph in the correctly sized div
-        plot2.resize();
-        plot2.setupGrid();
-        plot2.draw();
+        plot.resize();
+        plot.setupGrid();
+        plot.draw();
     });
     // * Initialize Ordered Chart
-
-    // Initialize Pie Chart
-    var data3 = [
-        { label: 'Chrome', data: 30 },
-        { label: 'Firefox', data: 15 },
-        { label: 'Safari', data: 15 },
-        { label: 'IE', data: 10 },
-        { label: 'Opera', data: 5 },
-        { label: 'Other', data: 10}
-    ];
-
-    var options3 = {
-        series: {
-            pie: {
-                show: true,
-                innerRadius: 0,
-                stroke: {
-                    width: 0
-                },
-                label: {
-                    show: true,
-                    threshold: 0.05
-                }
-            }
-        },
-        colors: ['#428bca','#5cb85c','#f0ad4e','#d9534f','#5bc0de','#616f77'],
-        grid: {
-            hoverable: true,
-            clickable: true,
-            borderWidth: 0,
-            color: '#ccc'
-        },
-        tooltip: true,
-        tooltipOpts: { content: '%s: %p.0%' }
-    };
-
-    var plot3 = $.plot($("#pie-chart"), data3, options3);
-
-    $(window).resize(function() {
-        // redraw the graph in the correctly sized div
-        plot3.resize();
-        plot3.setupGrid();
-        plot3.draw();
-    });
-    // * Initialize Pie Chart
-
-});
+}

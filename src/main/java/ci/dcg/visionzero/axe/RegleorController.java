@@ -100,6 +100,7 @@ public class RegleorController {
         }
 
         model.addAttribute("lesAxes", axeList);
+        model.addAttribute("lesEntreprises", entrepriseService.findAll());
         return REGLE_OR_LIST_VIEW_NAME;
     }
 
@@ -188,6 +189,9 @@ public class RegleorController {
         double questionValue = 0.0000;
         double evaluationValue = 0.0000;
 
+        /*
+        *  On enregistre la valeur de la question si elle n'est pas faite, sinon on la change
+        */
         if (notationQuestion == null){
             notationQuestion = new NotationQuestion(questionnaire, reponse, entreprise);
             notationQuestionService.save(notationQuestion);
@@ -199,14 +203,23 @@ public class RegleorController {
 
         List<Questionnaire> questionnaires = questionnaireService.findAllByEvaluation(evaluation.getCodeEvaluation());
 
+        /*
+        * Pour chaque question du domaine de la règle d'or, reccupérer les notes et les additionner.
+        * Au cas où une question n'est pas encore notée, lui donner la plus petite valeur.
+        */
         for(Questionnaire quest : questionnaires){
             NotationQuestion notQuest = notationQuestionService.findByQuestionnaireAndEntreprise(quest.getCodeQuestionnaire(), codeEntreprise);
 
             if (notQuest == null) notQuest = notationQuestionService.save(new NotationQuestion(quest, reponseService.findByValeur(1), entreprise));
 
-            questionValue += new Double(notQuest.getReponse().getValeurReponse());
+            questionValue += new Double(notQuest.getReponse().getValeurReponse()); // "new Double()" converti les entiers en nombres relatifs
         }
 
+        /*
+        * Si le domaine a déjà été noté, on effectue une mise à jour. Sinon on enregistre la note.
+        * La note est égale à la somme des notes des quetions du domaine, divisé par le nombre de questions.
+        * Le résultat est arrondi à 2 chiffres après la virgule.
+        */
         NotationEvaluation notationEvaluation = notationEvaluationService.findByEvaluationAndEntreprise(evaluation.getCodeEvaluation(), codeEntreprise);
 
         if (notationEvaluation == null) notationEvaluation = notationEvaluationService.save(new NotationEvaluation(new LesFonctions().round(questionValue / questionnaires.size(), 2), evaluation, entreprise));
@@ -217,15 +230,18 @@ public class RegleorController {
 
         List<Evaluation> evaluations = evaluationService.findAllByAxe(codeAxe);
 
+        /*
+        * Pour la note de la règle d'or, on effectue le même cheminement comme pour le calcul de celle du domaine.
+        * Par contre ici on ne fait pas d'enregistrement pour les domaines qui n'ont pas de notes.
+        */
         for (Evaluation eval : evaluations){
             NotationEvaluation notaEval = notationEvaluationService.findByEvaluationAndEntreprise(eval.getCodeEvaluation(), codeEntreprise);
 
-            double valeurProvisoir = 0.0;
+            double valeurProvisoir = 1.0;
 
-            if (notaEval == null) valeurProvisoir = 1.0;
-            else valeurProvisoir = notaEval.getValeurNotationEvaluation();
+            if (notaEval != null) valeurProvisoir = notaEval.getValeurNotationEvaluation();
 
-            evaluationValue += valeurProvisoir;
+            evaluationValue += valeurProvisoir;  // evaluationValue = evaluationValue + valeurProvisoir
         }
 
         NotationAxe notationAxe = notationAxeService.findByAxeAndEntreprise(codeAxe, codeEntreprise);

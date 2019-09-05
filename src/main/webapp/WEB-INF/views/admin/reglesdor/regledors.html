@@ -66,15 +66,17 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="axe,i:${lesAxes}">
+                                        <td th:id="'idForAxe'+${(i.index) +1}" th:text="${axe.codeAxe}" hidden></td>
                                         <td><a th:href="@{/axes/file/get/__${axe.codeAxe}__}"><img th:src="${axe.imageUser.fileDownloadUriUser}" alt=""></a></td>
                                         <td th:text="${axe.libelleAxe}">Internet Explorer 4.0</td>
                                         <td th:text="${axe.descriptionAxe}">Internet Explorer 4.0</td>
-                                        <!--<td><a th:href="@{/regle-or/notation/__${axe.codeAxe}__}" th:class="'myIcon icon-'+${axe.couleur.libelleCouleur}"  data-toggle="modal" data-target="#myModal3"><i class="fa fa-eye"></i></a></td>-->
-                                        <td><a th:href="@{/regles-or/notation/__${axe.codeAxe}__/ent201909031013323811}" th:class="'myIcon icon-'+${axe.couleur.libelleCouleur}"><i class="fa fa-eye"></i></a></td>
+                                        <td><a th:class="'myIcon icon-'+${axe.couleur.libelleCouleur}" th:id="'toAfficheEnterprises'+${(i.index) +1}"  data-toggle="modal" data-target="#myModal3"><i class="fa fa-eye"></i></a></td>
+                                        <!--<td><a th:href="@{/regles-or/notation/__${axe.codeAxe}__/ent201909031013323811}" th:class="'myIcon icon-'+${axe.couleur.libelleCouleur}"><i class="fa fa-eye"></i></a></td>-->
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <!--<div><a href="#" data-toggle="modal" data-target="#myModal3" id="boutonPourModal">bouton</a> </div>-->
                         </div>
                         <!-- /tile body -->
 
@@ -98,15 +100,39 @@
 <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title custom-font">I'm a modal!</h3>
-            </div>
+
             <div class="modal-body">
-                Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.
+                <!-- row -->
+                <div class="row">
+                    <!-- col -->
+                    <div class="col-md-12">
+
+                        <!-- tile -->
+                        <section class="tile">
+
+                            <!-- tile body -->
+                            <div class="tile-body">
+                                <h4 class="custom-font"><strong>Entreprises</strong></h4>
+                                <select class="form-control mb-10" id="entrepriseForNotation">
+                                    <option value="">Choisir une Entreprise</option>
+                                    <option th:each="entr:${lesEntreprises}"
+                                            th:value="${entr.codeEntreprise}"
+                                            th:text="${entr.nomEntreprise}">2</option>
+                                </select>
+                            </div>
+                            <!-- tile body -->
+
+                        </section>
+                        <!-- /tile -->
+
+                    </div>
+                    <!-- /col -->
+
+                </div>
+                <!-- /row -->
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Submit</button>
-                <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Cancel</button>
+                <button id="validerPourNotation" class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Valider</button>
             </div>
         </div>
     </div>

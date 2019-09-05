@@ -1,9 +1,23 @@
 $(window).load(function(){
-
-    //initialize editable datatable
-
     var context = $('.brand').attr("href");
     var table2 = $('#editable-usage');
+    var axe = '';
+
+    $(document).on('click', '.myIcon', function (e) {
+        e.preventDefault();
+        var index = Number($(this).attr('id').slice(-1));
+        axe = $('#idForAxe'+index).text();
+        //$('#boutonpourmodal').click();
+    });
+
+    $('#validerPourNotation').on('click', function (e) {
+        e.preventDefault();
+        var entreprise = $('#entrepriseForNotation').val();
+        location.href = context + 'regles-or/notation/' + axe + '/' + entreprise;
+    });
+
+
+    //initialize editable datatable
 
     var oTable = $('#editable-usage').DataTable({
         "aoColumnDefs": [
@@ -45,5 +59,4 @@ $(window).load(function(){
 
 
     //*initialize editable datatable
-
 });

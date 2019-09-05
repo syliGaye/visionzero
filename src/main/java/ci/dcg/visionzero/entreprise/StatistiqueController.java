@@ -1,7 +1,11 @@
 package ci.dcg.visionzero.entreprise;
 
+import ci.dcg.visionzero.axe.AxeOneList;
 import ci.dcg.visionzero.continent.ContinentService;
 import ci.dcg.visionzero.files.FileStorageService;
+import ci.dcg.visionzero.notationaxe.NotationAxe;
+import ci.dcg.visionzero.notationaxe.NotationAxeOneList;
+import ci.dcg.visionzero.notationaxe.NotationAxeService;
 import ci.dcg.visionzero.pays.PaysService;
 import ci.dcg.visionzero.raisonsociale.RaisonSocialeService;
 import ci.dcg.visionzero.secteuractivite.SecteurActiviteService;
@@ -17,6 +21,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
 
@@ -44,6 +51,9 @@ public class StatistiqueController {
 
     @Autowired
     private RaisonSocialeService raisonSocialeService;
+
+    @Autowired
+    private NotationAxeService notationAxeService;
 
     @ModelAttribute("titrepage")
     String titre() {
@@ -152,6 +162,67 @@ public class StatistiqueController {
         else {
             ajaxResponseBody.setResult(paysService.findAll());
         }
+
+        return ResponseEntity.ok(ajaxResponseBody);
+    }
+
+    @GetMapping("statistiques/{entreprise}/{pays}/{secteuractivite}/{raisonsociale}")
+    ResponseEntity<?> getValuesForCharts(@PathVariable("entreprise") String codeEntreprise,
+                                         @PathVariable("pays") String codePays,
+                                         @PathVariable("secteuractivite") String codeSecteurActivite,
+                                         @PathVariable("raisonsociale") String codeRaisonSociale){
+        AjaxResponseBody ajaxResponseBody = new AjaxResponseBody();
+        List<Entreprise> entreprises;
+        List<NotationAxe> notationAxes = new ArrayList<>();
+        List<AxeOneList> axeOneLists = new ArrayList<>();
+
+        if (codeEntreprise.equals("null")){
+            if (codePays.equals("null")){
+                if (codeRaisonSociale.equals("null")){
+                    if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAll();
+                    else entreprises = entrepriseService.findAllBySecteurActivite(codeSecteurActivite);
+                }
+                else{
+                    if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAllByRaisonSociale(codeRaisonSociale);
+                    else entreprises = entrepriseService.findAllBySecteurActiviteAndRaisonSociale(codeSecteurActivite, codeRaisonSociale);
+                }
+            }
+            else{
+                if (codeRaisonSociale.equals("null")){
+                    if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAllByPays(codePays);
+                    else entreprises = entrepriseService.findAllBySecteurActiviteAndPays(codeSecteurActivite, codePays);
+                }
+                else{
+                    if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAllByRaisonSocialeAndPays(codeRaisonSociale, codePays);
+                    else entreprises = entrepriseService.findAllBySecteurActiviteAndRaisonSocialeAndPays(codeSecteurActivite, codeRaisonSociale, codePays);
+                }
+            }
+
+            for (Entreprise entr:entreprises){
+                List<NotationAxe> notationAxeList = notationAxeService.findAllByEntreprise(entr.getCodeEntreprise());
+
+                for (NotationAxe notAxe:notationAxeList){
+                    notationAxes.add(notAxe);
+                }
+            }
+        }
+        else {
+            notationAxes = notationAxeService.findAllByEntreprise(codeEntreprise);
+        }
+
+        for (NotationAxe notationAxe:notationAxes){
+            NotationAxeOneList notationAxeOneList = new NotationAxeOneList();
+            AxeOneList axeOneList = new AxeOneList();
+
+            notationAxeOneList.setCodeNotationAxe(notationAxe.getCodeNotationAxe());
+            notationAxeOneList.setValeurNotationAxe(notationAxe.getValeurNotationAxe());
+            axeOneList.setLibelleAxe(notationAxe.getAxe().getLibelleAxe());
+            axeOneList.setCouleur(notationAxe.getAxe().getCouleur());
+            axeOneList.setNotationAxeOneList(notationAxeOneList);
+            axeOneLists.add(axeOneList);
+        }
+
+        ajaxResponseBody.setResult(axeOneLists);
 
         return ResponseEntity.ok(ajaxResponseBody);
     }

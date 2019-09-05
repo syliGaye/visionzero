@@ -3,6 +3,8 @@ package ci.dcg.visionzero.axe;
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.evaluation.EvaluationOneList;
 import ci.dcg.visionzero.imageuser.ImageUser;
+import ci.dcg.visionzero.notationaxe.NotationAxe;
+import ci.dcg.visionzero.notationaxe.NotationAxeOneList;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class AxeOneList {
     private Couleur couleur;
     private ImageUser imageUser;
     private List<EvaluationOneList> evaluationOneLists;
+    private NotationAxeOneList notationAxeOneList;
 
     public AxeOneList() {
         super();
@@ -64,5 +67,13 @@ public class AxeOneList {
 
     public void setEvaluationOneLists(List<EvaluationOneList> evaluationOneLists) {
         this.evaluationOneLists = evaluationOneLists;
+    }
+
+    public NotationAxeOneList getNotationAxeOneList() {
+        return notationAxeOneList;
+    }
+
+    public void setNotationAxeOneList(NotationAxeOneList notationAxeOneList) {
+        this.notationAxeOneList = notationAxeOneList;
     }
 }
