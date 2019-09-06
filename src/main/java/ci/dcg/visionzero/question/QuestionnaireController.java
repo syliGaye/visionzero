@@ -1,10 +1,14 @@
 package ci.dcg.visionzero.question;
 
-import ci.dcg.visionzero.axe.Axe;
 import ci.dcg.visionzero.axe.AxeService;
-import ci.dcg.visionzero.evaluation.Evaluation;
+import ci.dcg.visionzero.entreprise.Entreprise;
+import ci.dcg.visionzero.entreprise.EntrepriseService;
 import ci.dcg.visionzero.evaluation.EvaluationService;
 import ci.dcg.visionzero.files.FileStorageService;
+import ci.dcg.visionzero.notationquestion.NotationQuestion;
+import ci.dcg.visionzero.notationquestion.NotationQuestionService;
+import ci.dcg.visionzero.reponse.Reponse;
+import ci.dcg.visionzero.reponse.ReponseService;
 import ci.dcg.visionzero.support.AjaxResponseBody;
 import ci.dcg.visionzero.support.LesFonctions;
 import ci.dcg.visionzero.utilisateur.UserService;
@@ -19,10 +23,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
 
@@ -47,6 +48,15 @@ public class QuestionnaireController {
 
     @Autowired
     private AxeService axeService;
+    
+    @Autowired
+    private NotationQuestionService notationQuestionService;
+    
+    @Autowired
+    private EntrepriseService entrepriseService;
+
+    @Autowired
+    private ReponseService reponseService;
 
     @ModelAttribute("titrepage")
     String titre() {
@@ -100,7 +110,15 @@ public class QuestionnaireController {
         }
 
         questionnaireForm.setEvaluation(evaluationService.getOne(questionnaireForm.getCodeEvaluation()));
-        questionnaireService.save(questionnaireForm.createNewQuestionnaire());
+        Questionnaire questionnaire = questionnaireService.save(questionnaireForm.createNewQuestionnaire());
+        List<Entreprise> entreprises = entrepriseService.findAll();
+        Reponse reponse = reponseService.findByValeur(1);
+
+        if (!entreprises.isEmpty()){
+            for (Entreprise entreprise:entreprises){
+                notationQuestionService.save(new NotationQuestion(questionnaire, reponse, entreprise));
+            }
+        }
 
         return REDIRECT_QUESTION_LIST;
     }

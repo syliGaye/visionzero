@@ -1,8 +1,22 @@
 package ci.dcg.visionzero.entreprise;
 
+import ci.dcg.visionzero.axe.Axe;
+import ci.dcg.visionzero.axe.AxeService;
+import ci.dcg.visionzero.evaluation.Evaluation;
+import ci.dcg.visionzero.evaluation.EvaluationService;
 import ci.dcg.visionzero.files.FileStorageService;
+import ci.dcg.visionzero.notationaxe.NotationAxe;
+import ci.dcg.visionzero.notationaxe.NotationAxeService;
+import ci.dcg.visionzero.notationevaluation.NotationEvaluation;
+import ci.dcg.visionzero.notationevaluation.NotationEvaluationService;
+import ci.dcg.visionzero.notationquestion.NotationQuestion;
+import ci.dcg.visionzero.notationquestion.NotationQuestionService;
 import ci.dcg.visionzero.pays.PaysService;
+import ci.dcg.visionzero.question.Questionnaire;
+import ci.dcg.visionzero.question.QuestionnaireService;
 import ci.dcg.visionzero.raisonsociale.RaisonSocialeService;
+import ci.dcg.visionzero.reponse.Reponse;
+import ci.dcg.visionzero.reponse.ReponseService;
 import ci.dcg.visionzero.secteuractivite.SecteurActiviteService;
 import ci.dcg.visionzero.support.AjaxResponseBody;
 import ci.dcg.visionzero.support.LesFonctions;
@@ -18,6 +32,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
 
@@ -45,6 +61,27 @@ public class EntrepriseController {
 
     @Autowired
     private RaisonSocialeService raisonSocialeService;
+
+    @Autowired
+    private AxeService axeService;
+
+    @Autowired
+    private NotationAxeService notationAxeService;
+
+    @Autowired
+    private EvaluationService evaluationService;
+
+    @Autowired
+    private NotationEvaluationService notationEvaluationService;
+
+    @Autowired
+    private QuestionnaireService questionnaireService;
+
+    @Autowired
+    private ReponseService reponseService;
+
+    @Autowired
+    private NotationQuestionService notationQuestionService;
 
     @ModelAttribute("titrepage")
     String titre() {
@@ -94,7 +131,30 @@ public class EntrepriseController {
         entrepriseForm.setPays(paysService.getOne(entrepriseForm.getIdPays()));
         entrepriseForm.setSecteurActivite(secteurActiviteService.getOne(entrepriseForm.getIdSecteurActivite()));
         entrepriseForm.setRaisonSociale(raisonSocialeService.getOne(entrepriseForm.getIdRaisonSociale()));
-        entrepriseService.save(entrepriseForm.createNewEntreprise());
+
+        Entreprise entreprise = entrepriseService.save(entrepriseForm.createNewEntreprise());
+        List<Axe> axes = axeService.findAll();
+
+        if (!axes.isEmpty()){
+            for (Axe axe:axes){
+                List<Evaluation> evaluations = evaluationService.findAllByAxe(axe.getCodeAxe());
+                notationAxeService.save(new NotationAxe(1.0, axe, entreprise));
+
+                if (!evaluations.isEmpty()){
+                    for (Evaluation evaluation:evaluations){
+                        Reponse reponse = reponseService.findByValeur(1);
+                        List<Questionnaire> questionnaires = questionnaireService.findAllByEvaluation(evaluation.getCodeEvaluation());
+                        notationEvaluationService.save(new NotationEvaluation(1.0, evaluation, entreprise));
+
+                        if (!questionnaires.isEmpty() && reponse != null){
+                            for (Questionnaire quest:questionnaires){
+                                notationQuestionService.save(new NotationQuestion(quest, reponse, entreprise));
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         return REDIRECT_ENTREPRISE_LIST;
     }

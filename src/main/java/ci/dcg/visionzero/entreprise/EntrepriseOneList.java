@@ -1,8 +1,11 @@
 package ci.dcg.visionzero.entreprise;
 
+import ci.dcg.visionzero.axe.AxeOneList;
 import ci.dcg.visionzero.pays.Pays;
 import ci.dcg.visionzero.raisonsociale.RaisonSociale;
 import ci.dcg.visionzero.secteuractivite.SecteurActivite;
+
+import java.util.List;
 
 public class EntrepriseOneList {
     private String codeEntreprise;
@@ -11,6 +14,7 @@ public class EntrepriseOneList {
     private Pays pays;
     private SecteurActivite secteurActivite;
     private RaisonSociale raisonSociale;
+    private List<AxeOneList> axeOneLists;
 
     public EntrepriseOneList() {
         super();
@@ -64,4 +68,11 @@ public class EntrepriseOneList {
         this.raisonSociale = raisonSociale;
     }
 
+    public List<AxeOneList> getAxeOneLists() {
+        return axeOneLists;
+    }
+
+    public void setAxeOneLists(List<AxeOneList> axeOneLists) {
+        this.axeOneLists = axeOneLists;
+    }
 }

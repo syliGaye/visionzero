@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
 
@@ -172,6 +174,8 @@ public class StatistiqueController {
                                          @PathVariable("secteuractivite") String codeSecteurActivite,
                                          @PathVariable("raisonsociale") String codeRaisonSociale){
         AjaxResponseBody ajaxResponseBody = new AjaxResponseBody();
+        List<EntrepriseOneList> entrepriseOneLists = new ArrayList<>();
+        Map<String, AjaxResponseBody> map = new HashMap<>();
         List<Entreprise> entreprises;
         List<NotationAxe> notationAxes = new ArrayList<>();
         List<AxeOneList> axeOneLists = new ArrayList<>();
@@ -199,11 +203,15 @@ public class StatistiqueController {
             }
 
             for (Entreprise entr:entreprises){
+                EntrepriseOneList entrepriseOneList = new EntrepriseOneList();
                 List<NotationAxe> notationAxeList = notationAxeService.findAllByEntreprise(entr.getCodeEntreprise());
+                entrepriseOneList.setNomEntreprise(entr.getNomEntreprise());
 
                 for (NotationAxe notAxe:notationAxeList){
                     notationAxes.add(notAxe);
                 }
+
+                entrepriseOneLists.add(entrepriseOneList);
             }
         }
         else {

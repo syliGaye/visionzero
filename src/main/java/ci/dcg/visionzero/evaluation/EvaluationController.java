@@ -1,7 +1,11 @@
 package ci.dcg.visionzero.evaluation;
 
 import ci.dcg.visionzero.axe.AxeService;
+import ci.dcg.visionzero.entreprise.Entreprise;
+import ci.dcg.visionzero.entreprise.EntrepriseService;
 import ci.dcg.visionzero.files.FileStorageService;
+import ci.dcg.visionzero.notationevaluation.NotationEvaluation;
+import ci.dcg.visionzero.notationevaluation.NotationEvaluationService;
 import ci.dcg.visionzero.support.AjaxResponseBody;
 import ci.dcg.visionzero.support.LesFonctions;
 import ci.dcg.visionzero.utilisateur.UserService;
@@ -17,6 +21,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
 
@@ -38,6 +44,12 @@ public class EvaluationController {
 
     @Autowired
     private AxeService axeService;
+
+    @Autowired
+    private NotationEvaluationService notationEvaluationService;
+
+    @Autowired
+    private EntrepriseService entrepriseService;
 
     @ModelAttribute("titrepage")
     String titre() {
@@ -91,7 +103,14 @@ public class EvaluationController {
         }
 
         evaluationForm.setAxe(axeService.getOne(evaluationForm.getIdAxe()));
-        evaluationService.save(evaluationForm.createNewEvaluation());
+        Evaluation evaluation = evaluationService.save(evaluationForm.createNewEvaluation());
+        List<Entreprise> entreprises = entrepriseService.findAll();
+
+        if (!entreprises.isEmpty()){
+            for (Entreprise entreprise:entreprises){
+                notationEvaluationService.save(new NotationEvaluation(1.0, evaluation, entreprise));
+            }
+        }
 
         return REDIRECT_DOMAINE_LIST;
     }

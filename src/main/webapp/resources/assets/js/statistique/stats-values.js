@@ -39,6 +39,7 @@ function drawChartsWithRequest(url) {
         method: 'GET',
         data: null,
         success: function (data) {
+            console.log(data.result);
             var donnees = [];
 
             data.result.forEach(function (t) {

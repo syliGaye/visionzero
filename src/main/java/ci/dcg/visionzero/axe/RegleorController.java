@@ -1,14 +1,13 @@
 package ci.dcg.visionzero.axe;
 
-import ci.dcg.visionzero.couleur.CouleurService;
 import ci.dcg.visionzero.entreprise.Entreprise;
 import ci.dcg.visionzero.entreprise.EntrepriseService;
 import ci.dcg.visionzero.evaluation.Evaluation;
 import ci.dcg.visionzero.evaluation.EvaluationOneList;
 import ci.dcg.visionzero.evaluation.EvaluationService;
 import ci.dcg.visionzero.files.FileStorageService;
-import ci.dcg.visionzero.imageuser.ImageUserService;
-import ci.dcg.visionzero.notationaxe.*;
+import ci.dcg.visionzero.notationaxe.NotationAxe;
+import ci.dcg.visionzero.notationaxe.NotationAxeService;
 import ci.dcg.visionzero.notationevaluation.NotationEvaluation;
 import ci.dcg.visionzero.notationevaluation.NotationEvaluationService;
 import ci.dcg.visionzero.notationquestion.NotationQuestion;
@@ -46,16 +45,10 @@ public class RegleorController {
     private AxeService axeService;
 
     @Autowired
-    private CouleurService couleurService;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
     private FileStorageService fileStorageService;
-
-    @Autowired
-    private ImageUserService imageUserService;
 
     @Autowired
     private EntrepriseService entrepriseService;
@@ -150,7 +143,7 @@ public class RegleorController {
         NotationAxe notationAxe = notationAxeService.findByAxeAndEntreprise(codeAxe, codeEntreprise);
 
         if (notationAxe == null) {
-            notationAxe = new NotationAxe(0.00, axeService.getOne(codeAxe), entrepriseService.getOne(codeEntreprise));
+            notationAxe = new NotationAxe(1.00, axeService.getOne(codeAxe), entrepriseService.getOne(codeEntreprise));
             ajaxResponseBody.setValeur(notationAxeService.save(notationAxe).getValeurNotationAxe());
         }
         else ajaxResponseBody.setValeur(notationAxe.getValeurNotationAxe());
@@ -165,7 +158,7 @@ public class RegleorController {
         NotationEvaluation notationEvaluation = notationEvaluationService.findByEvaluationAndEntreprise(codeEvaluation, codeEntreprise);
 
         if (notationEvaluation == null) {
-            notationEvaluation = new NotationEvaluation(0.00, evaluationService.getOne(codeEvaluation), entrepriseService.getOne(codeEntreprise));
+            notationEvaluation = new NotationEvaluation(1.00, evaluationService.getOne(codeEvaluation), entrepriseService.getOne(codeEntreprise));
             ajaxResponseBody.setValeur(notationEvaluationService.save(notationEvaluation).getValeurNotationEvaluation());
         }
         else ajaxResponseBody.setValeur(notationEvaluation.getValeurNotationEvaluation());

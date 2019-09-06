@@ -1,10 +1,14 @@
 package ci.dcg.visionzero.axe;
 
 import ci.dcg.visionzero.couleur.CouleurService;
+import ci.dcg.visionzero.entreprise.Entreprise;
+import ci.dcg.visionzero.entreprise.EntrepriseService;
 import ci.dcg.visionzero.files.FileForm;
 import ci.dcg.visionzero.files.FileStorageService;
 import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.imageuser.ImageUserService;
+import ci.dcg.visionzero.notationaxe.NotationAxe;
+import ci.dcg.visionzero.notationaxe.NotationAxeService;
 import ci.dcg.visionzero.support.AjaxResponseBody;
 import ci.dcg.visionzero.support.LesFonctions;
 import ci.dcg.visionzero.utilisateur.UserService;
@@ -50,6 +54,12 @@ public class AxeController {
 
     @Autowired
     private AxeValidator axeValidator;
+
+    @Autowired
+    private EntrepriseService entrepriseService;
+
+    @Autowired
+    private NotationAxeService notationAxeService;
 
     @ModelAttribute("titrepage")
     String titre() {
@@ -108,7 +118,15 @@ public class AxeController {
             axeForm.setImageUser(new LesFonctions().createImageForUser(idAxe, imageUserService, axeForm.getFile()));
             axeForm.setCouleur(couleurService.getOne(axeForm.getIdCouleur()));
 
-            axeService.save(axeForm.createNewAxe());
+            Axe axe = axeService.save(axeForm.createNewAxe());
+            List<Entreprise> entreprises = entrepriseService.findAll();
+
+            if (!entreprises.isEmpty()){
+                for (Entreprise entreprise:entreprises){
+                    notationAxeService.save(new NotationAxe(1.0, axe, entreprise));
+                }
+            }
+
             return REDIRECT_AXE_LIST;
         } catch (IOException e) {
             e.printStackTrace();
