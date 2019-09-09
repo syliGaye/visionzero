@@ -174,13 +174,11 @@ public class StatistiqueController {
                                          @PathVariable("secteuractivite") String codeSecteurActivite,
                                          @PathVariable("raisonsociale") String codeRaisonSociale){
         AjaxResponseBody ajaxResponseBody = new AjaxResponseBody();
-        List<EntrepriseOneList> entrepriseOneLists = new ArrayList<>();
-        Map<String, AjaxResponseBody> map = new HashMap<>();
-        List<Entreprise> entreprises;
-        List<NotationAxe> notationAxes = new ArrayList<>();
-        List<AxeOneList> axeOneLists = new ArrayList<>();
 
         if (codeEntreprise.equals("null")){
+            List<EntrepriseOneList> entrepriseOneLists = new ArrayList<>();
+            List<Entreprise> entreprises;
+
             if (codePays.equals("null")){
                 if (codeRaisonSociale.equals("null")){
                     if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAll();
@@ -204,33 +202,21 @@ public class StatistiqueController {
 
             for (Entreprise entr:entreprises){
                 EntrepriseOneList entrepriseOneList = new EntrepriseOneList();
-                List<NotationAxe> notationAxeList = notationAxeService.findAllByEntreprise(entr.getCodeEntreprise());
                 entrepriseOneList.setNomEntreprise(entr.getNomEntreprise());
-
-                for (NotationAxe notAxe:notationAxeList){
-                    notationAxes.add(notAxe);
-                }
-
+                entrepriseOneList.setAxeOneLists(new LesFonctions().getAxesList(notationAxeService.findAllByEntreprise(entr.getCodeEntreprise())));
                 entrepriseOneLists.add(entrepriseOneList);
             }
+
+            ajaxResponseBody.setMsg("liste");
+            ajaxResponseBody.setResult(entrepriseOneLists);
         }
         else {
-            notationAxes = notationAxeService.findAllByEntreprise(codeEntreprise);
+            EntrepriseOneList entrepriseOneList = new EntrepriseOneList();
+            entrepriseOneList.setNomEntreprise(entrepriseService.getOne(codeEntreprise).getNomEntreprise());
+            entrepriseOneList.setAxeOneLists(new LesFonctions().getAxesList(notationAxeService.findAllByEntreprise(codeEntreprise)));
+            ajaxResponseBody.setMsg("objet");
+            ajaxResponseBody.setObject(entrepriseOneList);
         }
-
-        for (NotationAxe notationAxe:notationAxes){
-            NotationAxeOneList notationAxeOneList = new NotationAxeOneList();
-            AxeOneList axeOneList = new AxeOneList();
-
-            notationAxeOneList.setCodeNotationAxe(notationAxe.getCodeNotationAxe());
-            notationAxeOneList.setValeurNotationAxe(notationAxe.getValeurNotationAxe());
-            axeOneList.setLibelleAxe(notationAxe.getAxe().getLibelleAxe());
-            axeOneList.setCouleur(notationAxe.getAxe().getCouleur());
-            axeOneList.setNotationAxeOneList(notationAxeOneList);
-            axeOneLists.add(axeOneList);
-        }
-
-        ajaxResponseBody.setResult(axeOneLists);
 
         return ResponseEntity.ok(ajaxResponseBody);
     }

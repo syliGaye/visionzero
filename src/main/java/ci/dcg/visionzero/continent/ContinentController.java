@@ -1,8 +1,6 @@
 package ci.dcg.visionzero.continent;
 
 import ci.dcg.visionzero.files.FileStorageService;
-import ci.dcg.visionzero.imageuser.ImageUserService;
-import ci.dcg.visionzero.role.RoleService;
 import ci.dcg.visionzero.support.AjaxResponseBody;
 import ci.dcg.visionzero.support.LesFonctions;
 import ci.dcg.visionzero.utilisateur.UserService;

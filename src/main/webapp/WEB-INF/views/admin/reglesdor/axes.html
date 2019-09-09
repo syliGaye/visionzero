@@ -69,6 +69,7 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Id</th>
                                         <th>Pic</th>
                                         <th>Libell&eacute;</th>
                                         <th>Description</th>
@@ -78,6 +79,7 @@
                                     <tbody>
                                     <tr th:each="axe,i:${listAxes}">
                                         <td th:text="${(i.index) +1}"></td>
+                                        <td th:text="${axe.codeAxe}">Internet Explorer 4.0</td>
                                         <td><a th:href="@{/axes/file/get/__${axe.codeAxe}__}"><img th:src="${axe.imageUser.fileDownloadUriUser}" alt=""></a></td>
                                         <td th:text="${axe.libelleAxe}">Internet Explorer 4.0</td>
                                         <td th:text="${axe.descriptionAxe}">Internet Explorer 4.0</td>

@@ -13,7 +13,9 @@ $(window).load(function(){
     $('#validerPourNotation').on('click', function (e) {
         e.preventDefault();
         var entreprise = $('#entrepriseForNotation').val();
-        location.href = context + 'regles-or/notation/' + axe + '/' + entreprise;
+
+        if (entreprise !== '') location.href = context + 'regles-or/notation/' + axe + '/' + entreprise;
+        else alert('Choisir une entreprise !');
     });
 
 

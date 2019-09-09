@@ -1,10 +1,13 @@
 package ci.dcg.visionzero.support;
 
+import ci.dcg.visionzero.axe.AxeOneList;
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.couleur.CouleurService;
 import ci.dcg.visionzero.files.FileStorageService;
 import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.imageuser.ImageUserService;
+import ci.dcg.visionzero.notationaxe.NotationAxe;
+import ci.dcg.visionzero.notationaxe.NotationAxeOneList;
 import ci.dcg.visionzero.utilisateur.UserService;
 import ci.dcg.visionzero.utilisateur.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class LesFonctions {
@@ -25,6 +30,7 @@ public class LesFonctions {
     private CouleurService couleurService;
 
     public LesFonctions() {
+        super();
     }
 
     public double round(double value, int places) {
@@ -101,6 +107,24 @@ public class LesFonctions {
         imageUserService.update(imageUser);
 
         return imageUser;
+    }
+
+    public List<AxeOneList> getAxesList(List<NotationAxe> notationAxes){
+        List<AxeOneList> axeOneLists = new ArrayList<>();
+
+        for (NotationAxe notationAxe:notationAxes){
+            NotationAxeOneList notationAxeOneList = new NotationAxeOneList();
+            AxeOneList axeOneList = new AxeOneList();
+
+            notationAxeOneList.setCodeNotationAxe(notationAxe.getCodeNotationAxe());
+            notationAxeOneList.setValeurNotationAxe(notationAxe.getValeurNotationAxe());
+            axeOneList.setLibelleAxe(notationAxe.getAxe().getLibelleAxe());
+            axeOneList.setCouleur(notationAxe.getAxe().getCouleur());
+            axeOneList.setNotationAxeOneList(notationAxeOneList);
+            axeOneLists.add(axeOneList);
+        }
+
+        return axeOneLists;
     }
 
 }
