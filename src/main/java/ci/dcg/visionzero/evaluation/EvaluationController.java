@@ -108,7 +108,7 @@ public class EvaluationController {
 
         if (!entreprises.isEmpty()){
             for (Entreprise entreprise:entreprises){
-                notationEvaluationService.save(new NotationEvaluation(1.0, evaluation, entreprise));
+                if (notationEvaluationService.findByEvaluationAndEntreprise(evaluation.getCodeEvaluation(), entreprise.getCodeEntreprise()) == null) notationEvaluationService.save(new NotationEvaluation(1.0, evaluation, entreprise));
             }
         }
 

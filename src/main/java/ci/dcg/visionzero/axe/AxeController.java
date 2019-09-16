@@ -123,7 +123,7 @@ public class AxeController {
 
             if (!entreprises.isEmpty()){
                 for (Entreprise entreprise:entreprises){
-                    notationAxeService.save(new NotationAxe(1.0, axe, entreprise));
+                    if (notationAxeService.findByAxeAndEntreprise(axe.getCodeAxe(), entreprise.getCodeEntreprise()) == null) notationAxeService.save(new NotationAxe(1.0, axe, entreprise));
                 }
             }
 

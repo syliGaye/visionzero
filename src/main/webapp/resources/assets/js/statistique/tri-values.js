@@ -140,13 +140,35 @@ function getPays(ctx) {
         data: null,
         success: function (data) {
             $('#triPays').html("");
-            var options = '';
+            $('#triEntreprise').html("");
+            var optionsEntreprise = '';
+            var optionsPays = '';
 
-            data.result.forEach(function (t) {
-                options += '<option value="' + t.idPays + '">' + t.libellePays + '</option>';
-            });
+            if (data.result !== null){
+                data.result.forEach(function (t) {
+                    $.ajax({
+                        url:ctx + 'statistiques/pays/entreprise/' + t.idPays,
+                        method: 'GET',
+                        data: null,
+                        success: function (dn) {
+                            if (dn.result !== null){
+                                dn.result.forEach(function (t2) { optionsEntreprise += '<option value="' + t2.codeEntreprise + '">' + t2.nomEntreprise + '</option>'; });
+                            }
+                        },
+                        error: function (msg) {
+                            alert("Données Entreprises impossible!");
+                        }
+                    });
 
-            $('#triPays').html('<option value="">Choisir un Pays</option>' + options);
+                    optionsPays += '<option value="' + t.idPays + '">' + t.libellePays + '</option>';
+                });
+
+            }
+
+            alert(optionsEntreprise);
+
+            $('#triPays').html('<option value="">Choisir un Pays</option>' + optionsPays);
+            $('#triEntreprise').html('<option value="">Choisir une Entreprise</option>' + optionsEntreprise);
         },
         error: function () {
             alert("Données Pays impossible!");

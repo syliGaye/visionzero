@@ -1,64 +1,101 @@
 $(window).load(function () {
 
     var context = $('.brand').attr("href");
+    var entreprise = '';
+    var pays = '';
+    var raisonsociale = '';
+    var secteuractivite = '';
 
     $('#boutonTri').on('click', function (e) {
         e.preventDefault();
 
-        var entreprise = $('#triEntreprise').val();
-        var pays = $('#triPays').val();
-        var raisonsociale = $('#triRaisonSociale').val();
-        var secteuractivite = $('#triSecteurActivite').val();
+        entreprise = $('#triEntreprise').val();
+        pays = $('#triPays').val();
+        raisonsociale = $('#triRaisonSociale').val();
+        secteuractivite = $('#triSecteurActivite').val();
 
-        if (entreprise === null) entreprise = 'null';
-        if (pays === null) pays = 'null';
-        if (raisonsociale === null) raisonsociale = 'null';
-        if (secteuractivite === null) secteuractivite = 'null';
+        drawLineChart(context, entreprise, pays, raisonsociale, secteuractivite);
+        drawBarChart(context, entreprise, pays, raisonsociale, secteuractivite);
+        drawPieChart(context, entreprise, pays, raisonsociale, secteuractivite);
 
-        drawChartsWithRequest(context + 'statistiques/' + entreprise + '/' + pays + '/' + secteuractivite + '/' + raisonsociale);
+        $('#fermerLeTri').click();
 
     });
 
-    drawChartsWithRequest(context + 'statistiques/null/null/null/null');
+    drawLineChart(context, entreprise, pays, raisonsociale, secteuractivite);
+    drawBarChart(context, entreprise, pays, raisonsociale, secteuractivite);
+    drawPieChart(context, entreprise, pays, raisonsociale, secteuractivite);
 
 });
 
-function drawChartsWithRequest(url) {
-    var dataLine = [];
-    var optionsLine = {};
-    var plotLine = null;
-    var dataOrdered = [];
-    var optionsOrdered = {};
-    var plotOrdered = null;
-    var dataPie = [];
-    var optionsPie = {};
-    var plotPie = null;
+function drawPieChart(context, entreprise, pays, raisonsociale, secteuractivite) {
+
+    if (entreprise === '') entreprise = 'null';
+    if (pays === '') pays = 'null';
+    if (raisonsociale === '') raisonsociale = 'null';
+    if (secteuractivite === '') secteuractivite = 'null';
 
     $.ajax({
-        url: url,
+        url: context + 'statistiques/pie/' + entreprise + '/' + pays + '/' + secteuractivite + '/' + raisonsociale,
         method: 'GET',
         data: null,
         success: function (data) {
-            if (data.msg === 'objet'){
-                console.log(data.object);
-                alert('un Objet');
-            }
-            else if (data.msg = 'liste'){
-                console.log(data.result);
-                alert('une liste');
+            var dataPie = [];
+            var colorsPie = [];
+
+            if (data.result !== null) {
+                // Initialize Pie Chart
+                var index = 0;
+
+                data.result.forEach(function (t) {
+                    dataPie.push({
+                        label: 'Axe ' + (index + 1),
+                        data: t.valeurNote
+                    });
+
+                    colorsPie.push(t.hexCouleur);
+
+                    index++;
+                });
+
+                var options = {
+                    series: {
+                        pie: {
+                            show: true,
+                            innerRadius: 0,
+                            stroke: {
+                                width: 0
+                            },
+                            label: {
+                                show: true,
+                                threshold: 0.05
+                            }
+                        }
+                    },
+                    colors: colorsPie,
+                    grid: {
+                        hoverable: true,
+                        clickable: true,
+                        borderWidth: 0,
+                        color: '#ccc'
+                    },
+                    tooltip: true,
+                    tooltipOpts: { content: '%s: %p.0%' }
+                };
+
+                var plot = $.plot($("#pie-chart"), dataPie, options);
+
+                $(window).resize(function() {
+                    // redraw the graph in the correctly sized div
+                    plot.resize();
+                    plot.setupGrid();
+                    plot.draw();
+                });
+                // * Initialize Pie Chart
             }
             else {
                 alert('Données vides !');
             }
-            var donnees = [];
-
-            data.result.forEach(function (t) {
-                //donnees.push(t.);
-            });
-
-            drawLineChart(dataLine, optionsLine, plotLine);
-            drawOrderedChart(dataOrdered, optionsOrdered, plotOrdered);
-            drawPieChart(dataPie, optionsPie, plotPie);
         },
         error: function (msg) {
             alert('Impossible d\'afficher les graphiques!');
@@ -66,203 +103,152 @@ function drawChartsWithRequest(url) {
     });
 }
 
-function drawLineChart(data, options, plot) {
-    // Initialize Line Chart
+function drawBarChart(context, entreprise, pays, raisonsociale, secteuractivite) {
 
-    data = [
-        {
-            data: [[1,5.3],[2,5.9],[3,7.2],[4,8],[5,7],[6,6.5],[7,6.2]],
-            label: 'Sales',
-            points: {
-                show: true,
-                radius: 6
-            },
-            splines: {
-                show: true,
-                tension: 0.45,
-                lineWidth: 5,
-                fill: 0
-            }
-        }/*,
-        {
-            data: [[1,6.6],[2,7.4],[3,8.6],[4,9.4],[5,8.3],[6,7.9],[7,7.2],[8,7.7],[9,8.9],[10,8.4],[11,8],[12,8.3]],
-            label: 'Orders',
-            points: {
-                show: true,
-                radius: 6
-            },
-            splines: {
-                show: true,
-                tension: 0.45,
-                lineWidth: 5,
-                fill: 0
-            }
-        }*/
-    ];
+    if (entreprise === '') entreprise = 'null';
+    if (pays === '') pays = 'null';
+    if (raisonsociale === '') raisonsociale = 'null';
+    if (secteuractivite === '') secteuractivite = 'null';
 
-    options = {
-        colors: ['#a2d200', '#cd97eb'],
-        series: {
-            shadowSize: 0
-        },
-        xaxis:{
-            font: {
-                color: '#ccc'
-            },
-            position: 'bottom',
-            ticks: [
-                [ 1, 'Axe 1' ], [ 2, 'Axe 2' ], [ 3, 'Axe 3' ], [ 4, 'Axe 4' ], [ 5, 'Axe 5' ], [ 6, 'Axe 6' ], [ 7, 'Axe 7' ]
-            ]
-        },
-        yaxis: {
-            font: {
-                color: '#ccc'
+    $.ajax({
+        url: context + 'statistiques/bar/' + entreprise + '/' + pays + '/' + secteuractivite + '/' + raisonsociale,
+        method: 'GET',
+        data: null,
+        success: function (data) {
+            var dataBar = [];
+            var labelBar = [];
+            var colorsBar = [];
+
+
+            if (data.result !== null) {
+                var index = 0;
+
+                $('#bar-example').html('');
+
+                data.result.forEach(function (t) {
+                    var couleurs = [];
+                    var valeurs = [];
+                    var libelles = [];
+                    var nomEntreprise = t.nomEntreprise;
+
+                    if (t.axeOneLists !== null){
+                        t.axeOneLists.forEach(function (t2) {
+                            valeurs.push(t2.notationAxeOneList.valeurNotationAxe);
+                            couleurs.push(t2.couleur.hexCouleur);
+                            libelles.push(t2.libelleAxe);
+                        });
+                    }
+
+                    dataBar.push({
+                        y: nomEntreprise,
+                        a: valeurs[0],
+                        b: valeurs[1],
+                        c: valeurs[2],
+                        d: valeurs[3],
+                        e: valeurs[4],
+                        f: valeurs[5],
+                        g: valeurs[6]
+                    });
+                    labelBar = libelles;
+                    colorsBar = couleurs;
+                });
+
+                // Morris bar chart
+
+                Morris.Bar({
+                    element: 'bar-example',
+                    data: dataBar,
+                    xkey: 'y',
+                    ykeys: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+                    labels: labelBar,
+                    barColors:colorsBar
+                });
+            }
+            else {
+                alert('Données vides !');
             }
         },
-        grid: {
-            hoverable: true,
-            clickable: true,
-            borderWidth: 0,
-            color: '#ccc'
-        },
-        tooltip: true,
-        tooltipOpts: {
-            content: '%s: %y.4',
-            defaultTheme: false,
-            shifts: {
-                x: 0,
-                y: 20
-            }
+        error: function (msg) {
+            alert('Impossible d\'afficher les graphiques!');
         }
-    };
-
-    plot = $.plot($("#line-chart"), data, options);
-
-    $(window).resize(function() {
-        // redraw the graph in the correctly sized div
-        plot.resize();
-        plot.setupGrid();
-        plot.draw();
     });
-    // * Initialize Line Chart
 }
 
-function drawPieChart(data, options, plot) {
-    // Initialize Pie Chart
-    data = [
-        { label: 'Axe 1', data: 30 },
-        { label: 'Axe 2', data: 15 },
-        { label: 'Axe 3', data: 15 },
-        { label: 'Axe 4', data: 10 },
-        { label: 'Axe 5', data: 5 },
-        { label: 'Axe 6', data: 10},
-        { label: 'Axe 7', data: 20}
-    ];
+function drawLineChart(context, entreprise, pays, raisonsociale, secteuractivite) {
 
-    options = {
-        series: {
-            pie: {
-                show: true,
-                innerRadius: 0,
-                stroke: {
-                    width: 0
-                },
-                label: {
-                    show: true,
-                    threshold: 0.05
-                }
+    if (entreprise === '') entreprise = 'null';
+    if (pays === '') pays = 'null';
+    if (raisonsociale === '') raisonsociale = 'null';
+    if (secteuractivite === '') secteuractivite = 'null';
+
+    $.ajax({
+        url: context + 'statistiques/line/' + entreprise + '/' + pays + '/' + secteuractivite + '/' + raisonsociale,
+        method: 'GET',
+        data: null,
+        success: function (data) {
+            var dataLine = [];
+            var labelsLine = [];
+            var colorsLine = [];
+            var hKeys = '';
+            var nomAxe = '';
+
+            if (data.result !== null) {
+                var index = 0;
+
+                $('#line-example').html('');
+
+                data.result.forEach(function (t) {
+                    nomAxe = 2000 + (index + 1);  //t.libelleAxe;
+                    var nomEntreprise = [];
+                    var couleurs = [];
+                    var valeurs = [];
+
+                    t.entrepriseForLineCharts.forEach(function (t2) {
+                        nomEntreprise.push(t2.nomEntreprise);
+                        couleurs.push(t2.couleur);
+                        valeurs.push(t2.notationAxe);
+                    });
+
+                    colorsLine = couleurs;
+                    labelsLine = nomEntreprise;
+
+                    if (t.entrepriseForLineCharts.length === 1){
+                        dataLine.push({y: '' + nomAxe + '', a: valeurs[0]});
+                        hKeys = ['a'];
+                    }
+                    else if (t.entrepriseForLineCharts.length === 2){
+                        dataLine.push({y: '' + nomAxe + '', a: valeurs[0], b: valeurs[1]});
+                        hKeys = ['a', 'b'];
+                    }
+                    else if (t.entrepriseForLineCharts.length === 3){
+                        dataLine.push({y: '' + nomAxe + '', a: valeurs[0], b: valeurs[1], c: valeurs[2]});
+                        hKeys = ['a', 'b', 'c'];
+                    }
+                    else if (t.entrepriseForLineCharts.length === 4){
+                        dataLine.push({y: '' + nomAxe + '', a: valeurs[0], b: valeurs[1], c: valeurs[2], d: valeurs[3]});
+                        hKeys = ['a', 'b', 'c', 'd'];
+                    }
+
+                    index++;
+                });
+
+                // Morris line chart
+
+                Morris.Line({
+                    element: 'line-example',
+                    data: dataLine,
+                    xkey: 'y',
+                    ykeys: hKeys,
+                    labels: labelsLine,
+                    lineColors:colorsLine
+                });
+            }
+            else {
+                alert('Données vides !');
             }
         },
-        colors: ['#428bca','#5cb85c','#f0ad4e','#d9534f','#5bc0de','#616f77','#A2D200'],
-        grid: {
-            hoverable: true,
-            clickable: true,
-            borderWidth: 0,
-            color: '#ccc'
-        },
-        tooltip: true,
-        tooltipOpts: { content: '%s: %p.0%' }
-    };
-
-    plot = $.plot($("#pie-chart"), data, options);
-
-    $(window).resize(function() {
-        // redraw the graph in the correctly sized div
-        plot.resize();
-        plot.setupGrid();
-        plot.draw();
-    });
-    // * Initialize Pie Chart
-}
-
-function drawOrderedChart(data, options, plot) {
-
-    // Initialize Ordered Chart
-    data = [
-        {
-            data: [[10, 50]],
-            label: 'Axe 1'
-        }, {
-            data: [[10, 30]],
-            label: 'Axe 2'
-        }, {
-            data: [[10, 40]],
-            label: 'Axe 3'
-        }, {
-            data: [[10, 20]],
-            label: 'Axe 4'
-        }, {
-            data: [[10, 35]],
-            label: 'Axe 5'
-        }, {
-            data: [[10, 15]],
-            label: 'Axe 6'
-        }, {
-            data: [[10, 70]],
-            label: 'Axe 7'
+        error: function (msg) {
+            alert('Impossible d\'afficher les graphiques!');
         }
-    ];
-
-    options = {
-        series: {
-            shadowSize: 0
-        },
-        bars: {
-            show: true,
-            fill: true,
-            lineWidth: 0,
-            fillColor: {
-                colors: [{ opacity:0.6 }, { opacity:0.8}]
-            },
-            order: 1, // order bars
-            colors: ['#428bca','#d9534f','#A40778','#22BEEF','#FFC100','#9C27B0','#1693A5']
-        },
-        xaxis: {
-            font: {
-                color: '#ccc'
-            }
-        },
-        yaxis: {
-            font: {
-                color: '#ccc'
-            }
-        },
-        grid: {
-            hoverable: true,
-            clickable: true,
-            borderWidth: 0,
-            color: '#ccc'
-        },
-        tooltip: true
-    };
-
-    plot = $.plot($("#ordered-chart"), data, options);
-
-    $(window).resize(function() {
-        // redraw the graph in the correctly sized div
-        plot.resize();
-        plot.setupGrid();
-        plot.draw();
     });
-    // * Initialize Ordered Chart
 }

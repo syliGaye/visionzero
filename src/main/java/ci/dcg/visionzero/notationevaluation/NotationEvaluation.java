@@ -26,7 +26,7 @@ public class NotationEvaluation implements Serializable {
 
     @JsonManagedReference
     @JoinColumn(name = "CODE_EVALUATION", referencedColumnName = "CODE_EVALUATION")
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Evaluation evaluation;
 
     @JsonManagedReference

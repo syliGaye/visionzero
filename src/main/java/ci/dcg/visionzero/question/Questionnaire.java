@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class Questionnaire implements Serializable {
@@ -33,8 +34,8 @@ public class Questionnaire implements Serializable {
     private Evaluation evaluation;
 
     @JsonBackReference
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "questionnaire")
-    private NotationQuestion notationQuestion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionnaire")
+    private List<NotationQuestion> notationQuestionList;
 
     public Questionnaire() {
     }
@@ -78,12 +79,12 @@ public class Questionnaire implements Serializable {
     }
 
     @XmlTransient
-    public NotationQuestion getNotationQuestion() {
-        return notationQuestion;
+    public List<NotationQuestion> getNotationQuestionList() {
+        return notationQuestionList;
     }
 
-    public void setNotationQuestion(NotationQuestion notationQuestion) {
-        this.notationQuestion = notationQuestion;
+    public void setNotationQuestionList(List<NotationQuestion> notationQuestionList) {
+        this.notationQuestionList = notationQuestionList;
     }
 
     @Override
@@ -111,7 +112,7 @@ public class Questionnaire implements Serializable {
         return "Questionnaire{" +
                 "codeQuestionnaire='" + codeQuestionnaire + '\'' +
                 ", libelleQuestionnaire='" + libelleQuestionnaire + '\'' +
-                ", notationQuestion=" + notationQuestion +
+                ", notationQuestionList=" + notationQuestionList +
                 '}';
     }
 }

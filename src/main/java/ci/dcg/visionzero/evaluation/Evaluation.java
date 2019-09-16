@@ -39,8 +39,8 @@ public class Evaluation implements Serializable {
     private List<Questionnaire> questionnaireList;
 
     @JsonBackReference
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "evaluation")
-    private NotationEvaluation notationEvaluation;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluation")
+    private List<NotationEvaluation> notationEvaluationList;
 
     public Evaluation() {
         super();
@@ -94,12 +94,12 @@ public class Evaluation implements Serializable {
     }
 
     @XmlTransient
-    public NotationEvaluation getNotationEvaluation() {
-        return notationEvaluation;
+    public List<NotationEvaluation> getNotationEvaluationList() {
+        return notationEvaluationList;
     }
 
-    public void setNotationEvaluation(NotationEvaluation notationEvaluation) {
-        this.notationEvaluation = notationEvaluation;
+    public void setNotationEvaluationList(List<NotationEvaluation> notationEvaluationList) {
+        this.notationEvaluationList = notationEvaluationList;
     }
 
     @Override
@@ -128,7 +128,7 @@ public class Evaluation implements Serializable {
                 "codeEvaluation='" + codeEvaluation + '\'' +
                 ", libelleEvaluation='" + libelleEvaluation + '\'' +
                 ", questionnaireList=" + questionnaireList +
-                ", notationEvaluation=" + notationEvaluation +
+                ", notationEvaluationList=" + notationEvaluationList +
                 '}';
     }
 }

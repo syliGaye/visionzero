@@ -23,7 +23,7 @@ public class NotationQuestion implements Serializable {
 
     @JsonManagedReference
     @JoinColumn(name = "CODE_QUESTIONNAIRE", referencedColumnName = "CODE_QUESTIONNAIRE")
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Questionnaire questionnaire;
 
     @JsonManagedReference

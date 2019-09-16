@@ -3,6 +3,8 @@ package ci.dcg.visionzero.support;
 import ci.dcg.visionzero.axe.AxeOneList;
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.couleur.CouleurService;
+import ci.dcg.visionzero.entreprise.Entreprise;
+import ci.dcg.visionzero.entreprise.EntrepriseService;
 import ci.dcg.visionzero.files.FileStorageService;
 import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.imageuser.ImageUserService;
@@ -125,6 +127,33 @@ public class LesFonctions {
         }
 
         return axeOneLists;
+    }
+
+    public List<Entreprise> getEnterprisesList(String codePays, String codeSecteurActivite, String codeRaisonSociale, EntrepriseService entrepriseService){
+        List<Entreprise> entreprises;
+
+        if (codePays.equals("null")){
+            if (codeRaisonSociale.equals("null")){
+                if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAll();
+                else entreprises = entrepriseService.findAllBySecteurActivite(codeSecteurActivite);
+            }
+            else{
+                if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAllByRaisonSociale(codeRaisonSociale);
+                else entreprises = entrepriseService.findAllBySecteurActiviteAndRaisonSociale(codeSecteurActivite, codeRaisonSociale);
+            }
+        }
+        else{
+            if (codeRaisonSociale.equals("null")){
+                if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAllByPays(codePays);
+                else entreprises = entrepriseService.findAllBySecteurActiviteAndPays(codeSecteurActivite, codePays);
+            }
+            else{
+                if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAllByRaisonSocialeAndPays(codeRaisonSociale, codePays);
+                else entreprises = entrepriseService.findAllBySecteurActiviteAndRaisonSocialeAndPays(codeSecteurActivite, codeRaisonSociale, codePays);
+            }
+        }
+
+        return entreprises;
     }
 
 }

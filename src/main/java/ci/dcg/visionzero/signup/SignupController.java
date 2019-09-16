@@ -2,7 +2,6 @@ package ci.dcg.visionzero.signup;
 
 import ci.dcg.visionzero.files.FileStorageService;
 import ci.dcg.visionzero.imageuser.ImageUserService;
-import ci.dcg.visionzero.role.Role;
 import ci.dcg.visionzero.role.RoleService;
 import ci.dcg.visionzero.support.LesFonctions;
 import ci.dcg.visionzero.utilisateur.UserService;
@@ -102,49 +101,6 @@ public class SignupController {
             return REDIRECT_SIGNUP;
         }
     }
-
-    /*@GetMapping("upload")
-    String upload(Model model){
-        if (utilisateurStoked != null){
-            model.addAttribute("userFile", utilisateurStoked);
-            return UPLOADFILE_VIEW_NAME;
-        }
-
-        return REDIRECT_SIGNUP;
-    }
-
-    @PostMapping("upload")
-    String upload(Model model, @RequestParam("photo") MultipartFile file, HttpServletRequest request){
-        try {
-            byte[] bytes = file.getBytes();
-            String codeUtilisateur = userService.retourneId();
-            String codImage = imageUserService.retourneId();
-            String fileName = codImage + "_" + codeUtilisateur;
-
-            String[] types = file.getContentType().split("/");
-
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/downloadFile/")
-                    .path(fileName + "." + types[1])
-                    .toUriString();
-
-            ImageUser imageUser = new ImageUser();
-            imageUser.setCodeImageUser(codImage);
-            imageUser.setFileUser(bytes); imageUser.setFileDownloadUriUser(fileDownloadUri); imageUser.setFileNameUser(fileName);
-            imageUser.setFileTypeUser(types[1]); imageUser.setFileSizeUser(file.getSize());
-
-            ImageUser newImageUser = imageUserService.save(imageUser);
-            utilisateurStoked.setId(codeUtilisateur);
-            utilisateurStoked.setImageUser(newImageUser);
-            userService.save(utilisateurStoked);
-            utilisateurDetailService.loginUser(utilisateurStoked);
-
-            return REDIRECT_SIGNIN;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return REDIRECT_SIGNUP;
-        }
-    }*/
 
     @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {

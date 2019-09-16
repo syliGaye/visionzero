@@ -1,10 +1,13 @@
 package ci.dcg.visionzero.entreprise;
 
-import ci.dcg.visionzero.axe.AxeOneList;
+import ci.dcg.visionzero.axe.Axe;
+import ci.dcg.visionzero.axe.AxeForLineChart;
+import ci.dcg.visionzero.axe.AxeForPieChart;
+import ci.dcg.visionzero.axe.AxeService;
 import ci.dcg.visionzero.continent.ContinentService;
+import ci.dcg.visionzero.couleur.Couleur;
+import ci.dcg.visionzero.couleur.CouleurService;
 import ci.dcg.visionzero.files.FileStorageService;
-import ci.dcg.visionzero.notationaxe.NotationAxe;
-import ci.dcg.visionzero.notationaxe.NotationAxeOneList;
 import ci.dcg.visionzero.notationaxe.NotationAxeService;
 import ci.dcg.visionzero.pays.PaysService;
 import ci.dcg.visionzero.raisonsociale.RaisonSocialeService;
@@ -23,9 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
 
@@ -56,6 +57,12 @@ public class StatistiqueController {
 
     @Autowired
     private NotationAxeService notationAxeService;
+
+    @Autowired
+    private CouleurService couleurService;
+
+    @Autowired
+    private AxeService axeService;
 
     @ModelAttribute("titrepage")
     String titre() {
@@ -125,9 +132,7 @@ public class StatistiqueController {
                             raisonsociale,
                             pays));
                 }
-                else {
-                    ajaxResponseBody.setResult(entrepriseService.findAllByPays(pays));
-                }
+                else ajaxResponseBody.setResult(entrepriseService.findAllByPays(pays));
             }
         }
         else {
@@ -137,17 +142,11 @@ public class StatistiqueController {
                             secteuractivite,
                             raisonsociale));
                 }
-                else {
-                    ajaxResponseBody.setResult(entrepriseService.findAllBySecteurActivite(secteuractivite));
-                }
+                else ajaxResponseBody.setResult(entrepriseService.findAllBySecteurActivite(secteuractivite));
             }
             else {
-                if (!raisonsociale.equals("null")){
-                    ajaxResponseBody.setResult(entrepriseService.findAllByRaisonSociale(raisonsociale));
-                }
-                else {
-                    ajaxResponseBody.setResult(entrepriseService.findAll());
-                }
+                if (!raisonsociale.equals("null"))ajaxResponseBody.setResult(entrepriseService.findAllByRaisonSociale(raisonsociale));
+                else ajaxResponseBody.setResult(entrepriseService.findAll());
             }
         }
 
@@ -158,74 +157,153 @@ public class StatistiqueController {
     ResponseEntity<?> getAllPays(@PathVariable("continent") String continent){
         AjaxResponseBody ajaxResponseBody = new AjaxResponseBody();
 
-        if (!continent.equals("null")){
-            ajaxResponseBody.setResult(paysService.findAllByContinent(continent));
-        }
-        else {
-            ajaxResponseBody.setResult(paysService.findAll());
-        }
+        if (!continent.equals("null")) ajaxResponseBody.setResult(paysService.findAllByContinent(continent));
+        else ajaxResponseBody.setResult(paysService.findAll());
 
         return ResponseEntity.ok(ajaxResponseBody);
     }
 
-    @GetMapping("statistiques/{entreprise}/{pays}/{secteuractivite}/{raisonsociale}")
-    ResponseEntity<?> getValuesForCharts(@PathVariable("entreprise") String codeEntreprise,
+    @GetMapping("statistiques/pays/entreprise/{pays}")
+    ResponseEntity<?> getAllEntreprisesByContinent(@PathVariable("pays") String pays){
+        AjaxResponseBody ajaxResponseBody = new AjaxResponseBody();
+
+        ajaxResponseBody.setResult(entrepriseService.findAllByPays(pays));
+
+        return ResponseEntity.ok(ajaxResponseBody);
+    }
+
+    @GetMapping("statistiques/bar/{entreprise}/{pays}/{secteuractivite}/{raisonsociale}")
+    ResponseEntity<?> getValuesForBarCharts(@PathVariable("entreprise") String codeEntreprise,
                                          @PathVariable("pays") String codePays,
                                          @PathVariable("secteuractivite") String codeSecteurActivite,
                                          @PathVariable("raisonsociale") String codeRaisonSociale){
         AjaxResponseBody ajaxResponseBody = new AjaxResponseBody();
+        List<EntrepriseOneList> entrepriseOneLists = new ArrayList<>();
 
         if (codeEntreprise.equals("null")){
-            List<EntrepriseOneList> entrepriseOneLists = new ArrayList<>();
-            List<Entreprise> entreprises;
+            List<Entreprise> entreprises = new LesFonctions().getEnterprisesList(codePays, codeSecteurActivite, codeRaisonSociale, entrepriseService);
 
-            if (codePays.equals("null")){
-                if (codeRaisonSociale.equals("null")){
-                    if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAll();
-                    else entreprises = entrepriseService.findAllBySecteurActivite(codeSecteurActivite);
-                }
-                else{
-                    if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAllByRaisonSociale(codeRaisonSociale);
-                    else entreprises = entrepriseService.findAllBySecteurActiviteAndRaisonSociale(codeSecteurActivite, codeRaisonSociale);
-                }
-            }
-            else{
-                if (codeRaisonSociale.equals("null")){
-                    if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAllByPays(codePays);
-                    else entreprises = entrepriseService.findAllBySecteurActiviteAndPays(codeSecteurActivite, codePays);
-                }
-                else{
-                    if (codeSecteurActivite.equals("null")) entreprises = entrepriseService.findAllByRaisonSocialeAndPays(codeRaisonSociale, codePays);
-                    else entreprises = entrepriseService.findAllBySecteurActiviteAndRaisonSocialeAndPays(codeSecteurActivite, codeRaisonSociale, codePays);
-                }
-            }
+            List<Couleur> couleurs = couleurService.findAll();
+            int index = 0;
 
             for (Entreprise entr:entreprises){
                 EntrepriseOneList entrepriseOneList = new EntrepriseOneList();
+                entrepriseOneList.setCouleur(couleurs.get(index));
                 entrepriseOneList.setNomEntreprise(entr.getNomEntreprise());
                 entrepriseOneList.setAxeOneLists(new LesFonctions().getAxesList(notationAxeService.findAllByEntreprise(entr.getCodeEntreprise())));
                 entrepriseOneLists.add(entrepriseOneList);
+                index++;
             }
 
-            ajaxResponseBody.setMsg("liste");
-            ajaxResponseBody.setResult(entrepriseOneLists);
         }
         else {
             EntrepriseOneList entrepriseOneList = new EntrepriseOneList();
             entrepriseOneList.setNomEntreprise(entrepriseService.getOne(codeEntreprise).getNomEntreprise());
             entrepriseOneList.setAxeOneLists(new LesFonctions().getAxesList(notationAxeService.findAllByEntreprise(codeEntreprise)));
-            ajaxResponseBody.setMsg("objet");
-            ajaxResponseBody.setObject(entrepriseOneList);
+            entrepriseOneLists.add(entrepriseOneList);
         }
+
+        ajaxResponseBody.setResult(entrepriseOneLists);
 
         return ResponseEntity.ok(ajaxResponseBody);
     }
 
-    /*@GetMapping("entreprises/continents")
-    ResponseEntity<?> delete(@PathVariable("id") String id){
+    @GetMapping("statistiques/line/{entreprise}/{pays}/{secteuractivite}/{raisonsociale}")
+    ResponseEntity<?> getValuesForLineCharts(@PathVariable("entreprise") String codeEntreprise,
+                                         @PathVariable("pays") String codePays,
+                                         @PathVariable("secteuractivite") String codeSecteurActivite,
+                                         @PathVariable("raisonsociale") String codeRaisonSociale){
         AjaxResponseBody ajaxResponseBody = new AjaxResponseBody();
-        ajaxResponseBody.setResult(entrepriseService.findAll());
+        List<AxeForLineChart> axeForLineCharts = new ArrayList<>();
+
+        if (codeEntreprise.equals("null")){
+            List<Entreprise> entreprises = new LesFonctions().getEnterprisesList(codePays, codeSecteurActivite, codeRaisonSociale, entrepriseService);
+
+            List<Couleur> couleurs = couleurService.findAll();
+            int index = 0;
+
+            for (Axe axe:axeService.findAll()) {
+                AxeForLineChart axeForLineChart = new AxeForLineChart();
+                List<EntrepriseForLineChart> entrepriseForLineCharts = new ArrayList<>();
+
+                for (Entreprise entr:entreprises){
+                    EntrepriseForLineChart entrepriseForLineChart = new EntrepriseForLineChart();
+                    entrepriseForLineChart.setCouleur(couleurs.get(index).getHexCouleur());
+                    entrepriseForLineChart.setNomEntreprise(entr.getNomEntreprise());
+                    entrepriseForLineChart.setNotationAxe(notationAxeService.findByAxeAndEntreprise(axe.getCodeAxe(), entr.getCodeEntreprise()).getValeurNotationAxe());
+                    entrepriseForLineCharts.add(entrepriseForLineChart);
+                    index++;
+                }
+
+                axeForLineChart.setLibelleAxe(axe.getLibelleAxe());
+                axeForLineChart.setEntrepriseForLineCharts(entrepriseForLineCharts);
+                axeForLineCharts.add(axeForLineChart);
+            }
+        }
+        else {
+
+            for (Axe axe:axeService.findAll()) {
+                AxeForLineChart axeForLineChart = new AxeForLineChart();
+                List<EntrepriseForLineChart> entrepriseForLineCharts = new ArrayList<>();
+                EntrepriseForLineChart entrepriseForLineChart = new EntrepriseForLineChart();
+
+                entrepriseForLineChart.setCouleur(couleurService.findAll().get(0).getHexCouleur());
+                entrepriseForLineChart.setNomEntreprise(entrepriseService.getOne(codeEntreprise).getNomEntreprise());
+                entrepriseForLineChart.setNotationAxe(notationAxeService.findByAxeAndEntreprise(axe.getCodeAxe(), entrepriseService.getOne(codeEntreprise).getCodeEntreprise()).getValeurNotationAxe());
+                entrepriseForLineCharts.add(entrepriseForLineChart);
+
+                axeForLineChart.setLibelleAxe(axe.getLibelleAxe());
+                axeForLineChart.setEntrepriseForLineCharts(entrepriseForLineCharts);
+                axeForLineCharts.add(axeForLineChart);
+            }
+        }
+
+        ajaxResponseBody.setResult(axeForLineCharts);
 
         return ResponseEntity.ok(ajaxResponseBody);
-    }*/
+    }
+
+    @GetMapping("statistiques/pie/{entreprise}/{pays}/{secteuractivite}/{raisonsociale}")
+    ResponseEntity<?> getValuesForPieCharts(@PathVariable("entreprise") String codeEntreprise,
+                                             @PathVariable("pays") String codePays,
+                                             @PathVariable("secteuractivite") String codeSecteurActivite,
+                                             @PathVariable("raisonsociale") String codeRaisonSociale){
+        AjaxResponseBody ajaxResponseBody = new AjaxResponseBody();
+        List<AxeForPieChart> axeForPieCharts = new ArrayList<>();
+
+        if (codeEntreprise.equals("null")){
+            List<Entreprise> entreprises = new LesFonctions().getEnterprisesList(codePays, codeSecteurActivite, codeRaisonSociale, entrepriseService);
+
+            for (Axe axe:axeService.findAll()){
+                AxeForPieChart axeForPieChart = new AxeForPieChart();
+                double valeurAxe = 0.0;
+
+                for (Entreprise entr:entreprises){
+                    valeurAxe += notationAxeService.findByAxeAndEntreprise(axe.getCodeAxe(), entr.getCodeEntreprise()).getValeurNotationAxe();
+                }
+
+                axeForPieChart.setLibelleAxe(axe.getLibelleAxe());
+                axeForPieChart.setHexCouleur(axe.getCouleur().getHexCouleur());
+                axeForPieChart.setValeurNote(valeurAxe);
+                axeForPieCharts.add(axeForPieChart);
+            }
+
+        }
+        else {
+            for (Axe axe:axeService.findAll()){
+                AxeForPieChart axeForPieChart = new AxeForPieChart();
+
+                axeForPieChart.setLibelleAxe(axe.getLibelleAxe());
+                axeForPieChart.setHexCouleur(axe.getCouleur().getHexCouleur());
+                axeForPieChart.setValeurNote(notationAxeService.findByAxeAndEntreprise(axe.getCodeAxe(), entrepriseService.getOne(codeEntreprise).getCodeEntreprise()).getValeurNotationAxe());
+                axeForPieCharts.add(axeForPieChart);
+            }
+
+        }
+
+        ajaxResponseBody.setResult(axeForPieCharts);
+
+        return ResponseEntity.ok(ajaxResponseBody);
+    }
+
 }

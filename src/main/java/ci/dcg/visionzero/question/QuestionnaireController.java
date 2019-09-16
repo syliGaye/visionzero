@@ -116,7 +116,7 @@ public class QuestionnaireController {
 
         if (!entreprises.isEmpty()){
             for (Entreprise entreprise:entreprises){
-                notationQuestionService.save(new NotationQuestion(questionnaire, reponse, entreprise));
+                if (notationQuestionService.findByQuestionnaireAndReponseAndEntreprise(questionnaire.getCodeQuestionnaire(), reponse.getCodeReponse(), entreprise.getCodeEntreprise()) == null) notationQuestionService.save(new NotationQuestion(questionnaire, reponse, entreprise));
             }
         }
 

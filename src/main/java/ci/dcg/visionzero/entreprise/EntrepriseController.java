@@ -138,17 +138,19 @@ public class EntrepriseController {
         if (!axes.isEmpty()){
             for (Axe axe:axes){
                 List<Evaluation> evaluations = evaluationService.findAllByAxe(axe.getCodeAxe());
-                notationAxeService.save(new NotationAxe(1.0, axe, entreprise));
+
+                if (notationAxeService.findByAxeAndEntreprise(axe.getCodeAxe(), entreprise.getCodeEntreprise()) == null) notationAxeService.save(new NotationAxe(1.0, axe, entreprise));
 
                 if (!evaluations.isEmpty()){
                     for (Evaluation evaluation:evaluations){
                         Reponse reponse = reponseService.findByValeur(1);
                         List<Questionnaire> questionnaires = questionnaireService.findAllByEvaluation(evaluation.getCodeEvaluation());
-                        notationEvaluationService.save(new NotationEvaluation(1.0, evaluation, entreprise));
+
+                        if (notationEvaluationService.findByEvaluationAndEntreprise(evaluation.getCodeEvaluation(), entreprise.getCodeEntreprise()) == null) notationEvaluationService.save(new NotationEvaluation(1.0, evaluation, entreprise));
 
                         if (!questionnaires.isEmpty() && reponse != null){
                             for (Questionnaire quest:questionnaires){
-                                notationQuestionService.save(new NotationQuestion(quest, reponse, entreprise));
+                                if (notationQuestionService.findByQuestionnaireAndReponseAndEntreprise(quest.getCodeQuestionnaire(), reponse.getCodeReponse(), entreprise.getCodeEntreprise()) == null) notationQuestionService.save(new NotationQuestion(quest, reponse, entreprise));
                             }
                         }
                     }

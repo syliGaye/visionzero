@@ -7,6 +7,8 @@
 <head>
     <th:block th:replace="fragments/header :: header-title"/>
 
+    <link rel="stylesheet" href="../../../resources/assets/js/vendor/morris/morris.css" media="screen" th:href="@{/resources/assets/js/vendor/morris/morris.css}">
+
     <th:block th:replace="fragments/header :: header-css"/>
 </head>
 
@@ -115,7 +117,8 @@
                         <!-- tile body -->
                         <div class="tile-body">
 
-                            <div id="line-chart" style="height: 350px"></div>
+                            <!--<div id="line-chart" style="height: 350px"></div>-->
+                            <div id="line-example" style="height: 350px;"></div>
 
                         </div>
                         <!-- /tile body -->
@@ -149,9 +152,8 @@
 
                         <!-- tile body -->
                         <div class="tile-body">
-
-                            <div id="ordered-chart" style="height: 350px"></div>
-
+                            <div id="bar-example" style="height: 350px;"></div>
+                            <!--<div id="ordered-chart" style="height: 350px"></div>-->
                         </div>
                         <!-- /tile body -->
 
@@ -337,7 +339,12 @@
                             <section class="tile">
 
                                 <!-- tile body -->
-                                <div class="tile-body">&nbsp;&nbsp;&nbsp;</div>
+                                <div class="tile-body">
+                                    <div hidden>
+                                        <button id="fermerLeTri" class="btn btn-default btn-border" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                    &nbsp;&nbsp;&nbsp;
+                                </div>
                                 <!-- tile body -->
 
                             </section>
@@ -387,6 +394,9 @@
 <!--<script src="../../../resources/assets/js/vendor/typeahead/typeahead.bundle.min.js" th:src="@{/resources/assets/js/vendor/typeahead/typeahead.bundle.min.js}"></script>-->
 
 <th:block th:replace="fragments/footer :: js-flot"/>
+<script src="../../../../resources/assets/js/vendor/raphael/raphael-min.js" th:src="@{/resources/assets/js/vendor/raphael/raphael-min.js}"></script>
+<script src="../../../../resources/assets/js/vendor/d3/d3.v2.js" th:src="@{/resources/assets/js/vendor/d3/d3.v2.js}"></script>
+<script src="../../../../resources/assets/js/vendor/morris/morris.min.js" th:src="@{/resources/assets/js/vendor/morris/morris.min.js}"></script>
 
 <!--/ vendor javascripts -->
 

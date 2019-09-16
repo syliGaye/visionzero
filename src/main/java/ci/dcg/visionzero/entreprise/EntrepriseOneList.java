@@ -1,6 +1,7 @@
 package ci.dcg.visionzero.entreprise;
 
 import ci.dcg.visionzero.axe.AxeOneList;
+import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.pays.Pays;
 import ci.dcg.visionzero.raisonsociale.RaisonSociale;
 import ci.dcg.visionzero.secteuractivite.SecteurActivite;
@@ -14,6 +15,7 @@ public class EntrepriseOneList {
     private Pays pays;
     private SecteurActivite secteurActivite;
     private RaisonSociale raisonSociale;
+    private Couleur couleur;
     private List<AxeOneList> axeOneLists;
 
     public EntrepriseOneList() {
@@ -74,5 +76,13 @@ public class EntrepriseOneList {
 
     public void setAxeOneLists(List<AxeOneList> axeOneLists) {
         this.axeOneLists = axeOneLists;
+    }
+
+    public Couleur getCouleur() {
+        return couleur;
+    }
+
+    public void setCouleur(Couleur couleur) {
+        this.couleur = couleur;
     }
 }
