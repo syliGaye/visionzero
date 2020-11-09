@@ -1,5 +1,6 @@
 package ci.dcg.visionzero.signup;
 
+import ci.dcg.visionzero.email.EmailService;
 import ci.dcg.visionzero.files.FileStorageService;
 import ci.dcg.visionzero.imageuser.ImageUserService;
 import ci.dcg.visionzero.role.RoleService;
@@ -48,6 +49,8 @@ public class SignupController {
 
     @Autowired
     private FileStorageService fileStorageService;
+
+    @Autowired private EmailService emailService;
 
     @ModelAttribute("titrepage")
     String titre() {

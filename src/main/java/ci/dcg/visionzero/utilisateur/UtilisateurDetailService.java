@@ -1,5 +1,6 @@
 package ci.dcg.visionzero.utilisateur;
 
+import ci.dcg.visionzero.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -13,15 +14,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Service
+@Transactional
 public class UtilisateurDetailService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired private EmailService emailService;
 
     public Utilisateur putUtilisateurActive(Utilisateur utilisateur) {
         utilisateur.setActive(1);
@@ -29,6 +34,7 @@ public class UtilisateurDetailService implements UserDetailsService {
     }
 
     public void loginUser(Utilisateur utilisateur) {
+        emailService.prepareAndSend(utilisateur.getEmail(), "GAYE Mehibo", "TEST");
         SecurityContextHolder.getContext().setAuthentication(authenticate(utilisateur));
     }
 

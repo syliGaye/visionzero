@@ -2,6 +2,7 @@ package ci.dcg.visionzero.signin;
 
 import ci.dcg.visionzero.couleur.Couleur;
 import ci.dcg.visionzero.couleur.CouleurService;
+import ci.dcg.visionzero.email.EmailService;
 import ci.dcg.visionzero.files.FileStorageService;
 import ci.dcg.visionzero.role.Role;
 import ci.dcg.visionzero.role.RoleService;
@@ -32,6 +33,8 @@ public class SigninController {
 
     @Autowired
     private FileStorageService fileStorageService;
+
+    @Autowired private EmailService emailService;
 
     @ModelAttribute("titrepage")
     String titre() {
@@ -128,6 +131,7 @@ public class SigninController {
 
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             new LesFonctions().profileDeConnexion(model, fileStorageService, userService);
+            emailService.prepareAndSend("sylvestregaye@gmail.com", "GAYE Mehibo", "TEST");
 
             return HOME_VIEW_NAME;
         }

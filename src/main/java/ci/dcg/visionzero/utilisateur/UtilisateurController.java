@@ -1,11 +1,8 @@
 package ci.dcg.visionzero.utilisateur;
 
 import ci.dcg.visionzero.files.FileStorageService;
-import ci.dcg.visionzero.imageuser.ImageUser;
 import ci.dcg.visionzero.imageuser.ImageUserService;
-import ci.dcg.visionzero.role.Role;
 import ci.dcg.visionzero.role.RoleService;
-import ci.dcg.visionzero.signup.SignupValidator;
 import ci.dcg.visionzero.support.AjaxResponseBody;
 import ci.dcg.visionzero.support.LesFonctions;
 import ci.dcg.visionzero.web.AjaxUtils;
@@ -19,7 +16,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.io.IOException;
 
 import static ci.dcg.visionzero.web.WebViewName.*;
