@@ -95,8 +95,8 @@ public class SignupController {
             utilisateur.setId(codeUtilisateur);
             utilisateur.setImageUser(new LesFonctions().createImageForUser(codeUtilisateur, imageUserService, signupForm.getFile()));
 
-            userService.save(utilisateur);
-            utilisateurDetailService.loginUser(utilisateur);
+            Utilisateur utilisateurSaved = userService.save(utilisateur);
+            utilisateurDetailService.loginUser(utilisateurSaved);
 
             return REDIRECT_SIGNIN;
         } catch (IOException e) {

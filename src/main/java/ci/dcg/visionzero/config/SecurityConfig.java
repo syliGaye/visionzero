@@ -19,8 +19,7 @@ import org.springframework.security.web.authentication.rememberme.TokenBasedReme
 @EnableGlobalMethodSecurity(securedEnabled = true)
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UtilisateurDetailService utilisateurDetailService;
+    @Autowired private UtilisateurDetailService utilisateurDetailService;
 
     @Bean
     public TokenBasedRememberMeServices rememberMeServices() {

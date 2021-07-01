@@ -23,8 +23,7 @@ import java.util.Collections;
 @Transactional
 public class UtilisateurDetailService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private UserRepository userRepository;
 
     @Autowired private EmailService emailService;
 
